@@ -162,6 +162,9 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
 .finished-inner{border:1.5px solid rgba(201,168,76,.12);border-top:none;border-radius:0 0 14px 14px;padding:12px}
 .admin-finished-details{margin-top:10px}
 .admin-finished-summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;font-size:.88rem;font-weight:700;color:#4ade80;padding:11px 14px;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.2);border-radius:10px;user-select:none}
+.admin-search{width:100%;padding:11px 14px;background:var(--dark);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.88rem;outline:none;margin-bottom:12px}
+.admin-search:focus{border-color:var(--gold)}
+.admin-group-label{font-size:.78rem;font-weight:700;color:#fbbf24;margin:4px 0 8px}
 .admin-finished-summary::-webkit-details-marker{display:none}
 .admin-finished-summary .chevron{transition:transform .25s;color:var(--muted)}
 .admin-finished-details[open] .admin-finished-summary .chevron{transform:rotate(180deg)}
@@ -1745,14 +1748,27 @@ function renderAdminMatches(){
   const haveResult=list.filter(m=>DB.results[m.id]);
 
   let html='';
-  if(needEntry.length) html+=needEntry.map(buildItem).join('');
+  // حقل بحث سريع للوصول لأي مباراة بسرعة (مفيد لتصحيح خطأ)
+  html+=`<input class="admin-search" id="admin-match-search" placeholder="🔍 ابحث عن مباراة بالاسم لتعديلها..." oninput="filterAdminMatches(this.value)">`;
+  if(needEntry.length) html+=`<div class="admin-group-label">⏳ بانتظار إدخال النتيجة (${needEntry.length})</div>`+needEntry.map(buildItem).join('');
   if(haveResult.length){
-    html+=`<details class="admin-finished-details">
-      <summary class="admin-finished-summary"><span>✅ المباريات المُدخلة نتائجها (${haveResult.length})</span><span class="chevron">▾</span></summary>
+    html+=`<details class="admin-finished-details" ${adminFilter==='all'?'open':''}>
+      <summary class="admin-finished-summary"><span>✏️ المباريات المُدخلة نتائجها — اضغط لتعديل أي خطأ (${haveResult.length})</span><span class="chevron">▾</span></summary>
       <div style="padding-top:8px">${haveResult.map(buildItem).join('')}</div>
     </details>`;
   }
   document.getElementById('admin-matches').innerHTML=html;
+}
+
+// تصفية مباريات الإدارة بالبحث بالاسم
+function filterAdminMatches(q){
+  const query=(q||'').trim().toLowerCase();
+  document.querySelectorAll('#admin-matches .admin-match-item').forEach(item=>{
+    const title=item.querySelector('.admin-match-title')?.textContent.toLowerCase()||'';
+    item.style.display = (!query || title.includes(query)) ? '' : 'none';
+  });
+  // افتح قائمة المُدخلة تلقائياً عند البحث
+  if(query){ const d=document.querySelector('.admin-finished-details'); if(d) d.open=true; }
 }
 
 async function adminSave(id){
