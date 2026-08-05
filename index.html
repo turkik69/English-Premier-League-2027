@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#3B1D5C">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="فانتزي العزبه">
+<meta name="apple-mobile-web-app-title" content="تحدي الدوري">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
@@ -30,20 +30,20 @@ header{background:linear-gradient(135deg,#25002B 0%,#37003C 50%,#4A0057 100%);bo
 .header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;flex-wrap:wrap;gap:10px}
 .logo-area{display:flex;align-items:center;gap:12px}
 .trophy{font-size:2.2rem;filter:drop-shadow(0 0 8px rgba(201,168,76,.6))}
-.logo-text h1{font-size:1.2rem;font-weight:900;color:var(--gold);line-height:1.1}
-.logo-text p{font-size:.72rem;color:var(--muted);margin-top:2px}
+.logo-text h1{font-size:1.25rem;font-weight:900;color:var(--gold);line-height:1.1}
+.logo-text p{font-size:.75rem;color:var(--muted);margin-top:2px}
 .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-#player-name-display{font-size:.82rem;color:var(--gold);font-weight:700;padding:5px 12px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:20px;display:none}
-#live-badge{display:flex;align-items:center;gap:5px;font-size:.72rem;color:#4ade80;padding:4px 10px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);border-radius:20px;font-weight:700}
+#player-name-display{font-size:.8125rem;color:var(--gold);font-weight:700;padding:5px 12px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:20px;display:none}
+#live-badge{display:flex;align-items:center;gap:5px;font-size:.75rem;color:#4ade80;padding:4px 10px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);border-radius:20px;font-weight:700}
 .live-dot{width:7px;height:7px;background:#4ade80;border-radius:50%;animation:pulse 1.5s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
-#admin-badge{font-size:.72rem;color:#c4b5fd;padding:4px 10px;background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.4);border-radius:20px;font-weight:700;display:none}
+#admin-badge{font-size:.75rem;color:#c4b5fd;padding:4px 10px;background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.4);border-radius:20px;font-weight:700;display:none}
 .logout-btn{font-size:.75rem;padding:5px 12px;background:none;border:1px solid var(--border);border-radius:20px;color:var(--muted);font-family:'Cairo',sans-serif;cursor:pointer}
 .logout-btn:hover{border-color:var(--red);color:var(--red)}
 
 /* ── TABS ── */
 .tabs{max-width:1100px;margin:0 auto;display:flex;border-bottom:2px solid var(--border);padding:0 20px;overflow-x:auto}
-.tab-btn{padding:13px 20px;background:none;border:none;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap}
+.tab-btn{padding:13px 20px;background:none;border:none;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.875rem;font-weight:700;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap}
 .tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
 .tab-btn.admin-tab{color:#a78bfa}
 .tab-btn.admin-tab.active{color:#c4b5fd;border-bottom-color:var(--purple)}
@@ -52,20 +52,20 @@ header{background:linear-gradient(135deg,#25002B 0%,#37003C 50%,#4A0057 100%);bo
 .auth-wrap{max-width:460px;margin:40px auto;padding:0 16px}
 .auth-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:36px 28px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.4)}
 .auth-box .icon{font-size:3.5rem;margin-bottom:14px}
-.auth-box h2{font-size:1.4rem;font-weight:900;color:var(--gold);margin-bottom:6px}
-.auth-box .sub{font-size:.85rem;color:var(--muted);margin-bottom:24px;line-height:1.6}
+.auth-box h2{font-size:1.5rem;font-weight:900;color:var(--gold);margin-bottom:6px}
+.auth-box .sub{font-size:.875rem;color:var(--muted);margin-bottom:24px;line-height:1.6}
 .auth-tabs{display:flex;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:22px}
-.auth-tab-btn{flex:1;padding:10px;background:none;border:none;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s}
+.auth-tab-btn{flex:1;padding:10px;background:none;border:none;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.875rem;font-weight:700;cursor:pointer;transition:all .2s}
 .auth-tab-btn.active{background:var(--green);color:#fff}
 .inp-grp{margin-bottom:14px;text-align:right}
-.inp-grp label{display:block;font-size:.82rem;color:var(--muted);margin-bottom:5px}
-.inp-grp input{width:100%;padding:11px 14px;background:var(--dark);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.95rem;outline:none;text-align:right;transition:border-color .2s}
+.inp-grp label{display:block;font-size:.8125rem;color:var(--muted);margin-bottom:5px}
+.inp-grp input{width:100%;padding:11px 14px;background:var(--dark);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.9375rem;outline:none;text-align:right;transition:border-color .2s}
 .inp-grp input:focus{border-color:var(--gold)}
-.btn-main{width:100%;padding:13px;background:linear-gradient(135deg,var(--green),#005530);border:none;border-radius:9px;color:#fff;font-family:'Cairo',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 15px rgba(0,105,62,.4)}
+.btn-main{width:100%;padding:13px;background:linear-gradient(135deg,var(--green),#005530);border:none;border-radius:9px;color:#fff;font-family:'Cairo',sans-serif;font-size:.9375rem;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 15px rgba(0,105,62,.4)}
 .btn-main:hover{transform:translateY(-1px)}
-.auth-err{color:#f87171;font-size:.8rem;margin-top:8px;display:none}
+.auth-err{color:#f87171;font-size:.8125rem;margin-top:8px;display:none}
 .auth-note{font-size:.75rem;color:var(--muted);margin-top:14px}
-.admin-link{margin-top:18px;background:none;border:none;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.8rem;cursor:pointer;text-decoration:underline;padding:4px}
+.admin-link{margin-top:18px;background:none;border:none;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.8125rem;cursor:pointer;text-decoration:underline;padding:4px}
 .admin-link:hover{color:var(--gold)}
 
 /* ── MAIN ── */
@@ -73,11 +73,11 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
 .tab-panel{display:none}.tab-panel.active{display:block}
 
 /* ── STAGE & DAY ── */
-.stage-title{font-size:1.05rem;font-weight:900;color:var(--gold);border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:18px;margin-top:30px;display:flex;align-items:center;gap:8px}
+.stage-title{font-size:1rem;font-weight:900;color:var(--gold);border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:18px;margin-top:30px;display:flex;align-items:center;gap:8px}
 .stage-title:first-child{margin-top:0}
 .day-section{margin-bottom:28px}
 .day-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 16px;background:linear-gradient(90deg,rgba(0,105,62,.2),transparent);border-right:3px solid var(--green);border-radius:0 8px 8px 0}
-.day-header h3{font-size:.95rem;font-weight:900}
+.day-header h3{font-size:.9375rem;font-weight:900}
 
 /* ── MATCH CARD ── */
 .match-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:10px;position:relative;overflow:hidden}
@@ -89,70 +89,70 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
 .match-card.completed::before{background:var(--muted)}
 .match-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:5px}
 .match-badges{display:flex;gap:5px;flex-wrap:wrap}
-.badge{font-size:.68rem;padding:3px 9px;border-radius:20px;font-weight:700}
+.badge{font-size:.6875rem;padding:3px 9px;border-radius:20px;font-weight:700}
 .badge-group{background:rgba(201,168,76,.15);color:var(--gold)}
 .badge-golden{background:linear-gradient(135deg,#C9A84C,#F4D03F);color:#0A1628;font-weight:900;animation:goldpulse 2s ease-in-out infinite}
 @keyframes goldpulse{0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,.5)}50%{box-shadow:0 0 8px 2px rgba(201,168,76,.5)}}
 .tourney-card{background:linear-gradient(160deg,rgba(124,58,237,.12),rgba(10,22,40,.6));border:1.5px solid rgba(124,58,237,.35);border-radius:16px;margin-bottom:18px;overflow:hidden}
 .tourney-summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;font-size:1rem;font-weight:900;color:var(--gold);padding:15px 18px;user-select:none}
 .tourney-summary::-webkit-details-marker{display:none}
-.tourney-summary .chevron{transition:transform .25s;font-size:1.1rem;color:var(--muted)}
+.tourney-summary .chevron{transition:transform .25s;font-size:1.125rem;color:var(--muted)}
 .tourney-card[open] .tourney-summary .chevron{transform:rotate(180deg)}
 .tourney-body{padding:0 16px 16px}
-.tourney-hdr{font-size:1.05rem;font-weight:900;color:var(--gold);margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
-.tourney-locked{font-size:.72rem;background:rgba(239,68,68,.15);color:#f87171;padding:3px 10px;border-radius:12px}
-.tourney-note{font-size:.72rem;color:var(--muted);margin-bottom:14px;line-height:1.5}
+.tourney-hdr{font-size:1rem;font-weight:900;color:var(--gold);margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.tourney-locked{font-size:.75rem;background:rgba(239,68,68,.15);color:#f87171;padding:3px 10px;border-radius:12px}
+.tourney-note{font-size:.75rem;color:var(--muted);margin-bottom:14px;line-height:1.5}
 .tourney-field{margin-bottom:13px}
-.tourney-field label{display:block;font-size:.84rem;font-weight:700;color:var(--text);margin-bottom:6px}
-.t-pts{font-size:.68rem;color:#a78bfa;font-weight:700;margin-right:4px}
-.tourney-field select,.tourney-field input{width:100%;padding:10px 12px;background:var(--dark);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.88rem;outline:none}
+.tourney-field label{display:block;font-size:.875rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.t-pts{font-size:.6875rem;color:#a78bfa;font-weight:700;margin-right:4px}
+.tourney-field select,.tourney-field input{width:100%;padding:10px 12px;background:var(--dark);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.875rem;outline:none}
 .tourney-field select:focus,.tourney-field input:focus{border-color:var(--gold)}
-.tourney-save{width:100%;padding:12px;margin-top:6px;background:linear-gradient(135deg,#7C3AED,#5B21B6);border:none;border-radius:10px;color:#fff;font-family:'Cairo',sans-serif;font-size:.92rem;font-weight:800;cursor:pointer}
+.tourney-save{width:100%;padding:12px;margin-top:6px;background:linear-gradient(135deg,#7C3AED,#5B21B6);border:none;border-radius:10px;color:#fff;font-family:'Cairo',sans-serif;font-size:.9375rem;font-weight:800;cursor:pointer}
 .tourney-save:hover{opacity:.9}
-.tourney-locked-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:.86rem;padding:7px 0;border-bottom:1px solid var(--border)}
+.tourney-locked-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:.875rem;padding:7px 0;border-bottom:1px solid var(--border)}
 .tourney-locked-row b{color:var(--gold)}
-.t-correct{color:#4ade80;font-weight:900;font-size:.78rem}
-.t-wrong{color:#f87171;font-weight:900;font-size:.78rem}
-.admin-t-label{display:block;font-size:.78rem;font-weight:700;color:#a78bfa;margin:8px 0 4px}
-.admin-t-inp{width:100%;padding:9px 11px;background:var(--dark);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.85rem;outline:none;margin-bottom:8px}
+.t-correct{color:#4ade80;font-weight:900;font-size:.75rem}
+.t-wrong{color:#f87171;font-weight:900;font-size:.75rem}
+.admin-t-label{display:block;font-size:.75rem;font-weight:700;color:#a78bfa;margin:8px 0 4px}
+.admin-t-inp{width:100%;padding:9px 11px;background:var(--dark);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.875rem;outline:none;margin-bottom:8px}
 
 /* ── FANTASY ── */
 .fantasy-budget-bar{display:flex;gap:10px;margin-bottom:14px}
 .fantasy-budget-bar>div{flex:1;background:linear-gradient(160deg,rgba(124,58,237,.15),rgba(10,22,40,.6));border:1px solid rgba(124,58,237,.3);border-radius:12px;padding:12px;text-align:center}
-.fb-label{font-size:.68rem;color:var(--muted);margin-bottom:4px}
-.fb-val{font-size:1.3rem;font-weight:900;color:var(--gold)}
+.fb-label{font-size:.6875rem;color:var(--muted);margin-bottom:4px}
+.fb-val{font-size:1.25rem;font-weight:900;color:var(--gold)}
 .fb-neg{color:#f87171}
 .fantasy-pos-tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto}
-.fpos-tab{flex:1;white-space:nowrap;padding:9px 8px;background:var(--card2);border:1px solid var(--border);border-radius:9px;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer}
-.fpos-tab span{display:block;font-size:.65rem;margin-top:2px}
+.fpos-tab{flex:1;white-space:nowrap;padding:9px 8px;background:var(--card2);border:1px solid var(--border);border-radius:9px;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer}
+.fpos-tab span{display:block;font-size:.6875rem;margin-top:2px}
 .fpos-tab.active{background:linear-gradient(135deg,#7C3AED,#5B21B6);color:#fff;border-color:transparent}
 .fantasy-browse{max-height:260px;overflow-y:auto;background:var(--card2);border-radius:12px;padding:8px;margin-bottom:16px}
 .f-player-row{display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border-radius:8px;margin-bottom:4px;background:rgba(255,255,255,.02)}
 .f-player-row.f-added{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2)}
-.f-pname{font-size:.85rem;font-weight:700;color:var(--text)}
-.f-pteam{font-size:.68rem;color:var(--muted)}
-.f-price{font-size:.78rem;font-weight:900;color:var(--gold)}
-.f-btn{padding:6px 12px;border-radius:7px;border:none;font-family:'Cairo',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer}
+.f-pname{font-size:.875rem;font-weight:700;color:var(--text)}
+.f-pteam{font-size:.6875rem;color:var(--muted)}
+.f-price{font-size:.75rem;font-weight:900;color:var(--gold)}
+.f-btn{padding:6px 12px;border-radius:7px;border:none;font-family:'Cairo',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer}
 .f-add{background:var(--green);color:#fff}
 .f-add:disabled{background:var(--border);color:var(--muted);cursor:not-allowed}
 .f-remove{background:rgba(224,52,52,.15);color:#f87171}
-.f-empty{text-align:center;padding:30px 12px;color:var(--muted);font-size:.82rem}
-.fantasy-squad-title{font-size:.92rem;font-weight:900;color:var(--gold);margin:6px 0 10px}
-.f-squad-pos-label{font-size:.72rem;font-weight:700;color:#a78bfa;margin:10px 0 6px}
+.f-empty{text-align:center;padding:30px 12px;color:var(--muted);font-size:.8125rem}
+.fantasy-squad-title{font-size:.9375rem;font-weight:900;color:var(--gold);margin:6px 0 10px}
+.f-squad-pos-label{font-size:.75rem;font-weight:700;color:#a78bfa;margin:10px 0 6px}
 .f-squad-row{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:8px;margin-bottom:4px;background:var(--card2)}
 .f-squad-row.f-starting{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25)}
-.f-check{display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:700;color:var(--text);cursor:pointer}
+.f-check{display:flex;align-items:center;gap:8px;font-size:.875rem;font-weight:700;color:var(--text);cursor:pointer}
 .f-check input{width:17px;height:17px;accent-color:var(--gold)}
 .f-cap-btn{width:26px;height:26px;border-radius:50%;border:1px solid var(--border);background:var(--dark);color:var(--muted);font-weight:900;font-size:.75rem;cursor:pointer}
 .f-cap-btn.active{background:var(--gold);color:#0A1628;border-color:var(--gold)}
-.fantasy-save-btn{width:100%;padding:13px;margin-top:16px;background:linear-gradient(135deg,#7C3AED,#5B21B6);border:none;border-radius:11px;color:#fff;font-family:'Cairo',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer}
-.fantasy-note{font-size:.7rem;color:var(--muted);text-align:center;margin-top:10px;line-height:1.6}
+.fantasy-save-btn{width:100%;padding:13px;margin-top:16px;background:linear-gradient(135deg,#7C3AED,#5B21B6);border:none;border-radius:11px;color:#fff;font-family:'Cairo',sans-serif;font-size:.9375rem;font-weight:800;cursor:pointer}
+.fantasy-note{font-size:.6875rem;color:var(--muted);text-align:center;margin-top:10px;line-height:1.6}
 .fantasy-lb-details{margin-bottom:16px}
-.fantasy-lb-summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;font-size:.9rem;font-weight:800;color:var(--gold);padding:12px 16px;background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(10,22,40,.4));border:1px solid rgba(201,168,76,.3);border-radius:12px}
+.fantasy-lb-summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;font-size:.875rem;font-weight:800;color:var(--gold);padding:12px 16px;background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(10,22,40,.4));border:1px solid rgba(201,168,76,.3);border-radius:12px}
 .fantasy-lb-summary::-webkit-details-marker{display:none}
 .fantasy-lb-summary .chevron{transition:transform .25s}
 .fantasy-lb-details[open] .fantasy-lb-summary .chevron{transform:rotate(180deg)}
-.f-lb-row{display:flex;justify-content:space-between;padding:7px 12px;font-size:.82rem;border-bottom:1px solid var(--border)}
+.f-lb-row{display:flex;justify-content:space-between;padding:7px 12px;font-size:.8125rem;border-bottom:1px solid var(--border)}
 .f-lb-row b{color:var(--gold)}
 .badge-open{background:rgba(0,105,62,.2);color:#4ade80}
 .badge-locked{background:rgba(224,52,52,.15);color:#f87171}
@@ -161,94 +161,94 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
 .match-time{font-size:.75rem;color:var(--muted);direction:ltr}
 .teams-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .team{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1}
-.team-flag{font-size:.78rem;font-weight:900;line-height:1;background:linear-gradient(135deg,var(--purple),#5C0068);color:#fff;border:1px solid rgba(233,0,82,.35);border-radius:8px;padding:6px 9px;display:inline-block;letter-spacing:.5px}
-.team-name{font-size:.82rem;font-weight:700;text-align:center;line-height:1.2}
+.team-flag{font-size:.75rem;font-weight:900;line-height:1;background:linear-gradient(135deg,var(--purple),#5C0068);color:#fff;border:1px solid rgba(233,0,82,.35);border-radius:8px;padding:6px 9px;display:inline-block;letter-spacing:.5px}
+.team-name{font-size:.8125rem;font-weight:700;text-align:center;line-height:1.2}
 .vs-area{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:72px}
-.score-result{font-size:1.4rem;font-weight:900;color:var(--gold);direction:ltr;letter-spacing:2px}
-.vs-label{font-size:.72rem;color:var(--muted);font-weight:700}
-.venue-label{font-size:.65rem;color:var(--muted)}
+.score-result{font-size:1.5rem;font-weight:900;color:var(--gold);direction:ltr;letter-spacing:2px}
+.vs-label{font-size:.75rem;color:var(--muted);font-weight:700}
+.venue-label{font-size:.6875rem;color:var(--muted)}
 
 /* ── PREDICTION INPUT ── */
 .prediction-area{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
-.pred-label{font-size:.76rem;color:var(--muted);margin-bottom:9px;font-weight:600}
+.pred-label{font-size:.75rem;color:var(--muted);margin-bottom:9px;font-weight:600}
 .score-inputs{display:flex;align-items:center;justify-content:center;gap:10px;direction:ltr}
 .score-input-wrap{display:flex;align-items:center;background:var(--dark);border:1px solid var(--border);border-radius:9px;overflow:hidden}
-.score-input-wrap button{width:30px;height:38px;background:rgba(255,255,255,.05);border:none;color:var(--text);font-size:1.1rem;cursor:pointer;font-family:'Cairo',sans-serif}
+.score-input-wrap button{width:30px;height:38px;background:rgba(255,255,255,.05);border:none;color:var(--text);font-size:1.125rem;cursor:pointer;font-family:'Cairo',sans-serif}
 .score-input-wrap button:hover{background:rgba(255,255,255,.1)}
-.score-num{width:38px;text-align:center;background:none;border:none;color:var(--gold);font-size:1.15rem;font-weight:900;font-family:'Cairo',sans-serif;outline:none}
+.score-num{width:38px;text-align:center;background:none;border:none;color:var(--gold);font-size:1.125rem;font-weight:900;font-family:'Cairo',sans-serif;outline:none}
 .score-num::-webkit-outer-spin-button,.score-num::-webkit-inner-spin-button{-webkit-appearance:none}
 .score-num[type=number]{-moz-appearance:textfield}
-.save-pred-btn{margin-top:10px;width:100%;padding:9px;background:linear-gradient(135deg,var(--gold),#A5003D);border:none;border-radius:8px;color:#fff;font-family:'Cairo',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer}
+.save-pred-btn{margin-top:10px;width:100%;padding:9px;background:linear-gradient(135deg,var(--gold),#A5003D);border:none;border-radius:8px;color:#fff;font-family:'Cairo',sans-serif;font-size:.875rem;font-weight:700;cursor:pointer}
 .save-pred-btn:hover{opacity:.9}
 .my-pred-display{margin-top:10px;padding:9px 14px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);border-radius:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:7px}
 .pred-mine-label{color:var(--muted);font-size:.75rem}
-.pred-mine-score{font-weight:900;color:var(--gold);font-size:.95rem;direction:ltr}
-.pts-badge{padding:3px 11px;border-radius:20px;font-weight:900;font-size:.78rem}
+.pred-mine-score{font-weight:900;color:var(--gold);font-size:.9375rem;direction:ltr}
+.pts-badge{padding:3px 11px;border-radius:20px;font-weight:900;font-size:.75rem}
 .pts-3{background:rgba(22,163,74,.2);color:#4ade80}
 .pts-1{background:rgba(14,165,233,.2);color:#38bdf8}
 .pts-0{background:rgba(224,52,52,.1);color:#f87171}
 
 /* ── ALL PREDS (after match) ── */
 .all-preds-section{margin-top:10px}
-.all-preds-title{font-size:.72rem;color:var(--muted);font-weight:700;margin-bottom:7px}
+.all-preds-title{font-size:.75rem;color:var(--muted);font-weight:700;margin-bottom:7px}
 .all-preds-details{margin-top:10px;border-top:1px solid var(--border);padding-top:10px}
 .finished-details{margin-top:20px}
 .finished-summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;font-size:1rem;font-weight:800;color:var(--gold);padding:14px 18px;background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(10,22,40,.4));border:1.5px solid rgba(201,168,76,.3);border-radius:14px;user-select:none}
 .finished-summary::-webkit-details-marker{display:none}
-.finished-summary .chevron{transition:transform .25s;font-size:1.1rem;color:var(--muted)}
+.finished-summary .chevron{transition:transform .25s;font-size:1.125rem;color:var(--muted)}
 .finished-details[open] .finished-summary{border-radius:14px 14px 0 0;margin-bottom:0}
 .finished-details[open] .finished-summary .chevron{transform:rotate(180deg)}
 .finished-inner{border:1.5px solid rgba(201,168,76,.12);border-top:none;border-radius:0 0 14px 14px;padding:12px}
 .admin-finished-details{margin-top:10px}
-.admin-finished-summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;font-size:.88rem;font-weight:700;color:#4ade80;padding:11px 14px;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.2);border-radius:10px;user-select:none}
-.admin-search{width:100%;padding:11px 14px;background:var(--dark);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.88rem;outline:none;margin-bottom:12px}
+.admin-finished-summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;font-size:.875rem;font-weight:700;color:#4ade80;padding:11px 14px;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.2);border-radius:10px;user-select:none}
+.admin-search{width:100%;padding:11px 14px;background:var(--dark);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.875rem;outline:none;margin-bottom:12px}
 .admin-search:focus{border-color:var(--gold)}
-.admin-group-label{font-size:.78rem;font-weight:700;color:#fbbf24;margin:4px 0 8px}
+.admin-group-label{font-size:.75rem;font-weight:700;color:#fbbf24;margin:4px 0 8px}
 .admin-finished-summary::-webkit-details-marker{display:none}
 .admin-finished-summary .chevron{transition:transform .25s;color:var(--muted)}
 .admin-finished-details[open] .admin-finished-summary .chevron{transform:rotate(180deg)}
-.all-preds-summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;font-size:.78rem;font-weight:700;color:var(--gold);padding:8px 12px;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.18);border-radius:9px;user-select:none}
+.all-preds-summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;font-size:.75rem;font-weight:700;color:var(--gold);padding:8px 12px;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.18);border-radius:9px;user-select:none}
 .all-preds-summary::-webkit-details-marker{display:none}
-.all-preds-summary .chevron{transition:transform .25s;font-size:.9rem;color:var(--muted)}
+.all-preds-summary .chevron{transition:transform .25s;font-size:.875rem;color:var(--muted)}
 .all-preds-details[open] .all-preds-summary{border-radius:9px 9px 0 0;margin-bottom:0}
 .all-preds-details[open] .all-preds-summary .chevron{transform:rotate(180deg)}
 .all-preds-details[open] .all-preds-section{border:1px solid rgba(201,168,76,.12);border-top:none;border-radius:0 0 9px 9px;padding:8px;margin-top:0}
 .all-pred-row{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;border-radius:8px;margin-bottom:4px;background:rgba(255,255,255,.02);gap:8px}
 .all-pred-row.me{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.18)}
-.all-pred-name{font-size:.8rem;font-weight:600;flex:1}
-.all-pred-score{font-size:.88rem;font-weight:900;direction:ltr;color:var(--text)}
+.all-pred-name{font-size:.8125rem;font-weight:600;flex:1}
+.all-pred-score{font-size:.875rem;font-weight:900;direction:ltr;color:var(--text)}
 
 /* ── LEADERBOARD ── */
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:22px}
 .stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
-.stat-num{font-size:1.9rem;font-weight:900;color:var(--gold);line-height:1}
-.stat-label{font-size:.72rem;color:var(--muted);margin-top:5px}
+.stat-num{font-size:2rem;font-weight:900;color:var(--gold);line-height:1}
+.stat-label{font-size:.75rem;color:var(--muted);margin-top:5px}
 .lb-table{width:100%;border-collapse:collapse}
-.lb-table th{background:var(--card2);padding:11px 14px;text-align:right;font-size:.78rem;color:var(--muted);font-weight:700;border-bottom:2px solid var(--border)}
-.lb-table td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:.88rem}
+.lb-table th{background:var(--card2);padding:11px 14px;text-align:right;font-size:.75rem;color:var(--muted);font-weight:700;border-bottom:2px solid var(--border)}
+.lb-table td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:.875rem}
 .lb-table tr.clickable{cursor:pointer;transition:background .15s}
 .lb-table tr.clickable:hover td{background:rgba(201,168,76,.04)}
 .rank-cell{font-weight:900;text-align:center;width:48px}
 .rank-1{color:#FFD700}.rank-2{color:#C0C0C0}.rank-3{color:#CD7F32}
-.pts-cell{font-weight:900;font-size:1.05rem;color:var(--gold);text-align:center}
+.pts-cell{font-weight:900;font-size:1rem;color:var(--gold);text-align:center}
 .me-row td{background:rgba(201,168,76,.05)}
-.lb-hint{font-size:.73rem;color:var(--muted);padding:8px 12px;background:rgba(122,143,174,.05);border:1px solid var(--border);border-radius:8px;margin-bottom:12px}
-.player-meta{font-size:.7rem;color:var(--muted);margin-top:2px}
-.tap-hint{font-size:.65rem;color:var(--muted);margin-right:auto}
+.lb-hint{font-size:.75rem;color:var(--muted);padding:8px 12px;background:rgba(122,143,174,.05);border:1px solid var(--border);border-radius:8px;margin-bottom:12px}
+.player-meta{font-size:.6875rem;color:var(--muted);margin-top:2px}
+.tap-hint{font-size:.6875rem;color:var(--muted);margin-right:auto}
 
 /* ── PROFILE DRAWER ── */
 #profile-overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);align-items:flex-end;justify-content:center}
 
 /* ── BADGES & STREAK ── */
 .lb-badges{display:flex;gap:3px;flex-wrap:wrap;margin-bottom:3px;justify-content:flex-start}
-.lb-badge-ico{font-size:.8rem;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.22);border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;line-height:1}
-.lb-streak{background:rgba(224,52,52,.12);color:#fb923c;font-size:.72rem;font-weight:900;padding:1px 7px;border-radius:10px}
+.lb-badge-ico{font-size:.8125rem;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.22);border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;line-height:1}
+.lb-streak{background:rgba(224,52,52,.12);color:#fb923c;font-size:.75rem;font-weight:900;padding:1px 7px;border-radius:10px}
 
 /* ── آخر الترتيب الساخر ── */
 .last-place{display:inline-flex;align-items:center;gap:6px;position:relative}
-.last-emoji{font-size:.95rem;animation:wobble 1.6s ease-in-out infinite;display:inline-block}
+.last-emoji{font-size:.9375rem;animation:wobble 1.6s ease-in-out infinite;display:inline-block}
 @keyframes wobble{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
-.last-bubble{position:relative;background:#fff;color:#0A1628;font-size:.62rem;font-weight:900;padding:3px 8px;border-radius:10px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.3);animation:pop .4s ease-out}
+.last-bubble{position:relative;background:#fff;color:#0A1628;font-size:.6875rem;font-weight:900;padding:3px 8px;border-radius:10px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.3);animation:pop .4s ease-out}
 .last-bubble::after{content:'';position:absolute;left:-4px;top:50%;transform:translateY(-50%);border-width:4px 4px 4px 0;border-style:solid;border-color:transparent #fff transparent transparent}
 @keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
 .last-row td{background:rgba(224,52,52,.04)}
@@ -256,37 +256,37 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
 
 #profile-badges-bar{padding:0 20px 6px}
 .profile-badges{display:flex;flex-wrap:wrap;gap:6px}
-.profile-badge{font-size:.72rem;font-weight:700;color:var(--gold);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);border-radius:20px;padding:4px 11px}
+.profile-badge{font-size:.75rem;font-weight:700;color:var(--gold);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);border-radius:20px;padding:4px 11px}
 
 /* ── COMPARE BUTTON & MODAL ── */
-.compare-btn{width:100%;padding:11px;margin-bottom:12px;background:linear-gradient(135deg,rgba(124,58,237,.9),#5B21B6);border:none;border-radius:10px;color:#fff;font-family:'Cairo',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer}
+.compare-btn{width:100%;padding:11px;margin-bottom:12px;background:linear-gradient(135deg,rgba(124,58,237,.9),#5B21B6);border:none;border-radius:10px;color:#fff;font-family:'Cairo',sans-serif;font-size:.875rem;font-weight:700;cursor:pointer}
 .compare-btn:hover{opacity:.9}
 #compare-overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);align-items:flex-end;justify-content:center}
 #compare-overlay.open{display:flex}
 #compare-drawer{background:var(--card);border:1px solid var(--border);border-radius:20px 20px 0 0;width:100%;max-width:680px;max-height:88vh;overflow-y:auto;transform:translateY(100%);transition:transform .3s cubic-bezier(.32,0,.15,1);padding-bottom:28px}
 #compare-overlay.open #compare-drawer{transform:translateY(0)}
 .cmp-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}
-.cmp-name{flex:1;text-align:center;font-weight:900;font-size:.92rem;color:var(--text)}
+.cmp-name{flex:1;text-align:center;font-weight:900;font-size:.9375rem;color:var(--text)}
 .cmp-name.cmp-me{color:var(--gold)}
-.cmp-vs{color:var(--muted);font-weight:900;font-size:.8rem}
+.cmp-vs{color:var(--muted);font-weight:900;font-size:.8125rem}
 .cmp-score-big{display:flex;align-items:center;justify-content:space-between;background:var(--dark);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:14px}
 .cmp-score-big>div:first-child,.cmp-score-big>div:last-child{font-size:2rem;font-weight:900;color:var(--text);flex:1;text-align:center}
 .cmp-score-big>div:nth-child(2){flex:0}
 .cmp-win{color:#4ade80!important}
 .cmp-row{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--border)}
-.cmp-val{flex:1;text-align:center;font-weight:900;font-size:1.05rem;color:var(--text)}
-.cmp-label{flex:1.4;text-align:center;font-size:.78rem;color:var(--muted)}
+.cmp-val{flex:1;text-align:center;font-weight:900;font-size:1rem;color:var(--text)}
+.cmp-label{flex:1.4;text-align:center;font-size:.75rem;color:var(--muted)}
 .cmp-h2h{margin-top:16px;background:var(--dark);border:1px solid var(--border);border-radius:12px;padding:14px}
-.cmp-h2h-title{font-size:.82rem;font-weight:700;color:var(--gold);margin-bottom:10px;text-align:center}
+.cmp-h2h-title{font-size:.8125rem;font-weight:700;color:var(--gold);margin-bottom:10px;text-align:center}
 .cmp-h2h-bar{display:flex;height:34px;border-radius:8px;overflow:hidden;direction:ltr}
-.cmp-h2h-me{background:linear-gradient(135deg,var(--green),#005530);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:.9rem;min-width:28px;transition:width .4s}
-.cmp-h2h-opp{background:rgba(124,58,237,.6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:.9rem;min-width:28px;transition:width .4s}
-.cmp-h2h-legend{display:flex;justify-content:space-between;margin-top:8px;font-size:.72rem;color:var(--muted)}
+.cmp-h2h-me{background:linear-gradient(135deg,var(--green),#005530);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:.875rem;min-width:28px;transition:width .4s}
+.cmp-h2h-opp{background:rgba(124,58,237,.6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:.875rem;min-width:28px;transition:width .4s}
+.cmp-h2h-legend{display:flex;justify-content:space-between;margin-top:8px;font-size:.75rem;color:var(--muted)}
 
 /* ── SQUAD MODAL ── */
 .team-clickable{cursor:pointer;border-radius:10px;padding:4px;transition:background .15s}
 .team-clickable:hover{background:rgba(201,168,76,.06)}
-.squad-hint{font-size:.6rem;color:var(--gold);opacity:.7;margin-top:2px}
+.squad-hint{font-size:.6875rem;color:var(--gold);opacity:.7;margin-top:2px}
 #squad-overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);align-items:flex-end;justify-content:center}
 #squad-overlay.open{display:flex}
 #squad-drawer{background:var(--card);border:1px solid var(--border);border-radius:20px 20px 0 0;width:100%;max-width:680px;max-height:88vh;overflow-y:auto;transform:translateY(100%);transition:transform .3s cubic-bezier(.32,0,.15,1);padding-bottom:28px}
@@ -294,91 +294,91 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
 #squad-body{padding:0 20px}
 .squad-info{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
 .squad-info-item{background:var(--dark);border:1px solid var(--border);border-radius:9px;padding:10px;text-align:center}
-.sii-label{font-size:.66rem;color:var(--muted);margin-bottom:4px}
-.sii-val{font-size:.78rem;font-weight:700;color:var(--text)}
-.squad-count{text-align:center;font-size:.8rem;font-weight:700;color:var(--gold);background:rgba(201,168,76,.08);border-radius:8px;padding:7px;margin-bottom:12px}
-.squad-pos-title{font-size:.8rem;font-weight:900;color:#a78bfa;margin:14px 0 7px;padding-bottom:5px;border-bottom:1px solid var(--border)}
+.sii-label{font-size:.6875rem;color:var(--muted);margin-bottom:4px}
+.sii-val{font-size:.75rem;font-weight:700;color:var(--text)}
+.squad-count{text-align:center;font-size:.8125rem;font-weight:700;color:var(--gold);background:rgba(201,168,76,.08);border-radius:8px;padding:7px;margin-bottom:12px}
+.squad-pos-title{font-size:.8125rem;font-weight:900;color:#a78bfa;margin:14px 0 7px;padding-bottom:5px;border-bottom:1px solid var(--border)}
 .squad-player{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--card2);border-radius:8px;margin-bottom:5px}
-.squad-player-name{font-size:.86rem;font-weight:700;color:var(--text)}
-.squad-player-club{font-size:.72rem;color:var(--muted)}
+.squad-player-name{font-size:.875rem;font-weight:700;color:var(--text)}
+.squad-player-club{font-size:.75rem;color:var(--muted)}
 .squad-soon{text-align:center;padding:40px 20px}
 #profile-overlay.open{display:flex}
 #profile-drawer{background:var(--card);border:1px solid var(--border);border-radius:20px 20px 0 0;width:100%;max-width:680px;max-height:88vh;overflow-y:auto;transform:translateY(100%);transition:transform .3s cubic-bezier(.32,0,.15,1);padding-bottom:32px}
 #profile-overlay.open #profile-drawer{transform:translateY(0)}
 .drawer-handle{width:38px;height:4px;background:var(--border);border-radius:2px;margin:13px auto 0}
 .drawer-hdr{padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
-.drawer-hdr h2{font-size:1.05rem;font-weight:900;color:var(--gold)}
-.drawer-close{background:none;border:1px solid var(--border);border-radius:7px;color:var(--muted);padding:5px 13px;font-family:'Cairo',sans-serif;cursor:pointer;font-size:.82rem}
+.drawer-hdr h2{font-size:1rem;font-weight:900;color:var(--gold)}
+.drawer-close{background:none;border:1px solid var(--border);border-radius:7px;color:var(--muted);padding:5px 13px;font-family:'Cairo',sans-serif;cursor:pointer;font-size:.8125rem}
 .drawer-close:hover{border-color:var(--red);color:var(--red)}
 .drawer-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 20px}
 .d-stat{background:var(--dark);border:1px solid var(--border);border-radius:9px;padding:10px;text-align:center}
 .d-stat .n{font-size:1.5rem;font-weight:900;color:var(--gold);line-height:1}
-.d-stat .l{font-size:.7rem;color:var(--muted);margin-top:3px}
+.d-stat .l{font-size:.6875rem;color:var(--muted);margin-top:3px}
 .drawer-body{padding:0 20px}
-.d-stage{font-size:.78rem;font-weight:900;color:var(--muted);margin:16px 0 7px;padding-bottom:5px;border-bottom:1px solid var(--border)}
+.d-stage{font-size:.75rem;font-weight:900;color:var(--muted);margin:16px 0 7px;padding-bottom:5px;border-bottom:1px solid var(--border)}
 .d-pred-row{display:flex;align-items:center;justify-content:space-between;padding:9px 11px;border-radius:9px;margin-bottom:5px;background:var(--card2);gap:8px;flex-wrap:wrap}
 .d-pred-row.me{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.18)}
-.d-pred-teams{font-size:.8rem;font-weight:700;flex:1;line-height:1.4}
-.d-pred-actual{font-size:.72rem;color:var(--muted)}
-.d-ko-detail{font-size:.68rem;color:#a78bfa;margin-top:3px;font-weight:700}
+.d-pred-teams{font-size:.8125rem;font-weight:700;flex:1;line-height:1.4}
+.d-pred-actual{font-size:.75rem;color:var(--muted)}
+.d-ko-detail{font-size:.6875rem;color:#a78bfa;margin-top:3px;font-weight:700}
 .d-pred-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .d-breakdown{margin-top:8px;padding:8px 10px;background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.18);border-radius:8px}
-.bd-title{font-size:.7rem;font-weight:900;color:var(--gold);margin-bottom:6px}
-.bd-step{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.72rem;color:var(--text);padding:3px 0;line-height:1.4}
-.d-pred-score{font-size:.8rem;font-weight:900;text-align:center;white-space:nowrap}
-.d-hidden-note{margin-top:14px;padding:9px 13px;background:rgba(122,143,174,.06);border:1px solid var(--border);border-radius:8px;font-size:.76rem;color:var(--muted);text-align:center}
-.d-empty{text-align:center;padding:28px;color:var(--muted);font-size:.88rem}
+.bd-title{font-size:.6875rem;font-weight:900;color:var(--gold);margin-bottom:6px}
+.bd-step{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.75rem;color:var(--text);padding:3px 0;line-height:1.4}
+.d-pred-score{font-size:.8125rem;font-weight:900;text-align:center;white-space:nowrap}
+.d-hidden-note{margin-top:14px;padding:9px 13px;background:rgba(122,143,174,.06);border:1px solid var(--border);border-radius:8px;font-size:.75rem;color:var(--muted);text-align:center}
+.d-empty{text-align:center;padding:28px;color:var(--muted);font-size:.875rem}
 
 /* ── ADMIN ── */
 .admin-panel{background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(124,58,237,.04));border:1px solid rgba(124,58,237,.3);border-radius:12px;padding:22px;margin-bottom:22px}
-.admin-panel h3{color:#c4b5fd;font-size:.95rem;font-weight:900;margin-bottom:14px}
+.admin-panel h3{color:#c4b5fd;font-size:.9375rem;font-weight:900;margin-bottom:14px}
 .admin-sec{margin-bottom:22px}
-.admin-sec-title{font-size:.86rem;font-weight:900;color:#a78bfa;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid rgba(124,58,237,.2)}
+.admin-sec-title{font-size:.875rem;font-weight:900;color:#a78bfa;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid rgba(124,58,237,.2)}
 .admin-match-item{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:12px 14px;margin-bottom:8px}
-.admin-match-title{font-size:.85rem;font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.auto-badge{background:rgba(14,165,233,.15);color:#38bdf8;padding:2px 8px;border-radius:8px;font-size:.68rem;font-weight:700}
-.result-badge{background:rgba(22,163,74,.15);color:#4ade80;padding:2px 8px;border-radius:8px;font-size:.68rem;font-weight:700}
+.admin-match-title{font-size:.875rem;font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.auto-badge{background:rgba(14,165,233,.15);color:#38bdf8;padding:2px 8px;border-radius:8px;font-size:.6875rem;font-weight:700}
+.result-badge{background:rgba(22,163,74,.15);color:#4ade80;padding:2px 8px;border-radius:8px;font-size:.6875rem;font-weight:700}
 .admin-score-row{display:flex;align-items:center;gap:10px;direction:ltr;flex-wrap:wrap}
-.admin-inp{width:52px;padding:7px;background:var(--dark);border:1px solid var(--border);border-radius:7px;color:var(--gold);font-size:.95rem;font-weight:900;text-align:center;font-family:'Cairo',sans-serif;outline:none}
+.admin-inp{width:52px;padding:7px;background:var(--dark);border:1px solid var(--border);border-radius:7px;color:var(--gold);font-size:.9375rem;font-weight:900;text-align:center;font-family:'Cairo',sans-serif;outline:none}
 .admin-inp:focus{border-color:var(--purple)}
-.btn-admin{padding:7px 14px;background:linear-gradient(135deg,var(--purple),#5B21B6);border:none;border-radius:7px;color:#fff;font-family:'Cairo',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer}
+.btn-admin{padding:7px 14px;background:linear-gradient(135deg,var(--purple),#5B21B6);border:none;border-radius:7px;color:#fff;font-family:'Cairo',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer}
 .btn-admin:hover{opacity:.85}
 .btn-admin:disabled{opacity:.4;cursor:not-allowed}
-.btn-danger{padding:7px 14px;background:rgba(224,52,52,.15);border:1px solid rgba(224,52,52,.35);border-radius:7px;color:#f87171;font-family:'Cairo',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer}
+.btn-danger{padding:7px 14px;background:rgba(224,52,52,.15);border:1px solid rgba(224,52,52,.35);border-radius:7px;color:#f87171;font-family:'Cairo',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer}
 .filter-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.filter-btn{padding:5px 13px;background:none;border:1px solid var(--border);border-radius:20px;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.78rem;cursor:pointer;transition:all .2s}
+.filter-btn{padding:5px 13px;background:none;border:1px solid var(--border);border-radius:20px;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.75rem;cursor:pointer;transition:all .2s}
 .filter-btn.active{background:rgba(0,105,62,.2);border-color:var(--green);color:#4ade80}
 .admin-players-table{width:100%;border-collapse:collapse;margin-top:10px}
-.admin-players-table th{background:rgba(124,58,237,.15);padding:9px 12px;text-align:right;font-size:.76rem;color:#c4b5fd;border-bottom:1px solid rgba(124,58,237,.25)}
-.admin-players-table td{padding:9px 12px;border-bottom:1px solid var(--border);font-size:.83rem}
+.admin-players-table th{background:rgba(124,58,237,.15);padding:9px 12px;text-align:right;font-size:.75rem;color:#c4b5fd;border-bottom:1px solid rgba(124,58,237,.25)}
+.admin-players-table td{padding:9px 12px;border-bottom:1px solid var(--border);font-size:.8125rem}
 .live-status-box{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:14px}
 
 /* ── RULES ── */
 .rules-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:20px}
-.rules-box h3{font-size:.95rem;font-weight:900;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:7px}
+.rules-box h3{font-size:.9375rem;font-weight:900;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:7px}
 .rule-item{display:flex;align-items:center;gap:13px;padding:11px 0;border-bottom:1px solid var(--border)}
 .rule-item:last-child{border-bottom:none}
-.rule-pts{min-width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0}
+.rule-pts{min-width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.125rem;font-weight:900;flex-shrink:0}
 .rule-pts.r3{background:rgba(22,163,74,.2);color:#4ade80}
 .rule-pts.r1{background:rgba(14,165,233,.2);color:#38bdf8}
 .rule-pts.r0{background:rgba(224,52,52,.1);color:#f87171}
-.rule-desc{font-size:.88rem;line-height:1.5}
-.rule-sub{font-size:.76rem;color:var(--muted);margin-top:2px}
+.rule-desc{font-size:.875rem;line-height:1.5}
+.rule-sub{font-size:.75rem;color:var(--muted);margin-top:2px}
 
 /* ── TOAST ── */
-#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);border:1px solid var(--gold);border-radius:9px;padding:10px 22px;font-size:.88rem;font-weight:700;color:var(--gold);z-index:999;transition:transform .3s;box-shadow:0 8px 30px rgba(0,0,0,.5);white-space:nowrap;pointer-events:none}
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);border:1px solid var(--gold);border-radius:9px;padding:10px 22px;font-size:.875rem;font-weight:700;color:var(--gold);z-index:999;transition:transform .3s;box-shadow:0 8px 30px rgba(0,0,0,.5);white-space:nowrap;pointer-events:none}
 #toast.show{transform:translateX(-50%) translateY(0)}
 
 @media(max-width:540px){
-  .team-flag{font-size:.68rem;padding:5px 7px}.team-name{font-size:.73rem}
+  .team-flag{font-size:.6875rem;padding:5px 7px}.team-name{font-size:.75rem}
   .match-card{padding:10px 12px}.vs-area{min-width:58px}
-  .score-result{font-size:1.2rem}.tab-btn{padding:11px 13px;font-size:.8rem}
+  .score-result{font-size:1.25rem}.tab-btn{padding:11px 13px;font-size:.8125rem}
 }
 </style>
 </head>
 <body>
 
-<div id="loading-overlay"><div class="spinner"></div><p style="color:var(--muted);font-size:.88rem">جاري التحميل...</p></div>
+<div id="loading-overlay"><div class="spinner"></div><p style="color:var(--muted);font-size:.875rem">جاري التحميل...</p></div>
 
 <!-- AUTH -->
 <div id="auth-screen" style="display:none;padding-top:20px">
@@ -456,14 +456,14 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
         <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:#a78bfa">10</div><div><div class="rule-desc">توقع بطل الدوري</div><div class="rule-sub">10 نقاط لمن يصيب الفريق البطل 🏆</div></div></div>
         <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:#a78bfa">5</div><div><div class="rule-desc">توقع وصيف الدوري</div><div class="rule-sub">5 نقاط لمن يصيب الفريق الوصيف 🥈</div></div></div>
         <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:#a78bfa">5</div><div><div class="rule-desc">توقع هداف الدوري</div><div class="rule-sub">5 نقاط لمن يصيب هداف الموسم ⚽</div></div></div>
-        <div class="rule-item" style="border:none"><div class="rule-pts" style="background:rgba(239,68,68,.15);color:#f87171;font-size:.9rem">🔒</div><div><div class="rule-desc">توقعات الموسم تُدخل مرة واحدة وتُقفل</div><div class="rule-sub">لا يمكن تعديلها بعد الحفظ</div></div></div>
+        <div class="rule-item" style="border:none"><div class="rule-pts" style="background:rgba(239,68,68,.15);color:#f87171;font-size:.875rem">🔒</div><div><div class="rule-desc">توقعات الموسم تُدخل مرة واحدة وتُقفل</div><div class="rule-sub">لا يمكن تعديلها بعد الحفظ</div></div></div>
       </div>
       <div class="rules-box">
         <h3>⏰ نظام فتح وإغلاق التوقعات</h3>
-        <div class="rule-item"><div class="rule-pts" style="background:rgba(22,163,74,.2);color:#4ade80;font-size:.9rem">🟢</div><div><div class="rule-desc">تُفتح التوقعات قبل 24 ساعة من المباراة</div></div></div>
-        <div class="rule-item"><div class="rule-pts" style="background:rgba(224,52,52,.1);color:#f87171;font-size:.9rem">🔴</div><div><div class="rule-desc">تُغلق التوقعات قبل ساعة من الانطلاق</div></div></div>
-        <div class="rule-item"><div class="rule-pts" style="background:rgba(14,165,233,.2);color:#38bdf8;font-size:.9rem">🔒</div><div><div class="rule-desc">توقعات المشاركين مخفية حتى نهاية المباراة</div></div></div>
-        <div class="rule-item"><div class="rule-pts" style="background:rgba(74,222,128,.1);color:#4ade80;font-size:.9rem">🔄</div><div><div class="rule-desc">النتائج والنقاط تتحدث تلقائياً من الإنترنت</div></div></div>
+        <div class="rule-item"><div class="rule-pts" style="background:rgba(22,163,74,.2);color:#4ade80;font-size:.875rem">🟢</div><div><div class="rule-desc">تُفتح التوقعات قبل 24 ساعة من المباراة</div></div></div>
+        <div class="rule-item"><div class="rule-pts" style="background:rgba(224,52,52,.1);color:#f87171;font-size:.875rem">🔴</div><div><div class="rule-desc">تُغلق التوقعات قبل ساعة من الانطلاق</div></div></div>
+        <div class="rule-item"><div class="rule-pts" style="background:rgba(14,165,233,.2);color:#38bdf8;font-size:.875rem">🔒</div><div><div class="rule-desc">توقعات المشاركين مخفية حتى نهاية المباراة</div></div></div>
+        <div class="rule-item"><div class="rule-pts" style="background:rgba(74,222,128,.1);color:#4ade80;font-size:.875rem">🔄</div><div><div class="rule-desc">النتائج والنقاط تتحدث تلقائياً من الإنترنت</div></div></div>
       </div>
     </div>
 
@@ -525,8 +525,8 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
       <button class="drawer-close" onclick="closeCompareDirect()">✕ إغلاق</button>
     </div>
     <div style="padding:14px 20px">
-      <label style="font-size:.82rem;color:var(--muted);display:block;margin-bottom:8px">اختر منافساً لمقارنتك به:</label>
-      <select id="compare-select" onchange="renderCompare()" style="width:100%;padding:11px 14px;background:var(--dark);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.95rem;outline:none"></select>
+      <label style="font-size:.8125rem;color:var(--muted);display:block;margin-bottom:8px">اختر منافساً لمقارنتك به:</label>
+      <select id="compare-select" onchange="renderCompare()" style="width:100%;padding:11px 14px;background:var(--dark);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.9375rem;outline:none"></select>
     </div>
     <div id="compare-body" style="padding:0 20px 24px"></div>
   </div>
@@ -627,9 +627,9 @@ async function loadDB(){
   // فشل الاتصال
   if(u===undefined && p===undefined && r===undefined){
     document.getElementById('loading-overlay').innerHTML=`<div style="text-align:center;padding:40px;max-width:420px">
-      <div style="font-size:3rem;margin-bottom:14px">⚠️</div>
-      <div style="color:#f87171;font-size:1.05rem;font-weight:700;margin-bottom:10px">تعذّر الاتصال بقاعدة البيانات</div>
-      <div style="color:#7A8FAE;font-size:.85rem;line-height:1.6;margin-bottom:18px">تحقق من اتصال الإنترنت ثم أعد المحاولة.</div>
+      <div style="font-size:2.5rem;margin-bottom:14px">⚠️</div>
+      <div style="color:#f87171;font-size:1rem;font-weight:700;margin-bottom:10px">تعذّر الاتصال بقاعدة البيانات</div>
+      <div style="color:#7A8FAE;font-size:.875rem;line-height:1.6;margin-bottom:18px">تحقق من اتصال الإنترنت ثم أعد المحاولة.</div>
       <button onclick="location.reload()" style="padding:10px 24px;background:#00693E;border:none;border-radius:8px;color:#fff;font-family:Cairo,sans-serif;font-weight:700;cursor:pointer">إعادة المحاولة</button>
     </div>`;
     throw new Error('FB connection failed');
@@ -895,7 +895,7 @@ function renderFantasyUI(){
       ${POS_ORDER.map(pos=>`<button class="fpos-tab ${w.posTab===pos?'active':''}" onclick="fSwitchTab('${pos}')">${POS_LABEL[pos]} <span>${counts[pos]}/${FANTASY_SQUAD_RULES[pos]}</span></button>`).join('')}
     </div>
     <div class="fantasy-browse" id="fantasy-browse"></div>
-    <div class="fantasy-squad-title">📋 فريقي (${w.squad.length}/15) <span style="font-size:.7rem;color:var(--muted);font-weight:400">اختر 11 أساسيين + كابتن</span></div>
+    <div class="fantasy-squad-title">📋 فريقي (${w.squad.length}/15) <span style="font-size:.6875rem;color:var(--muted);font-weight:400">اختر 11 أساسيين + كابتن</span></div>
     <div id="fantasy-squad-list"></div>
     <button class="fantasy-save-btn" onclick="submitFantasyTeam()">💾 حفظ فريقي</button>
     <div class="fantasy-note">💡 الكابتن يحصل على ضعف نقاطه · فقط الأساسيون (11) يسجّلون نقاطاً · يمكنك تعديل فريقك في أي وقت</div>
@@ -1152,7 +1152,7 @@ function buildTourneyCard(){
   // إذا أُغلق الباب ولم يتوقّع
   else if(closed && !myT){
     summaryLabel='🏆 توقعات الموسم 🔒';
-    bodyHTML=`<div style="font-size:.82rem;color:var(--muted);text-align:center;padding:8px">انتهى وقت توقعات الموسم.</div>`;
+    bodyHTML=`<div style="font-size:.8125rem;color:var(--muted);text-align:center;padding:8px">انتهى وقت توقعات الموسم.</div>`;
   }
   // نموذج الإدخال (مفتوح)
   else {
@@ -1277,11 +1277,11 @@ function buildCard(m){
     predHTML=`<div class="prediction-area">
       <div class="pred-label">🎯 يُغلق التوقع في: ${formatTime(new Date(new Date(m.ko).getTime()-3600*1000).toISOString())}</div>
       <div class="score-inputs">
-        <span style="font-size:.7rem;color:var(--muted)">${m.away}</span>
+        <span style="font-size:.6875rem;color:var(--muted)">${m.away}</span>
         <div class="score-input-wrap"><button onclick="adj('${m.id}','a',-1)">−</button><input class="score-num" type="number" id="a_${m.id}" value="${pa}" min="0" max="20" oninput="clamp(this)"><button onclick="adj('${m.id}','a',1)">+</button></div>
         <span style="color:var(--muted);font-weight:900">-</span>
         <div class="score-input-wrap"><button onclick="adj('${m.id}','h',-1)">−</button><input class="score-num" type="number" id="h_${m.id}" value="${ph}" min="0" max="20" oninput="clamp(this)"><button onclick="adj('${m.id}','h',1)">+</button></div>
-        <span style="font-size:.7rem;color:var(--muted)">${m.home}</span>
+        <span style="font-size:.6875rem;color:var(--muted)">${m.home}</span>
       </div>
       <button class="save-pred-btn" onclick="savePred('${m.id}')">حفظ التوقع ✓</button>
     </div>`;
@@ -1353,7 +1353,7 @@ async function savePred(id){
 // ════════════════════════════════════════════
 function renderLeaderboard(){
   if(currentUser?.isAdmin){
-    document.getElementById('my-stats').innerHTML=`<div class="stat-card" style="grid-column:1/-1"><div style="color:var(--muted);font-size:.85rem">🛡️ أنت مشرف · تدير المسابقة من تبويب الإدارة. الترتيب أدناه لجميع المشاركين.</div></div>`;
+    document.getElementById('my-stats').innerHTML=`<div class="stat-card" style="grid-column:1/-1"><div style="color:var(--muted);font-size:.875rem">🛡️ أنت مشرف · تدير المسابقة من تبويب الإدارة. الترتيب أدناه لجميع المشاركين.</div></div>`;
   } else {
     const s=statOf(currentUser?.username), myP=totalPts(currentUser?.username);
     const streak=currentStreak(currentUser?.username);
@@ -1451,7 +1451,7 @@ function openProfile(username){
     return nb-na;
   });
   let html='';
-  if(isAdmin && !isMe){ html+=`<div style="padding:8px 12px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.3);border-radius:8px;font-size:.78rem;color:#c4b5fd;margin-bottom:12px">🛡️ عرض المشرف — جميع التوقعات مرئية لك بما فيها المباريات القادمة</div>`; }
+  if(isAdmin && !isMe){ html+=`<div style="padding:8px 12px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.3);border-radius:8px;font-size:.75rem;color:#c4b5fd;margin-bottom:12px">🛡️ عرض المشرف — جميع التوقعات مرئية لك بما فيها المباريات القادمة</div>`; }
   stagesOrdered.forEach(stage=>{
     html+=`<div class="d-stage">${stage}</div>`;
     // داخل كل مرحلة: الأحدث انتهاءً أولاً
@@ -1480,11 +1480,11 @@ function openProfile(username){
       html+=`<div class="d-pred-row${me?' me':''}" style="${border}">
         <div style="flex:1;min-width:0">
           <div class="d-pred-head">
-            <div class="d-pred-teams">${m.hf} ${m.home} <span style="color:var(--muted);font-size:.72rem">vs</span> ${m.away} ${m.af}
+            <div class="d-pred-teams">${m.hf} ${m.home} <span style="color:var(--muted);font-size:.75rem">vs</span> ${m.away} ${m.af}
               ${res?`<div class="d-pred-actual">النتيجة: <bdi>${resText}</bdi></div>`:`<div class="d-pred-actual">${status==='completed'?'':'لم تُلعب بعد'}</div>`}
             </div>
             <div style="display:flex;align-items:center;gap:8px">
-              <div style="text-align:center"><div style="font-size:.63rem;color:var(--muted)">توقع</div><div class="d-pred-score" style="color:var(--gold)"><bdi>${predText}</bdi></div></div>
+              <div style="text-align:center"><div style="font-size:.6875rem;color:var(--muted)">توقع</div><div class="d-pred-score" style="color:var(--gold)"><bdi>${predText}</bdi></div></div>
               ${badge}
             </div>
           </div>
@@ -1550,7 +1550,7 @@ function renderCompare(){
     </div>
     <div class="cmp-score-big">
       <div class="${myPts>oppPts?'cmp-win':''}">${myPts}</div>
-      <div style="color:var(--muted);font-size:.8rem">النقاط</div>
+      <div style="color:var(--muted);font-size:.8125rem">النقاط</div>
       <div class="${oppPts>myPts?'cmp-win':''}">${oppPts}</div>
     </div>
     ${row('توقع دقيق 🎯', myS.p3, oppS.p3)}
@@ -1582,7 +1582,7 @@ function openSquad(teamName){
     body.innerHTML=`<div class="squad-soon">
       <div style="font-size:2.5rem;margin-bottom:10px">⏳</div>
       <div style="font-weight:700;color:var(--gold);margin-bottom:6px">القائمة قيد الإضافة</div>
-      <div style="font-size:.82rem;color:var(--muted);line-height:1.6">سيتم إضافة قائمة لاعبي ${teamName} الرسمية قريباً.<br>تابعونا!</div>
+      <div style="font-size:.8125rem;color:var(--muted);line-height:1.6">سيتم إضافة قائمة لاعبي ${teamName} الرسمية قريباً.<br>تابعونا!</div>
     </div>`;
   } else {
     const byPos={'حارس':[],'مدافع':[],'وسط':[],'مهاجم':[]};
@@ -1637,7 +1637,7 @@ function renderAdminFantasy(){
   const gws=Object.keys(DB.fantasyGwPoints||{}).sort((a,b)=>b-a);
   const teamsCount=Object.keys(DB.fantasyTeams||{}).length;
   document.getElementById('admin-fantasy').innerHTML=`
-    <div style="font-size:.78rem;color:var(--muted);margin-bottom:10px;line-height:1.6">
+    <div style="font-size:.75rem;color:var(--muted);margin-bottom:10px;line-height:1.6">
       ${teamsCount} مشارك بنى فريق فانتزي · اطلبي من Claude تحديث نقاط أي جولة (يجلبها من الموقع الرسمي لـ Fantasy Premier League)، ثم الصقي النتيجة هنا بصيغة JSON.
       ${gws.length?`<br>الجولات المُدخلة حالياً: ${gws.join('، ')}`:''}
     </div>
@@ -1665,7 +1665,7 @@ function renderAdminTourney(){
   const teamOpts=(sel)=>`<option value="">—</option>`+teams.map(t=>`<option value="${t.name}" ${sel===t.name?'selected':''}>${t.flag} ${t.name}</option>`).join('');
   const count=Object.keys(DB.tourneyPreds||{}).length;
   document.getElementById('admin-tourney').innerHTML=`
-    <div style="font-size:.78rem;color:var(--muted);margin-bottom:10px">${count} مشارك أدخل توقعات الموسم · أدخل النتائج النهائية بعد انتهاء الموسم لاحتساب النقاط</div>
+    <div style="font-size:.75rem;color:var(--muted);margin-bottom:10px">${count} مشارك أدخل توقعات الموسم · أدخل النتائج النهائية بعد انتهاء الموسم لاحتساب النقاط</div>
     <label class="admin-t-label">🏆 البطل</label>
     <select id="r-champion" class="admin-t-inp">${teamOpts(r.champion)}</select>
     <label class="admin-t-label">🥈 الوصيف</label>
@@ -1687,7 +1687,7 @@ async function saveTourneyRes(){
 function renderAdminMatches(){
   const n=now();
   let list=MATCHES.filter(m=>{ const ko=new Date(m.ko); return adminFilter==='all'||(n>ko&&!DB.results[m.id]); });
-  if(!list.length){ document.getElementById('admin-matches').innerHTML=`<div style="color:var(--muted);padding:12px;font-size:.85rem">لا توجد مباريات في هذا التصنيف</div>`; return; }
+  if(!list.length){ document.getElementById('admin-matches').innerHTML=`<div style="color:var(--muted);padding:12px;font-size:.875rem">لا توجد مباريات في هذا التصنيف</div>`; return; }
 
   const buildItem=(m)=>{
     const r=DB.results[m.id];
@@ -1695,11 +1695,11 @@ function renderAdminMatches(){
     return `<div class="admin-match-item">
       <div class="admin-match-title">${badges}${m.home} vs ${m.away} · ${formatDate(m.ko)}</div>
       <div class="admin-score-row">
-        <span style="font-size:.78rem;color:var(--muted)">${m.home}</span>
+        <span style="font-size:.75rem;color:var(--muted)">${m.home}</span>
         <input class="admin-inp" type="number" id="ah_${m.id}" value="${r?.h??''}" min="0" max="20" placeholder="0">
         <span style="color:var(--muted);font-weight:900">-</span>
         <input class="admin-inp" type="number" id="aa_${m.id}" value="${r?.a??''}" min="0" max="20" placeholder="0">
-        <span style="font-size:.78rem;color:var(--muted)">${m.away}</span>
+        <span style="font-size:.75rem;color:var(--muted)">${m.away}</span>
         <button class="btn-admin" onclick="adminSave('${m.id}')">حفظ</button>
         ${r?`<button class="btn-danger" onclick="adminDel('${m.id}')">حذف</button>`:''}
       </div>
@@ -1750,7 +1750,7 @@ async function adminDel(id){
 function renderAdminPlayers(){
   const participants = Object.entries(DB.users).filter(([u,d])=>!d.admin);
   if(!participants.length){
-    document.getElementById('admin-players').innerHTML=`<div style="color:var(--muted);padding:12px;font-size:.85rem">لا يوجد مشاركون مسجّلون بعد</div>`;
+    document.getElementById('admin-players').innerHTML=`<div style="color:var(--muted);padding:12px;font-size:.875rem">لا يوجد مشاركون مسجّلون بعد</div>`;
     return;
   }
   document.getElementById('admin-players').innerHTML=`
@@ -1760,8 +1760,8 @@ function renderAdminPlayers(){
       <td style="text-align:center">${Object.keys(DB.predictions[u]||{}).length}</td>
       <td style="text-align:center;color:var(--gold);font-weight:700">${totalPts(u)}</td>
       <td style="text-align:center;white-space:nowrap">
-        <button class="btn-admin" style="padding:5px 10px;font-size:.72rem" onclick="openProfile('${u}')">👁️ توقعاته</button>
-        <button class="btn-danger" style="padding:5px 10px;font-size:.72rem" onclick="adminDeletePlayer('${u}')">🗑️ حذف</button>
+        <button class="btn-admin" style="padding:5px 10px;font-size:.75rem" onclick="openProfile('${u}')">👁️ توقعاته</button>
+        <button class="btn-danger" style="padding:5px 10px;font-size:.75rem" onclick="adminDeletePlayer('${u}')">🗑️ حذف</button>
       </td>
     </tr>`).join('')}
     </tbody></table>`;
