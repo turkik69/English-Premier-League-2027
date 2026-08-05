@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>تحدي كأس العالم 2026 – مسابقة التوقعات</title>
+<title>تحدي الدوري الإنجليزي 2026-27 – مسابقة التوقعات</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#00693E">
+<meta name="theme-color" content="#3B1D5C">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="تحدي 2026">
+<meta name="apple-mobile-web-app-title" content="تحدي الدوري">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
@@ -122,7 +122,7 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
 .match-time{font-size:.75rem;color:var(--muted);direction:ltr}
 .teams-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .team{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1}
-.team-flag{font-size:1.9rem;line-height:1}
+.team-flag{font-size:.78rem;font-weight:900;line-height:1;background:linear-gradient(135deg,var(--green),#00482b);color:#fff;border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:6px 9px;display:inline-block;letter-spacing:.5px}
 .team-name{font-size:.82rem;font-weight:700;text-align:center;line-height:1.2}
 .vs-area{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:72px}
 .score-result{font-size:1.4rem;font-weight:900;color:var(--gold);direction:ltr;letter-spacing:2px}
@@ -338,7 +338,7 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
 #toast.show{transform:translateX(-50%) translateY(0)}
 
 @media(max-width:540px){
-  .team-flag{font-size:1.55rem}.team-name{font-size:.73rem}
+  .team-flag{font-size:.68rem;padding:5px 7px}.team-name{font-size:.73rem}
   .match-card{padding:10px 12px}.vs-area{min-width:58px}
   .score-result{font-size:1.2rem}.tab-btn{padding:11px 13px;font-size:.8rem}
 }
@@ -354,8 +354,8 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
     <!-- شاشة المشارك -->
     <div class="auth-box" id="participant-box">
       <div class="icon">🏆</div>
-      <h2>تحدي كأس العالم 2026</h2>
-      <p class="sub">مسابقة التوقعات · USA · Canada · Mexico<br>أدخل اسمك وانضم فوراً!</p>
+      <h2>تحدي الدوري الإنجليزي 2026-27</h2>
+      <p class="sub">مسابقة توقعات الدوري الإنجليزي الممتاز<br>أدخل اسمك وانضم فوراً!</p>
       <div class="inp-grp"><label>الاسم الأول</label><input type="text" id="e-first" placeholder="مثال: محمد" maxlength="20" onkeydown="if(event.key==='Enter')document.getElementById('e-tribe').focus()"></div>
       <div class="inp-grp"><label>القبيلة</label><input type="text" id="e-tribe" placeholder="مثال: العنزي" maxlength="30" onkeydown="if(event.key==='Enter')doEnter()"></div>
       <div class="auth-err" id="e-err"></div>
@@ -383,7 +383,7 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
     <div class="header-inner">
       <div class="logo-area">
         <span class="trophy">🏆</span>
-        <div class="logo-text"><h1>تحدي كأس العالم 2026</h1><p>مسابقة التوقعات · USA · Canada · Mexico</p></div>
+        <div class="logo-text"><h1>تحدي الدوري الإنجليزي</h1><p>مسابقة توقعات الدوري الإنجليزي الممتاز</p></div>
       </div>
       <div class="header-actions">
         <span id="admin-badge">🛡️ مشرف</span>
@@ -415,18 +415,11 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
         <div class="rule-item"><div class="rule-pts r0">0</div><div><div class="rule-desc">توقع خاطئ</div><div class="rule-sub">مثال: توقعت فوز فريق وفاز الآخر ❌</div></div></div>
       </div>
       <div class="rules-box">
-        <h3>⚔️ الأدوار الإقصائية (من دور الـ32)</h3>
-        <div class="rule-item"><div class="rule-pts r3">3</div><div><div class="rule-desc">نقاط الوقت الأصلي كالمعتاد</div><div class="rule-sub">3 للتوقع الدقيق · 1 للفائز/التعادل الصحيح · 0 للخطأ (90 دقيقة)</div></div></div>
-        <div class="rule-item"><div class="rule-pts" style="background:rgba(124,58,237,.2);color:#a78bfa">+1</div><div><div class="rule-desc">توقع الأشواط الإضافية</div><div class="rule-sub">تظهر الخانة فقط إذا توقّعت تعادلاً في الوقت الأصلي · +1 إذا أصبت من يحسمها في الإضافي أو استمرار التعادل</div></div></div>
-        <div class="rule-item"><div class="rule-pts" style="background:rgba(124,58,237,.2);color:#a78bfa">+1</div><div><div class="rule-desc">توقع الفائز بضربات الترجيح</div><div class="rule-sub">تظهر فقط إذا توقّعت استمرار التعادل في الإضافي · +1 إذا أصبت الفائز بالترجيح</div></div></div>
-        <div class="rule-item" style="border:none"><div class="rule-pts" style="background:rgba(74,222,128,.2);color:#4ade80">5</div><div><div class="rule-desc">مثال على الحد الأقصى</div><div class="rule-sub">تعادل دقيق (3) + إضافي صحيح (1) + ترجيح صحيح (1) = 5 نقاط 🎯 · ملاحظة: لو توقّعت فوز فريق في الإضافي تُغلق خانة الترجيح</div></div></div>
-      </div>
-      <div class="rules-box">
-        <h3>🏆 توقعات البطولة (مرة واحدة قبل نهاية دور المجموعات)</h3>
-        <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:#a78bfa">10</div><div><div class="rule-desc">توقع بطل كأس العالم</div><div class="rule-sub">10 نقاط لمن يصيب المنتخب البطل 🏆</div></div></div>
-        <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:#a78bfa">5</div><div><div class="rule-desc">توقع طرفي النهائي</div><div class="rule-sub">5 نقاط · يجب تطابق المنتخبين معاً (بأي ترتيب) ⚔️</div></div></div>
-        <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:#a78bfa">5</div><div><div class="rule-desc">توقع هداف البطولة</div><div class="rule-sub">5 نقاط لمن يصيب هداف كأس العالم ⚽</div></div></div>
-        <div class="rule-item" style="border:none"><div class="rule-pts" style="background:rgba(239,68,68,.15);color:#f87171;font-size:.9rem">🔒</div><div><div class="rule-desc">توقعات البطولة تُدخل مرة واحدة وتُقفل</div><div class="rule-sub">لا يمكن تعديلها بعد الحفظ · آخر موعد نهاية دور المجموعات</div></div></div>
+        <h3>🏆 توقعات الموسم (مرة واحدة قبل الموعد النهائي)</h3>
+        <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:#a78bfa">10</div><div><div class="rule-desc">توقع بطل الدوري</div><div class="rule-sub">10 نقاط لمن يصيب الفريق البطل 🏆</div></div></div>
+        <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:#a78bfa">5</div><div><div class="rule-desc">توقع وصيف الدوري</div><div class="rule-sub">5 نقاط لمن يصيب الفريق الوصيف 🥈</div></div></div>
+        <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:#a78bfa">5</div><div><div class="rule-desc">توقع هداف الدوري</div><div class="rule-sub">5 نقاط لمن يصيب هداف الموسم ⚽</div></div></div>
+        <div class="rule-item" style="border:none"><div class="rule-pts" style="background:rgba(239,68,68,.15);color:#f87171;font-size:.9rem">🔒</div><div><div class="rule-desc">توقعات الموسم تُدخل مرة واحدة وتُقفل</div><div class="rule-sub">لا يمكن تعديلها بعد الحفظ</div></div></div>
       </div>
       <div class="rules-box">
         <h3>⏰ نظام فتح وإغلاق التوقعات</h3>
@@ -514,7 +507,7 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
   <div id="squad-drawer">
     <div class="drawer-handle"></div>
     <div class="drawer-hdr">
-      <h2 id="squad-title">قائمة المنتخب</h2>
+      <h2 id="squad-title">قائمة الفريق</h2>
       <button class="drawer-close" onclick="closeSquadDirect()">✕ إغلاق</button>
     </div>
     <div id="squad-body"></div>
@@ -533,117 +526,39 @@ const ADMIN_NAME = 'المشرف';
 // MATCHES DATA — كامل جدول كأس العالم 2026
 // ════════════════════════════════════════════
 const MATCHES = [
-  // ── دور المجموعات ──
-  {id:'m1',g:'A',home:'المكسيك',away:'جنوب أفريقيا',hf:'🇲🇽',af:'🇿🇦',venue:'أستاديو أزتيكا، مكسيكو سيتي',ko:'2026-06-11T19:00:00Z',stage:'دور المجموعات'},
-  {id:'m2',g:'A',home:'كوريا الجنوبية',away:'التشيك',hf:'🇰🇷',af:'🇨🇿',venue:'أستاديو أكرون، زاباوبان',ko:'2026-06-11T22:00:00Z',stage:'دور المجموعات'},
-  {id:'m3',g:'B',home:'كندا',away:'البوسنة والهرسك',hf:'🇨🇦',af:'🇧🇦',venue:'تورنتو ستاديوم، تورنتو',ko:'2026-06-12T21:00:00Z',stage:'دور المجموعات'},
-  {id:'m4',g:'D',home:'الولايات المتحدة',away:'باراجواي',hf:'🇺🇸',af:'🇵🇾',venue:'لوس أنجلوس ستاديوم',ko:'2026-06-13T00:00:00Z',stage:'دور المجموعات'},
-  {id:'m5',g:'B',home:'قطر',away:'سويسرا',hf:'🇶🇦',af:'🇨🇭',venue:'ليفايز ستاديوم، سانتا كلارا',ko:'2026-06-13T19:00:00Z',stage:'دور المجموعات'},
-  {id:'m6',g:'C',home:'البرازيل',away:'المغرب',hf:'🇧🇷',af:'🇲🇦',venue:'ميتلايف ستاديوم، نيوجيرسي',ko:'2026-06-13T22:00:00Z',stage:'دور المجموعات'},
-  {id:'m7',g:'C',home:'هايتي',away:'اسكتلندا',hf:'🇭🇹',af:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',venue:'جيليت ستاديوم، فوكسبورو',ko:'2026-06-14T01:00:00Z',stage:'دور المجموعات'},
-  {id:'m8',g:'D',home:'أستراليا',away:'تركيا',hf:'🇦🇺',af:'🇹🇷',venue:'BC بليس، فانكوفر',ko:'2026-06-14T04:00:00Z',stage:'دور المجموعات'},
-  {id:'m9',g:'E',home:'ألمانيا',away:'كوراساو',hf:'🇩🇪',af:'🇨🇼',venue:'NRG ستاديوم، هيوستن',ko:'2026-06-14T17:00:00Z',stage:'دور المجموعات'},
-  {id:'m10',g:'F',home:'هولندا',away:'اليابان',hf:'🇳🇱',af:'🇯🇵',venue:'AT&T ستاديوم، أرلينجتون',ko:'2026-06-14T20:00:00Z',stage:'دور المجموعات'},
-  {id:'m11',g:'E',home:'كوت ديفوار',away:'الإكوادور',hf:'🇨🇮',af:'🇪🇨',venue:'لينكولن فاينانشيال، فيلادلفيا',ko:'2026-06-14T23:00:00Z',stage:'دور المجموعات'},
-  {id:'m12',g:'F',home:'السويد',away:'تونس',hf:'🇸🇪',af:'🇹🇳',venue:'أستاديو BBVA، مونتيري',ko:'2026-06-15T02:00:00Z',stage:'دور المجموعات'},
-  {id:'m13',g:'H',home:'إسبانيا',away:'الرأس الأخضر',hf:'🇪🇸',af:'🇨🇻',venue:'مرسيدس-بنز ستاديوم، أتلانتا',ko:'2026-06-15T16:00:00Z',stage:'دور المجموعات'},
-  {id:'m14',g:'G',home:'بلجيكا',away:'مصر',hf:'🇧🇪',af:'🇪🇬',venue:'لومن فيلد، سياتل',ko:'2026-06-15T19:00:00Z',stage:'دور المجموعات'},
-  {id:'m15',g:'H',home:'السعودية',away:'أوروغواي',hf:'🇸🇦',af:'🇺🇾',venue:'هارد روك ستاديوم، ميامي',ko:'2026-06-15T22:00:00Z',stage:'دور المجموعات'},
-  {id:'m16',g:'G',home:'إيران',away:'نيوزيلندا',hf:'🇮🇷',af:'🇳🇿',venue:'SoFi ستاديوم، إنجلوود',ko:'2026-06-16T01:00:00Z',stage:'دور المجموعات'},
-  {id:'m17',g:'I',home:'فرنسا',away:'السنغال',hf:'🇫🇷',af:'🇸🇳',venue:'ميتلايف ستاديوم، نيوجيرسي',ko:'2026-06-16T19:00:00Z',stage:'دور المجموعات'},
-  {id:'m18',g:'I',home:'العراق',away:'النرويج',hf:'🇮🇶',af:'🇳🇴',venue:'جيليت ستاديوم، فوكسبورو',ko:'2026-06-16T22:00:00Z',stage:'دور المجموعات'},
-  {id:'m19',g:'J',home:'الأرجنتين',away:'الجزائر',hf:'🇦🇷',af:'🇩🇿',venue:'أروهيد ستاديوم، كانساس سيتي',ko:'2026-06-17T01:00:00Z',stage:'دور المجموعات'},
-  {id:'m20',g:'J',home:'النمسا',away:'الأردن',hf:'🇦🇹',af:'🇯🇴',venue:'ليفايز ستاديوم، سانتا كلارا',ko:'2026-06-17T04:00:00Z',stage:'دور المجموعات'},
-  {id:'m21',g:'K',home:'البرتغال',away:'الكونغو الديمقراطية',hf:'🇵🇹',af:'🇨🇩',venue:'NRG ستاديوم، هيوستن',ko:'2026-06-17T17:00:00Z',stage:'دور المجموعات'},
-  {id:'m22',g:'L',home:'إنجلترا',away:'كرواتيا',hf:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',af:'🇭🇷',venue:'AT&T ستاديوم، أرلينجتون',ko:'2026-06-17T20:00:00Z',stage:'دور المجموعات'},
-  {id:'m23',g:'L',home:'غانا',away:'بنما',hf:'🇬🇭',af:'🇵🇦',venue:'BMO فيلد، تورنتو',ko:'2026-06-17T23:00:00Z',stage:'دور المجموعات'},
-  {id:'m24',g:'K',home:'أوزبكستان',away:'كولومبيا',hf:'🇺🇿',af:'🇨🇴',venue:'أستاديو أزتيكا، مكسيكو سيتي',ko:'2026-06-18T02:00:00Z',stage:'دور المجموعات'},
-  {id:'m25',g:'A',home:'التشيك',away:'جنوب أفريقيا',hf:'🇨🇿',af:'🇿🇦',venue:'مرسيدس-بنز ستاديوم، أتلانتا',ko:'2026-06-18T16:00:00Z',stage:'دور المجموعات'},
-  {id:'m26',g:'B',home:'سويسرا',away:'البوسنة والهرسك',hf:'🇨🇭',af:'🇧🇦',venue:'SoFi ستاديوم، إنجلوود',ko:'2026-06-18T19:00:00Z',stage:'دور المجموعات'},
-  {id:'m27',g:'B',home:'كندا',away:'قطر',hf:'🇨🇦',af:'🇶🇦',venue:'BC بليس، فانكوفر',ko:'2026-06-18T22:00:00Z',stage:'دور المجموعات'},
-  {id:'m28',g:'A',home:'المكسيك',away:'كوريا الجنوبية',hf:'🇲🇽',af:'🇰🇷',venue:'أستاديو أكرون، زاباوبان',ko:'2026-06-19T01:00:00Z',stage:'دور المجموعات'},
-  {id:'m29',g:'D',home:'الولايات المتحدة',away:'أستراليا',hf:'🇺🇸',af:'🇦🇺',venue:'لومن فيلد، سياتل',ko:'2026-06-19T19:00:00Z',stage:'دور المجموعات'},
-  {id:'m30',g:'C',home:'اسكتلندا',away:'المغرب',hf:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',af:'🇲🇦',venue:'جيليت ستاديوم، فوكسبورو',ko:'2026-06-19T22:00:00Z',stage:'دور المجموعات'},
-  {id:'m31',g:'C',home:'البرازيل',away:'هايتي',hf:'🇧🇷',af:'🇭🇹',venue:'لينكولن فاينانشيال، فيلادلفيا',ko:'2026-06-20T00:30:00Z',stage:'دور المجموعات'},
-  {id:'m32',g:'D',home:'تركيا',away:'باراجواي',hf:'🇹🇷',af:'🇵🇾',venue:'ليفايز ستاديوم، سانتا كلارا',ko:'2026-06-20T03:00:00Z',stage:'دور المجموعات'},
-  {id:'m33',g:'F',home:'هولندا',away:'السويد',hf:'🇳🇱',af:'🇸🇪',venue:'NRG ستاديوم، هيوستن',ko:'2026-06-20T17:00:00Z',stage:'دور المجموعات'},
-  {id:'m34',g:'E',home:'ألمانيا',away:'كوت ديفوار',hf:'🇩🇪',af:'🇨🇮',venue:'BMO فيلد، تورنتو',ko:'2026-06-20T20:00:00Z',stage:'دور المجموعات'},
-  {id:'m35',g:'E',home:'الإكوادور',away:'كوراساو',hf:'🇪🇨',af:'🇨🇼',venue:'أروهيد ستاديوم، كانساس سيتي',ko:'2026-06-21T00:00:00Z',stage:'دور المجموعات'},
-  {id:'m36',g:'F',home:'تونس',away:'اليابان',hf:'🇹🇳',af:'🇯🇵',venue:'أستاديو BBVA، مونتيري',ko:'2026-06-21T04:00:00Z',stage:'دور المجموعات'},
-  {id:'m37',g:'H',home:'إسبانيا',away:'السعودية',hf:'🇪🇸',af:'🇸🇦',venue:'مرسيدس-بنز ستاديوم، أتلانتا',ko:'2026-06-21T16:00:00Z',stage:'دور المجموعات'},
-  {id:'m38',g:'G',home:'بلجيكا',away:'إيران',hf:'🇧🇪',af:'🇮🇷',venue:'SoFi ستاديوم، إنجلوود',ko:'2026-06-21T19:00:00Z',stage:'دور المجموعات'},
-  {id:'m39',g:'H',home:'أوروغواي',away:'الرأس الأخضر',hf:'🇺🇾',af:'🇨🇻',venue:'هارد روك ستاديوم، ميامي',ko:'2026-06-21T22:00:00Z',stage:'دور المجموعات'},
-  {id:'m40',g:'G',home:'نيوزيلندا',away:'مصر',hf:'🇳🇿',af:'🇪🇬',venue:'BC بليس، فانكوفر',ko:'2026-06-22T01:00:00Z',stage:'دور المجموعات'},
-  {id:'m41',g:'J',home:'الأرجنتين',away:'النمسا',hf:'🇦🇷',af:'🇦🇹',venue:'AT&T ستاديوم، أرلينجتون',ko:'2026-06-22T17:00:00Z',stage:'دور المجموعات'},
-  {id:'m42',g:'I',home:'فرنسا',away:'العراق',hf:'🇫🇷',af:'🇮🇶',venue:'لينكولن فاينانشيال، فيلادلفيا',ko:'2026-06-22T21:00:00Z',stage:'دور المجموعات'},
-  {id:'m43',g:'I',home:'النرويج',away:'السنغال',hf:'🇳🇴',af:'🇸🇳',venue:'ميتلايف ستاديوم، نيوجيرسي',ko:'2026-06-23T00:00:00Z',stage:'دور المجموعات'},
-  {id:'m44',g:'J',home:'الأردن',away:'الجزائر',hf:'🇯🇴',af:'🇩🇿',venue:'ليفايز ستاديوم، سانتا كلارا',ko:'2026-06-23T03:00:00Z',stage:'دور المجموعات'},
-  {id:'m45',g:'K',home:'البرتغال',away:'أوزبكستان',hf:'🇵🇹',af:'🇺🇿',venue:'NRG ستاديوم، هيوستن',ko:'2026-06-23T17:00:00Z',stage:'دور المجموعات'},
-  {id:'m46',g:'L',home:'إنجلترا',away:'غانا',hf:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',af:'🇬🇭',venue:'جيليت ستاديوم، فوكسبورو',ko:'2026-06-23T20:00:00Z',stage:'دور المجموعات'},
-  {id:'m47',g:'L',home:'بنما',away:'كرواتيا',hf:'🇵🇦',af:'🇭🇷',venue:'BMO فيلد، تورنتو',ko:'2026-06-23T23:00:00Z',stage:'دور المجموعات'},
-  {id:'m48',g:'K',home:'كولومبيا',away:'الكونغو الديمقراطية',hf:'🇨🇴',af:'🇨🇩',venue:'أستاديو أكرون، زاباوبان',ko:'2026-06-24T02:00:00Z',stage:'دور المجموعات'},
-  {id:'m49',g:'B',home:'سويسرا',away:'كندا',hf:'🇨🇭',af:'🇨🇦',venue:'BC بليس، فانكوفر',ko:'2026-06-24T19:00:00Z',stage:'دور المجموعات'},
-  {id:'m50',g:'B',home:'البوسنة والهرسك',away:'قطر',hf:'🇧🇦',af:'🇶🇦',venue:'لومن فيلد، سياتل',ko:'2026-06-24T19:00:00Z',stage:'دور المجموعات'},
-  {id:'m51',g:'C',home:'اسكتلندا',away:'البرازيل',hf:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',af:'🇧🇷',venue:'هارد روك ستاديوم، ميامي',ko:'2026-06-24T22:00:00Z',stage:'دور المجموعات'},
-  {id:'m52',g:'C',home:'المغرب',away:'هايتي',hf:'🇲🇦',af:'🇭🇹',venue:'مرسيدس-بنز ستاديوم، أتلانتا',ko:'2026-06-24T22:00:00Z',stage:'دور المجموعات'},
-  {id:'m53',g:'A',home:'التشيك',away:'المكسيك',hf:'🇨🇿',af:'🇲🇽',venue:'أستاديو أزتيكا، مكسيكو سيتي',ko:'2026-06-25T01:00:00Z',stage:'دور المجموعات'},
-  {id:'m54',g:'A',home:'جنوب أفريقيا',away:'كوريا الجنوبية',hf:'🇿🇦',af:'🇰🇷',venue:'أستاديو BBVA، مونتيري',ko:'2026-06-25T01:00:00Z',stage:'دور المجموعات'},
-  {id:'m55',g:'E',home:'كوراساو',away:'كوت ديفوار',hf:'🇨🇼',af:'🇨🇮',venue:'لينكولن فاينانشيال، فيلادلفيا',ko:'2026-06-25T20:00:00Z',stage:'دور المجموعات'},
-  {id:'m56',g:'E',home:'الإكوادور',away:'ألمانيا',hf:'🇪🇨',af:'🇩🇪',venue:'ميتلايف ستاديوم، نيوجيرسي',ko:'2026-06-25T20:00:00Z',stage:'دور المجموعات'},
-  {id:'m57',g:'F',home:'اليابان',away:'السويد',hf:'🇯🇵',af:'🇸🇪',venue:'AT&T ستاديوم، أرلينجتون',ko:'2026-06-25T23:00:00Z',stage:'دور المجموعات'},
-  {id:'m58',g:'F',home:'تونس',away:'هولندا',hf:'🇹🇳',af:'🇳🇱',venue:'أروهيد ستاديوم، كانساس سيتي',ko:'2026-06-25T23:00:00Z',stage:'دور المجموعات'},
-  {id:'m59',g:'D',home:'تركيا',away:'الولايات المتحدة',hf:'🇹🇷',af:'🇺🇸',venue:'SoFi ستاديوم، إنجلوود',ko:'2026-06-26T02:00:00Z',stage:'دور المجموعات'},
-  {id:'m60',g:'D',home:'باراجواي',away:'أستراليا',hf:'🇵🇾',af:'🇦🇺',venue:'ليفايز ستاديوم، سانتا كلارا',ko:'2026-06-26T02:00:00Z',stage:'دور المجموعات'},
-  {id:'m61',g:'I',home:'النرويج',away:'فرنسا',hf:'🇳🇴',af:'🇫🇷',venue:'جيليت ستاديوم، فوكسبورو',ko:'2026-06-26T19:00:00Z',stage:'دور المجموعات'},
-  {id:'m62',g:'I',home:'السنغال',away:'العراق',hf:'🇸🇳',af:'🇮🇶',venue:'BMO فيلد، تورنتو',ko:'2026-06-26T19:00:00Z',stage:'دور المجموعات'},
-  {id:'m63',g:'H',home:'الرأس الأخضر',away:'السعودية',hf:'🇨🇻',af:'🇸🇦',venue:'NRG ستاديوم، هيوستن',ko:'2026-06-27T00:00:00Z',stage:'دور المجموعات'},
-  {id:'m64',g:'H',home:'أوروغواي',away:'إسبانيا',hf:'🇺🇾',af:'🇪🇸',venue:'أستاديو أكرون، زاباوبان',ko:'2026-06-27T00:00:00Z',stage:'دور المجموعات'},
-  {id:'m65',g:'G',home:'مصر',away:'إيران',hf:'🇪🇬',af:'🇮🇷',venue:'لومن فيلد، سياتل',ko:'2026-06-27T03:00:00Z',stage:'دور المجموعات'},
-  {id:'m66',g:'G',home:'نيوزيلندا',away:'بلجيكا',hf:'🇳🇿',af:'🇧🇪',venue:'BC بليس، فانكوفر',ko:'2026-06-27T03:00:00Z',stage:'دور المجموعات'},
-  {id:'m67',g:'L',home:'بنما',away:'إنجلترا',hf:'🇵🇦',af:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',venue:'ميتلايف ستاديوم، نيوجيرسي',ko:'2026-06-27T21:00:00Z',stage:'دور المجموعات'},
-  {id:'m68',g:'L',home:'كرواتيا',away:'غانا',hf:'🇭🇷',af:'🇬🇭',venue:'لينكولن فاينانشيال، فيلادلفيا',ko:'2026-06-27T21:00:00Z',stage:'دور المجموعات'},
-  {id:'m69',g:'K',home:'كولومبيا',away:'البرتغال',hf:'🇨🇴',af:'🇵🇹',venue:'هارد روك ستاديوم، ميامي',ko:'2026-06-27T23:30:00Z',stage:'دور المجموعات'},
-  {id:'m70',g:'K',home:'الكونغو الديمقراطية',away:'أوزبكستان',hf:'🇨🇩',af:'🇺🇿',venue:'مرسيدس-بنز ستاديوم، أتلانتا',ko:'2026-06-27T23:30:00Z',stage:'دور المجموعات'},
-  {id:'m71',g:'J',home:'الجزائر',away:'النمسا',hf:'🇩🇿',af:'🇦🇹',venue:'أروهيد ستاديوم، كانساس سيتي',ko:'2026-06-28T02:00:00Z',stage:'دور المجموعات'},
-  {id:'m72',g:'J',home:'الأردن',away:'الأرجنتين',hf:'🇯🇴',af:'🇦🇷',venue:'AT&T ستاديوم، أرلينجتون',ko:'2026-06-28T02:00:00Z',stage:'دور المجموعات'},
-  // ── دور الـ32 ──
-  {id:'r32_1',g:'',home:'جنوب أفريقيا',away:'كندا',hf:'🇿🇦',af:'🇨🇦',venue:'SoFi ستاديوم، إنجلوود',ko:'2026-06-28T19:00:00Z',stage:'دور الـ32'},
-  {id:'r32_2',g:'',home:'البرازيل',away:'اليابان',hf:'🇧🇷',af:'🇯🇵',venue:'NRG ستاديوم، هيوستن',ko:'2026-06-29T17:00:00Z',stage:'دور الـ32'},
-  {id:'r32_3',g:'',home:'ألمانيا',away:'باراغواي',hf:'🇩🇪',af:'🇵🇾',venue:'جيليت ستاديوم، فوكسبورو',ko:'2026-06-29T20:30:00Z',stage:'دور الـ32'},
-  {id:'r32_4',g:'',home:'هولندا',away:'المغرب',hf:'🇳🇱',af:'🇲🇦',venue:'أستاديو BBVA، مونتيري',ko:'2026-06-30T01:00:00Z',stage:'دور الـ32'},
-  {id:'r32_5',g:'',home:'كوت ديفوار',away:'النرويج',hf:'🇨🇮',af:'🇳🇴',venue:'AT&T ستاديوم، أرلينجتون',ko:'2026-06-30T17:00:00Z',stage:'دور الـ32'},
-  {id:'r32_6',g:'',home:'فرنسا',away:'السويد',hf:'🇫🇷',af:'🇸🇪',venue:'ميتلايف ستاديوم، نيوجيرسي',ko:'2026-06-30T21:00:00Z',stage:'دور الـ32'},
-  {id:'r32_7',g:'',home:'المكسيك',away:'الإكوادور',hf:'🇲🇽',af:'🇪🇨',venue:'أستاديو أزتيكا، مكسيكو سيتي',ko:'2026-07-01T01:00:00Z',stage:'دور الـ32'},
-  {id:'r32_8',g:'',home:'إنجلترا',away:'الكونغو الديمقراطية',hf:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',af:'🇨🇩',venue:'مرسيدس-بنز ستاديوم، أتلانتا',ko:'2026-07-01T16:00:00Z',stage:'دور الـ32'},
-  {id:'r32_9',g:'',home:'بلجيكا',away:'السنغال',hf:'🇧🇪',af:'🇸🇳',venue:'لومن فيلد، سياتل',ko:'2026-07-01T20:00:00Z',stage:'دور الـ32'},
-  {id:'r32_10',g:'',home:'الولايات المتحدة',away:'البوسنة والهرسك',hf:'🇺🇸',af:'🇧🇦',venue:'ليفايز ستاديوم، سانتا كلارا',ko:'2026-07-02T00:00:00Z',stage:'دور الـ32'},
-  {id:'r32_11',g:'',home:'إسبانيا',away:'النمسا',hf:'🇪🇸',af:'🇦🇹',venue:'SoFi ستاديوم، إنجلوود',ko:'2026-07-02T19:00:00Z',stage:'دور الـ32'},
-  {id:'r32_12',g:'',home:'البرتغال',away:'كرواتيا',hf:'🇵🇹',af:'🇭🇷',venue:'BMO فيلد، تورنتو',ko:'2026-07-02T23:00:00Z',stage:'دور الـ32'},
-  {id:'r32_13',g:'',home:'سويسرا',away:'الجزائر',hf:'🇨🇭',af:'🇩🇿',venue:'BC بليس، فانكوفر',ko:'2026-07-03T03:00:00Z',stage:'دور الـ32'},
-  {id:'r32_14',g:'',home:'أستراليا',away:'مصر',hf:'🇦🇺',af:'🇪🇬',venue:'AT&T ستاديوم، أرلينجتون',ko:'2026-07-03T18:00:00Z',stage:'دور الـ32'},
-  {id:'r32_15',g:'',home:'الأرجنتين',away:'الرأس الأخضر',hf:'🇦🇷',af:'🇨🇻',venue:'هارد روك ستاديوم، ميامي',ko:'2026-07-03T22:00:00Z',stage:'دور الـ32'},
-  {id:'r32_16',g:'',home:'كولومبيا',away:'غانا',hf:'🇨🇴',af:'🇬🇭',venue:'أروهيد ستاديوم، كانساس سيتي',ko:'2026-07-04T01:30:00Z',stage:'دور الـ32'},
-  // ── دور الـ16 ──
-  {id:'r16_1',g:'',home:'فائز م73',away:'فائز م75',hf:'⚽',af:'⚽',venue:'NRG ستاديوم، هيوستن',ko:'2026-07-04T17:00:00Z',stage:'دور الـ16'},
-  {id:'r16_2',g:'',home:'فائز م74',away:'فائز م77',hf:'⚽',af:'⚽',venue:'لينكولن فاينانشيال، فيلادلفيا',ko:'2026-07-04T21:00:00Z',stage:'دور الـ16'},
-  {id:'r16_3',g:'',home:'فائز م76',away:'فائز م78',hf:'⚽',af:'⚽',venue:'ميتلايف ستاديوم، نيوجيرسي',ko:'2026-07-05T20:00:00Z',stage:'دور الـ16'},
-  {id:'r16_4',g:'',home:'فائز م79',away:'فائز م80',hf:'⚽',af:'⚽',venue:'أستاديو أزتيكا، مكسيكو سيتي',ko:'2026-07-06T00:00:00Z',stage:'دور الـ16'},
-  {id:'r16_5',g:'',home:'فائز م83',away:'فائز م84',hf:'⚽',af:'⚽',venue:'AT&T ستاديوم، أرلينجتون',ko:'2026-07-06T19:00:00Z',stage:'دور الـ16'},
-  {id:'r16_6',g:'',home:'فائز م81',away:'فائز م82',hf:'⚽',af:'⚽',venue:'لومن فيلد، سياتل',ko:'2026-07-07T00:00:00Z',stage:'دور الـ16'},
-  {id:'r16_7',g:'',home:'فائز م86',away:'فائز م88',hf:'⚽',af:'⚽',venue:'مرسيدس-بنز ستاديوم، أتلانتا',ko:'2026-07-07T16:00:00Z',stage:'دور الـ16'},
-  {id:'r16_8',g:'',home:'فائز م85',away:'فائز م87',hf:'⚽',af:'⚽',venue:'BC بليس، فانكوفر',ko:'2026-07-07T20:00:00Z',stage:'دور الـ16'},
-  // ── ربع النهائي ──
-  {id:'qf1',g:'',home:'فائز ر16-89',away:'فائز ر16-90',hf:'⚽',af:'⚽',venue:'جيليت ستاديوم، فوكسبورو',ko:'2026-07-09T20:00:00Z',stage:'ربع النهائي'},
-  {id:'qf2',g:'',home:'فائز ر16-93',away:'فائز ر16-94',hf:'⚽',af:'⚽',venue:'SoFi ستاديوم، إنجلوود',ko:'2026-07-10T19:00:00Z',stage:'ربع النهائي'},
-  {id:'qf3',g:'',home:'فائز ر16-91',away:'فائز ر16-92',hf:'⚽',af:'⚽',venue:'هارد روك ستاديوم، ميامي',ko:'2026-07-11T21:00:00Z',stage:'ربع النهائي'},
-  {id:'qf4',g:'',home:'فائز ر16-95',away:'فائز ر16-96',hf:'⚽',af:'⚽',venue:'أروهيد ستاديوم، كانساس سيتي',ko:'2026-07-12T01:00:00Z',stage:'ربع النهائي'},
-  // ── نصف النهائي ──
-  {id:'sf1',g:'',home:'فائز ربع 97',away:'فائز ربع 98',hf:'⚽',af:'⚽',venue:'AT&T ستاديوم، أرلينجتون',ko:'2026-07-14T19:00:00Z',stage:'نصف النهائي'},
-  {id:'sf2',g:'',home:'فائز ربع 99',away:'فائز ربع 100',hf:'⚽',af:'⚽',venue:'مرسيدس-بنز ستاديوم، أتلانتا',ko:'2026-07-15T19:00:00Z',stage:'نصف النهائي'},
-  // ── المركز الثالث ──
-  {id:'tp',g:'',home:'خاسر نهائي 1',away:'خاسر نهائي 2',hf:'⚽',af:'⚽',venue:'هارد روك ستاديوم، ميامي',ko:'2026-07-18T21:00:00Z',stage:'المركز الثالث'},
-  // ── النهائي ──
-  {id:'final',g:'',home:'فائز نهائي 1',away:'فائز نهائي 2',hf:'🏆',af:'🏆',venue:'ميتلايف ستاديوم، نيوجيرسي',ko:'2026-07-19T19:00:00Z',stage:'النهائي'},
+  // ══ الجولة 1 — الجمعة 21 أغسطس إلى الاثنين 24 أغسطس 2026 ══
+  {id:'w1_1',g:'',home:'أرسنال',away:'كوفنتري سيتي',hf:'ARS',af:'COV',venue:'ملعب الإمارات، لندن',ko:'2026-08-21T19:00:00Z',stage:'الجولة 1'},
+  {id:'w1_2',g:'',home:'هال سيتي',away:'مانشستر يونايتد',hf:'HUL',af:'MUN',venue:'MKM ستاديوم، هال',ko:'2026-08-22T11:30:00Z',stage:'الجولة 1'},
+  {id:'w1_3',g:'',home:'إيفرتون',away:'كريستال بالاس',hf:'EVE',af:'CRY',venue:'هيل ديكنسون ستاديوم، ليفربول',ko:'2026-08-22T14:00:00Z',stage:'الجولة 1'},
+  {id:'w1_4',g:'',home:'إبسويتش تاون',away:'سندرلاند',hf:'IPS',af:'SUN',venue:'بورتمان رود، إبسويتش',ko:'2026-08-22T14:00:00Z',stage:'الجولة 1'},
+  {id:'w1_5',g:'',home:'نوتينغهام فورست',away:'ليدز يونايتد',hf:'NFO',af:'LEE',venue:'سيتي جراوند، نوتينغهام',ko:'2026-08-22T14:00:00Z',stage:'الجولة 1'},
+  {id:'w1_6',g:'',home:'برينتفورد',away:'توتنهام هوتسبير',hf:'BRE',af:'TOT',venue:'جيتك كوميونيتي ستاديوم، لندن',ko:'2026-08-22T16:30:00Z',stage:'الجولة 1'},
+  {id:'w1_7',g:'',home:'برايتون',away:'أستون فيلا',hf:'BHA',af:'AVL',venue:'أمكس ستاديوم، برايتون',ko:'2026-08-23T13:00:00Z',stage:'الجولة 1'},
+  {id:'w1_8',g:'',home:'مانشستر سيتي',away:'بورنموث',hf:'MCI',af:'BOU',venue:'الاتحاد، مانشستر',ko:'2026-08-23T13:00:00Z',stage:'الجولة 1'},
+  {id:'w1_9',g:'',home:'نيوكاسل يونايتد',away:'ليفربول',hf:'NEW',af:'LIV',venue:'سانت جيمس بارك، نيوكاسل',ko:'2026-08-23T15:30:00Z',stage:'الجولة 1'},
+  {id:'w1_10',g:'',home:'فولهام',away:'تشيلسي',hf:'FUL',af:'CHE',venue:'كرافن كوتيج، لندن',ko:'2026-08-24T19:00:00Z',stage:'الجولة 1'},
+  // ══ الجولة 2 — الجمعة 28 أغسطس إلى الاثنين 31 أغسطس 2026 ══
+  {id:'w2_1',g:'',home:'كريستال بالاس',away:'مانشستر سيتي',hf:'CRY',af:'MCI',venue:'سيلهيرست بارك، لندن',ko:'2026-08-28T19:00:00Z',stage:'الجولة 2'},
+  {id:'w2_2',g:'',home:'ليفربول',away:'نوتينغهام فورست',hf:'LIV',af:'NFO',venue:'أنفيلد، ليفربول',ko:'2026-08-29T11:30:00Z',stage:'الجولة 2'},
+  {id:'w2_3',g:'',home:'بورنموث',away:'إيفرتون',hf:'BOU',af:'EVE',venue:'فيتاليتي ستاديوم، بورنموث',ko:'2026-08-29T14:00:00Z',stage:'الجولة 2'},
+  {id:'w2_4',g:'',home:'كوفنتري سيتي',away:'هال سيتي',hf:'COV',af:'HUL',venue:'كوفنتري بيلدنغ سوسايتي أرينا، كوفنتري',ko:'2026-08-29T14:00:00Z',stage:'الجولة 2'},
+  {id:'w2_5',g:'',home:'توتنهام هوتسبير',away:'نيوكاسل يونايتد',hf:'TOT',af:'NEW',venue:'ملعب توتنهام هوتسبير، لندن',ko:'2026-08-29T16:30:00Z',stage:'الجولة 2'},
+  {id:'w2_6',g:'',home:'تشيلسي',away:'برايتون',hf:'CHE',af:'BHA',venue:'ستامفورد بريدج، لندن',ko:'2026-08-30T13:00:00Z',stage:'الجولة 2'},
+  {id:'w2_7',g:'',home:'ليدز يونايتد',away:'برينتفورد',hf:'LEE',af:'BRE',venue:'إيلاند رود، ليدز',ko:'2026-08-30T13:00:00Z',stage:'الجولة 2'},
+  {id:'w2_8',g:'',home:'سندرلاند',away:'فولهام',hf:'SUN',af:'FUL',venue:'ستاديوم أوف لايت، سندرلاند',ko:'2026-08-30T13:00:00Z',stage:'الجولة 2'},
+  {id:'w2_9',g:'',home:'مانشستر يونايتد',away:'إبسويتش تاون',hf:'MUN',af:'IPS',venue:'أولد ترافورد، مانشستر',ko:'2026-08-30T15:30:00Z',stage:'الجولة 2'},
+  {id:'w2_10',g:'',home:'أستون فيلا',away:'أرسنال',hf:'AVL',af:'ARS',venue:'فيلا بارك، برمنغهام',ko:'2026-08-31T19:00:00Z',stage:'الجولة 2'},
+  // ══ الجولة 3 — السبت 5 سبتمبر 2026 ══
+  {id:'w3_1',g:'',home:'أرسنال',away:'تشيلسي',hf:'ARS',af:'CHE',venue:'ملعب الإمارات، لندن',ko:'2026-09-05T14:00:00Z',stage:'الجولة 3'},
+  {id:'w3_2',g:'',home:'برينتفورد',away:'سندرلاند',hf:'BRE',af:'SUN',venue:'جيتك كوميونيتي ستاديوم، لندن',ko:'2026-09-05T14:00:00Z',stage:'الجولة 3'},
+  {id:'w3_3',g:'',home:'برايتون',away:'ليدز يونايتد',hf:'BHA',af:'LEE',venue:'أمكس ستاديوم، برايتون',ko:'2026-09-05T14:00:00Z',stage:'الجولة 3'},
+  {id:'w3_4',g:'',home:'إيفرتون',away:'مانشستر يونايتد',hf:'EVE',af:'MUN',venue:'هيل ديكنسون ستاديوم، ليفربول',ko:'2026-09-05T14:00:00Z',stage:'الجولة 3'},
+  {id:'w3_5',g:'',home:'فولهام',away:'كريستال بالاس',hf:'FUL',af:'CRY',venue:'كرافن كوتيج، لندن',ko:'2026-09-05T14:00:00Z',stage:'الجولة 3'},
+  {id:'w3_6',g:'',home:'هال سيتي',away:'أستون فيلا',hf:'HUL',af:'AVL',venue:'MKM ستاديوم، هال',ko:'2026-09-05T14:00:00Z',stage:'الجولة 3'},
+  {id:'w3_7',g:'',home:'إبسويتش تاون',away:'ليفربول',hf:'IPS',af:'LIV',venue:'بورتمان رود، إبسويتش',ko:'2026-09-05T14:00:00Z',stage:'الجولة 3'},
+  {id:'w3_8',g:'',home:'مانشستر سيتي',away:'كوفنتري سيتي',hf:'MCI',af:'COV',venue:'الاتحاد، مانشستر',ko:'2026-09-05T14:00:00Z',stage:'الجولة 3'},
+  {id:'w3_9',g:'',home:'نيوكاسل يونايتد',away:'بورنموث',hf:'NEW',af:'BOU',venue:'سانت جيمس بارك، نيوكاسل',ko:'2026-09-05T14:00:00Z',stage:'الجولة 3'},
+  {id:'w3_10',g:'',home:'نوتينغهام فورست',away:'توتنهام هوتسبير',hf:'NFO',af:'TOT',venue:'سيتي جراوند، نوتينغهام',ko:'2026-09-05T14:00:00Z',stage:'الجولة 3'},
 ];
 
 // ════════════════════════════════════════════
@@ -836,7 +751,8 @@ function formatTime(iso){ const d=mkt(iso); return `${String(d.getUTCHours()).pa
 function outcome(h,a){ return h>a?'h':a>h?'a':'d'; }
 function pts(pred,res){ if(!res||!pred)return null; const ph=+pred.h,pa=+pred.a; if(ph===res.h&&pa===res.a)return 3; if(outcome(ph,pa)===outcome(res.h,res.a))return 1; return 0; }
 // مباراة إقصائية؟ (كل ما ليس دور المجموعات)
-function isKnockout(m){ return m && m.stage && m.stage!=='دور المجموعات'; }
+// الدوري الإنجليزي نظام دوري بلا إقصاء — لا وجود لأشواط إضافية أو ترجيح
+function isKnockout(m){ return false; }
 // خريطة تأهل دور الـ32 → دور الـ16 (حسب bracket فيفا الرسمي)
 // كل مباراة r32 → [مباراة r16 الهدف، الموضع 'home'/'away']
 const BRACKET_R32_TO_R16 = {
@@ -976,23 +892,23 @@ function pointsBreakdown(m,pred,res){
   }
   return steps;
 }
-// قائمة كل المنتخبات المشاركة (مرتبة أبجدياً) مع علم كل منتخب
+// قائمة كل الفرق المشاركة (مرتبة أبجدياً) مع رمز كل فريق
 function allTeams(){
   const map={};
-  MATCHES.forEach(m=>{ if(m.stage==='دور المجموعات'){ if(!map[m.home])map[m.home]=m.hf; if(!map[m.away])map[m.away]=m.af; } });
+  MATCHES.forEach(m=>{ if(!map[m.home])map[m.home]=m.hf; if(!map[m.away])map[m.away]=m.af; });
   return Object.keys(map).sort((a,b)=>a.localeCompare(b,'ar')).map(name=>({name,flag:map[name]}));
 }
-// آخر موعد لتوقعات البطولة = آخر مباراة في دور المجموعات
+// آخر موعد لتوقعات البطولة (توقع البطل/الهداف) — موسم الدوري طويل، فالموعد ثابت يحدّده المشرف
+// افتراضياً: بداية نوفمبر 2026 (حوالي الجولة العاشرة)، ويمكن تعديله لاحقاً بسهولة
 function tourneyDeadline(){
-  const groupMatches=MATCHES.filter(m=>m.stage==='دور المجموعات');
-  if(!groupMatches.length) return null;
-  return groupMatches.reduce((max,m)=> new Date(m.ko)>new Date(max)?m.ko:max, groupMatches[0].ko);
+  return '2026-11-01T00:00:00Z';
 }
-// هل أُغلق باب توقعات البطولة؟ (بدأت آخر مباراة مجموعات)
+// هل أُغلق باب توقعات البطولة؟
 function tourneyClosed(){
   const dl=tourneyDeadline(); if(!dl) return false;
   return now() >= new Date(dl);
 }
+
 
 // نقاط توقعات البطولة: البطل 10، طرفا النهائي (تطابق الاثنين) 5، الهداف 5
 function tourneyPts(u){
@@ -1002,11 +918,8 @@ function tourneyPts(u){
   const norm=x=>normName(x);
   // البطل
   if(t.champion&&r.champion&&norm(t.champion)===norm(r.champion)) s+=10;
-  // طرفا النهائي: يجب تطابق المنتخبين معاً (بأي ترتيب)
-  if(t.finalists&&r.finalists&&Array.isArray(t.finalists)&&Array.isArray(r.finalists)){
-    const tf=t.finalists.map(norm).sort(), rf=r.finalists.map(norm).sort();
-    if(tf.length===2&&rf.length===2&&tf[0]===rf[0]&&tf[1]===rf[1]) s+=5;
-  }
+  // الوصيف (ثاني الترتيب)
+  if(t.runnerup&&r.runnerup&&norm(t.runnerup)===norm(r.runnerup)) s+=5;
   // الهداف
   if(t.topscorer&&r.topscorer&&(norm(t.topscorer).includes(norm(r.topscorer))||norm(r.topscorer).includes(norm(t.topscorer)))) s+=5;
   return s;
@@ -1119,7 +1032,7 @@ function buildTourneyCard(){
   const myT=DB.tourneyPreds[u]||null;
   const locked = closed || (myT&&myT.locked);
   const teams=allTeams();
-  const teamOpts=(sel)=>`<option value="">— اختر منتخباً —</option>`+teams.map(t=>`<option value="${t.name}" ${sel===t.name?'selected':''}>${t.flag} ${t.name}</option>`).join('');
+  const teamOpts=(sel)=>`<option value="">— اختر فريقاً —</option>`+teams.map(t=>`<option value="${t.name}" ${sel===t.name?'selected':''}>${t.flag} ${t.name}</option>`).join('');
 
   const details=document.createElement('details');
   details.className='tourney-card';
@@ -1133,36 +1046,33 @@ function buildTourneyCard(){
   if(locked && myT){
     const res=DB.tourneyResults;
     const champRight = res&&res.champion&&normName(res.champion)===normName(myT.champion||'');
-    const finRight = res&&res.finalists&&myT.finalists&&(()=>{ const a=(myT.finalists||[]).map(normName).sort(),b=(res.finalists||[]).map(normName).sort(); return a.length===2&&b.length===2&&a[0]===b[0]&&a[1]===b[1]; })();
+    const runnerRight = res&&res.runnerup&&myT.runnerup&&normName(res.runnerup)===normName(myT.runnerup);
     const scRight = res&&res.topscorer&&myT.topscorer&&(normName(myT.topscorer).includes(normName(res.topscorer))||normName(res.topscorer).includes(normName(myT.topscorer)));
-    summaryLabel='🏆 توقعات البطولة 🔒';
+    summaryLabel='🏆 توقعات الموسم 🔒';
     bodyHTML=`
       <div class="tourney-locked-row"><span>🏆 البطل:</span> <b>${myT.champion||'—'}</b> ${res?(champRight?'<span class="t-correct">✓ +10</span>':'<span class="t-wrong">✗</span>'):''}</div>
-      <div class="tourney-locked-row"><span>⚔️ طرفا النهائي:</span> <b>${(myT.finalists||[]).join(' و ')||'—'}</b> ${res?(finRight?'<span class="t-correct">✓ +5</span>':'<span class="t-wrong">✗</span>'):''}</div>
-      <div class="tourney-locked-row"><span>⚽ الهداف:</span> <b>${myT.topscorer||'—'}</b> ${res?(scRight?'<span class="t-correct">✓ +5</span>':'<span class="t-wrong">✗</span>'):''}</div>`;
+      <div class="tourney-locked-row"><span>🥈 الوصيف:</span> <b>${myT.runnerup||'—'}</b> ${res?(runnerRight?'<span class="t-correct">✓ +5</span>':'<span class="t-wrong">✗</span>'):''}</div>
+      <div class="tourney-locked-row"><span>⚽ هداف الدوري:</span> <b>${myT.topscorer||'—'}</b> ${res?(scRight?'<span class="t-correct">✓ +5</span>':'<span class="t-wrong">✗</span>'):''}</div>`;
   }
   // إذا أُغلق الباب ولم يتوقّع
   else if(closed && !myT){
-    summaryLabel='🏆 توقعات البطولة 🔒';
-    bodyHTML=`<div style="font-size:.82rem;color:var(--muted);text-align:center;padding:8px">انتهى وقت توقعات البطولة (أُغلقت بنهاية دور المجموعات).</div>`;
+    summaryLabel='🏆 توقعات الموسم 🔒';
+    bodyHTML=`<div style="font-size:.82rem;color:var(--muted);text-align:center;padding:8px">انتهى وقت توقعات الموسم.</div>`;
   }
   // نموذج الإدخال (مفتوح)
   else {
     bodyHTML=`
-      <div class="tourney-note">توقّع مرة واحدة فقط · يُقفل نهائياً بعد الحفظ · آخر موعد: نهاية دور المجموعات</div>
+      <div class="tourney-note">توقّع مرة واحدة فقط · يُقفل نهائياً بعد الحفظ · يمكنك التوقع في أي وقت قبل الموعد النهائي</div>
       <div class="tourney-field">
-        <label>🏆 بطل كأس العالم <span class="t-pts">10 نقاط</span></label>
+        <label>🏆 بطل الدوري الإنجليزي <span class="t-pts">10 نقاط</span></label>
         <select id="t-champion">${teamOpts(myT?.champion)}</select>
       </div>
       <div class="tourney-field">
-        <label>⚔️ طرفا النهائي <span class="t-pts">5 نقاط (يجب تطابق الاثنين)</span></label>
-        <div style="display:flex;gap:8px">
-          <select id="t-final1" style="flex:1">${teamOpts(myT?.finalists?.[0])}</select>
-          <select id="t-final2" style="flex:1">${teamOpts(myT?.finalists?.[1])}</select>
-        </div>
+        <label>🥈 وصيف الدوري <span class="t-pts">5 نقاط</span></label>
+        <select id="t-runnerup">${teamOpts(myT?.runnerup)}</select>
       </div>
       <div class="tourney-field">
-        <label>⚽ هداف كأس العالم <span class="t-pts">5 نقاط</span></label>
+        <label>⚽ هداف الدوري <span class="t-pts">5 نقاط</span></label>
         <input id="t-scorer" value="${myT?.topscorer||''}" placeholder="اسم اللاعب">
       </div>
       <button class="tourney-save" onclick="saveTourney()">🔒 حفظ وإقفال توقعاتي</button>`;
@@ -1175,15 +1085,15 @@ function buildTourneyCard(){
 async function saveTourney(){
   const u=currentUser.username;
   const champion=document.getElementById('t-champion').value;
-  const f1=document.getElementById('t-final1').value;
+  const runnerup=document.getElementById('t-runnerup').value;
   const f2=document.getElementById('t-final2').value;
   const topscorer=document.getElementById('t-scorer').value.trim();
-  if(!champion||!f1||!f2||!topscorer){ toast('⚠️ أكمل جميع التوقعات الثلاثة'); return; }
-  if(f1===f2){ toast('⚠️ اختر منتخبين مختلفين لطرفي النهائي'); return; }
+  if(!champion||!runnerup||!topscorer){ toast('⚠️ أكمل جميع التوقعات الثلاثة'); return; }
+  if(champion===runnerup){ toast('⚠️ اختر فريقين مختلفين للبطل والوصيف'); return; }
   if(!confirm('⚠️ تأكيد التوقعات؟ لا يمكن تعديلها بعد الحفظ!')) return;
-  DB.tourneyPreds[u]={champion, finalists:[f1,f2], topscorer, locked:true, at:Date.now()};
+  DB.tourneyPreds[u]={champion, runnerup, topscorer, locked:true, at:Date.now()};
   const ok=await saveTourneyPred(u);
-  if(ok){ toast('🏆 تم حفظ وإقفال توقعات البطولة'); renderMatches(); renderLeaderboard(); }
+  if(ok){ toast('🏆 تم حفظ وإقفال توقعات الموسم'); renderMatches(); renderLeaderboard(); }
   else { toast('⚠️ تعذّر الحفظ'); delete DB.tourneyPreds[u]; }
 }
 
@@ -1194,7 +1104,7 @@ function renderMatches(){
     const tc=buildTourneyCard();
     if(tc) c.appendChild(tc);
   }
-  const icons={'دور المجموعات':'⚽','دور الـ32':'⚔️','دور الـ16':'🏆','ربع النهائي':'🌟','نصف النهائي':'🔥','المركز الثالث':'🥉','النهائي':'🏆'};
+  const iconFor=(stage)=> stage&&stage.startsWith('الجولة') ? '⚽' : '🏆';
 
   // تقسيم: المباريات المنتهية على حدة، والباقي (قادمة/مفتوحة/قريباً) على حدة
   const upcoming=[], finished=[];
@@ -1216,7 +1126,7 @@ function renderMatches(){
     }
     let lastStage='';
     dayList.forEach(day=>{
-      if(day.stage!==lastStage){ const s=document.createElement('div'); s.className='stage-title'; s.innerHTML=`${icons[day.stage]||'⚽'} ${day.stage}`; container.appendChild(s); lastStage=day.stage; }
+      if(day.stage!==lastStage){ const s=document.createElement('div'); s.className='stage-title'; s.innerHTML=`${iconFor(day.stage)} ${day.stage}`; container.appendChild(s); lastStage=day.stage; }
       const sec=document.createElement('div'); sec.className='day-section';
       sec.innerHTML=`<div class="day-header"><span>📅</span><h3>${day.date}</h3></div>`;
       day.ms.forEach(m=>sec.appendChild(buildCard(m)));
@@ -1485,11 +1395,13 @@ function openProfile(username){
   const byStage={};
   visible.forEach(([id,pred])=>{ const m=MATCHES.find(x=>x.id===id); if(!m)return; if(!byStage[m.stage])byStage[m.stage]=[]; byStage[m.stage].push({m,pred}); });
 
-  const order=['دور المجموعات','دور الـ32','دور الـ16','ربع النهائي','نصف النهائي','المركز الثالث','النهائي'];
+  // ترتيب المراحل: الجولات مرتبة رقمياً (الأحدث أولاً) ليرى المشارك أحدث مبارياته أولاً
+  const stagesOrdered=Object.keys(byStage).sort((a,b)=>{
+    const na=parseInt((a.match(/\d+/)||[0])[0]), nb=parseInt((b.match(/\d+/)||[0])[0]);
+    return nb-na;
+  });
   let html='';
   if(isAdmin && !isMe){ html+=`<div style="padding:8px 12px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.3);border-radius:8px;font-size:.78rem;color:#c4b5fd;margin-bottom:12px">🛡️ عرض المشرف — جميع التوقعات مرئية لك بما فيها المباريات القادمة</div>`; }
-  // ترتيب المراحل من الأحدث (النهائي) إلى الأقدم (المجموعات) ليرى المشارك أحدث مبارياته أولاً
-  const stagesOrdered=[...order.filter(s=>byStage[s]),...Object.keys(byStage).filter(s=>!order.includes(s))].reverse();
   stagesOrdered.forEach(stage=>{
     html+=`<div class="d-stage">${stage}</div>`;
     // داخل كل مرحلة: الأحدث انتهاءً أولاً
@@ -1680,25 +1592,22 @@ function renderAdminTourney(){
   const teamOpts=(sel)=>`<option value="">—</option>`+teams.map(t=>`<option value="${t.name}" ${sel===t.name?'selected':''}>${t.flag} ${t.name}</option>`).join('');
   const count=Object.keys(DB.tourneyPreds||{}).length;
   document.getElementById('admin-tourney').innerHTML=`
-    <div style="font-size:.78rem;color:var(--muted);margin-bottom:10px">${count} مشارك أدخل توقعات البطولة · أدخل النتائج النهائية لاحتساب النقاط</div>
+    <div style="font-size:.78rem;color:var(--muted);margin-bottom:10px">${count} مشارك أدخل توقعات الموسم · أدخل النتائج النهائية بعد انتهاء الموسم لاحتساب النقاط</div>
     <label class="admin-t-label">🏆 البطل</label>
     <select id="r-champion" class="admin-t-inp">${teamOpts(r.champion)}</select>
-    <label class="admin-t-label">⚔️ طرفا النهائي</label>
-    <div style="display:flex;gap:8px;margin-bottom:8px">
-      <select id="r-final1" class="admin-t-inp" style="margin:0">${teamOpts(r.finalists?.[0])}</select>
-      <select id="r-final2" class="admin-t-inp" style="margin:0">${teamOpts(r.finalists?.[1])}</select>
-    </div>
+    <label class="admin-t-label">🥈 الوصيف</label>
+    <select id="r-runnerup" class="admin-t-inp">${teamOpts(r.runnerup)}</select>
     <label class="admin-t-label">⚽ الهداف</label>
     <input id="r-scorer" class="admin-t-inp" value="${r.topscorer||''}" placeholder="اسم الهداف">
-    <button class="btn-admin" onclick="saveTourneyRes()" style="width:100%;margin-top:6px">حفظ نتائج البطولة 🏆</button>`;
+    <button class="btn-admin" onclick="saveTourneyRes()" style="width:100%;margin-top:6px">حفظ نتائج الموسم 🏆</button>`;
 }
 async function saveTourneyRes(){
   const champion=document.getElementById('r-champion').value;
-  const f1=document.getElementById('r-final1').value, f2=document.getElementById('r-final2').value;
+  const runnerup=document.getElementById('r-runnerup').value;
   const topscorer=document.getElementById('r-scorer').value.trim();
-  DB.tourneyResults={champion:champion||null, finalists:(f1&&f2)?[f1,f2]:null, topscorer:topscorer||null};
+  DB.tourneyResults={champion:champion||null, runnerup:runnerup||null, topscorer:topscorer||null};
   const ok=await saveTourneyResults();
-  if(ok){ toast('🏆 تم حفظ نتائج البطولة'); renderAdmin(); renderMatches(); renderLeaderboard(); }
+  if(ok){ toast('🏆 تم حفظ نتائج الموسم'); renderAdmin(); renderMatches(); renderLeaderboard(); }
   else toast('⚠️ تعذّر الحفظ');
 }
 
@@ -1885,76 +1794,12 @@ function updateLiveUI(){
 }
 
 // ════════════════════════════════════════════
-// قوائم المنتخبات الرسمية لكأس العالم 2026
-// المصدر: القوائم النهائية المعتمدة (26 لاعباً لكل منتخب)
-// تُضاف المنتخبات تدريجياً — أي منتخب غير موجود يظهر "قريباً"
+// قوائم فرق الدوري الإنجليزي الممتاز 2026-27
+// تُضاف الفرق تدريجياً — أي فريق غير موجود يظهر "قريباً"
 // ════════════════════════════════════════════
 const SQUADS = {
-  'الأرجنتين': {
-    coach: 'ليونيل سكالوني',
-    colors: { home: 'أزرق سماوي/أبيض', away: 'أزرق داكن' },
-    players: [
-      {n:'إيميليانو مارتينيز', pos:'حارس', club:'أستون فيلا'},
-      {n:'خوان موسو', pos:'حارس', club:'أتلتيكو مدريد'},
-      {n:'جيرونيمو رولي', pos:'حارس', club:'مارسيليا'},
-      {n:'ليوناردو باليردي', pos:'مدافع', club:'مارسيليا'},
-      {n:'ليساندرو مارتينيز', pos:'مدافع', club:'مانشستر يونايتد'},
-      {n:'فاكوندو مدينة', pos:'مدافع', club:'مارسيليا'},
-      {n:'ناهويل مولينا', pos:'مدافع', club:'أتلتيكو مدريد'},
-      {n:'غونزالو مونتيل', pos:'مدافع', club:'ريفر بليت'},
-      {n:'نيكولاس أوتامندي', pos:'مدافع', club:'بنفيكا'},
-      {n:'كريستيان روميرو', pos:'مدافع', club:'توتنهام'},
-      {n:'نيكولاس تاغليافيكو', pos:'مدافع', club:'ليون'},
-      {n:'فالنتين باركو', pos:'وسط', club:'ستراسبورغ'},
-      {n:'رودريغو دي بول', pos:'وسط', club:'إنتر ميامي'},
-      {n:'إنزو فرنانديز', pos:'وسط', club:'تشيلسي'},
-      {n:'جيوفاني لو سيلسو', pos:'وسط', club:'ريال بيتيس'},
-      {n:'أليكسيس ماك أليستر', pos:'وسط', club:'ليفربول'},
-      {n:'إكسيكيل بالاسيوس', pos:'وسط', club:'باير ليفركوزن'},
-      {n:'ليандرو باريديس', pos:'وسط', club:'بوكا جونيورز'},
-      {n:'نيكولاس غونزاليز', pos:'وسط', club:'أتلتيكو مدريد'},
-      {n:'تياغو ألمادا', pos:'مهاجم', club:'أتلتيكو مدريد'},
-      {n:'خوليان ألفاريز', pos:'مهاجم', club:'أتلتيكو مدريد'},
-      {n:'خوسيه مانويل لوبيز', pos:'مهاجم', club:'بالميراس'},
-      {n:'لاوتارو مارتينيز', pos:'مهاجم', club:'إنتر ميلان'},
-      {n:'ليونيل ميسي', pos:'مهاجم', club:'إنتر ميامي'},
-      {n:'نيكو باز', pos:'مهاجم', club:'كومو'},
-      {n:'جوليانو سيميوني', pos:'مهاجم', club:'أتلتيكو مدريد'},
-    ]
-  },
-  'البرازيل': {
-    coach: 'كارلو أنشيلوتي',
-    colors: { home: 'أصفر/أخضر', away: 'أزرق' },
-    players: [
-      {n:'أليسون بيكر', pos:'حارس', club:'ليفربول'},
-      {n:'إيدرسون', pos:'حارس', club:'فنربخشة'},
-      {n:'ويفيرتون', pos:'حارس', club:'غريميو'},
-      {n:'ماركينيوس', pos:'مدافع', club:'باريس سان جيرمان'},
-      {n:'دانيلو', pos:'مدافع', club:'فلامنغو'},
-      {n:'أليكس ساندرو', pos:'مدافع', club:'فلامنغو'},
-      {n:'غابرييل ماغالهايش', pos:'مدافع', club:'أرسنال'},
-      {n:'بريمر', pos:'مدافع', club:'يوفنتوس'},
-      {n:'روجر إيبانيز', pos:'مدافع', club:'الأهلي'},
-      {n:'دوغلاس سانتوس', pos:'مدافع', club:'زينيت'},
-      {n:'ليو بيريرا', pos:'مدافع', club:'فلامنغو'},
-      {n:'كاسيميرو', pos:'وسط', club:'مانشستر يونايتد'},
-      {n:'إيدرسون', pos:'وسط', club:'أتالانتا'},
-      {n:'لوكاس باكيتا', pos:'وسط', club:'فلامنغو'},
-      {n:'برونو غيمارايش', pos:'وسط', club:'نيوكاسل'},
-      {n:'فابينيو', pos:'وسط', club:'الاتحاد'},
-      {n:'دانيلو', pos:'وسط', club:'بوتافوغو'},
-      {n:'نيمار', pos:'مهاجم', club:'سانتوس'},
-      {n:'فينيسيوس جونيور', pos:'مهاجم', club:'ريال مدريد'},
-      {n:'رافينيا', pos:'مهاجم', club:'برشلونة'},
-      {n:'غابرييل مارتينيلي', pos:'مهاجم', club:'أرسنال'},
-      {n:'ماتيوس كونيا', pos:'مهاجم', club:'مانشستر يونايتد'},
-      {n:'إندريك', pos:'مهاجم', club:'ليون'},
-      {n:'لويز هنريكي', pos:'مهاجم', club:'زينيت'},
-      {n:'إيغور تياغو', pos:'مهاجم', club:'برينتفورد'},
-      {n:'رايان', pos:'مهاجم', club:'بورنموث'},
-    ]
-  }
 };
+
 
 // خريطة أسماء الفرق: عربي → إنجليزي (للمطابقة مع مصدر النتائج المجاني)
 const TEAM_EN = {
