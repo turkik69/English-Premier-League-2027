@@ -115,6 +115,45 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
 .t-wrong{color:#f87171;font-weight:900;font-size:.78rem}
 .admin-t-label{display:block;font-size:.78rem;font-weight:700;color:#a78bfa;margin:8px 0 4px}
 .admin-t-inp{width:100%;padding:9px 11px;background:var(--dark);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.85rem;outline:none;margin-bottom:8px}
+
+/* ── FANTASY ── */
+.fantasy-budget-bar{display:flex;gap:10px;margin-bottom:14px}
+.fantasy-budget-bar>div{flex:1;background:linear-gradient(160deg,rgba(124,58,237,.15),rgba(10,22,40,.6));border:1px solid rgba(124,58,237,.3);border-radius:12px;padding:12px;text-align:center}
+.fb-label{font-size:.68rem;color:var(--muted);margin-bottom:4px}
+.fb-val{font-size:1.3rem;font-weight:900;color:var(--gold)}
+.fb-neg{color:#f87171}
+.fantasy-pos-tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto}
+.fpos-tab{flex:1;white-space:nowrap;padding:9px 8px;background:var(--card2);border:1px solid var(--border);border-radius:9px;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer}
+.fpos-tab span{display:block;font-size:.65rem;margin-top:2px}
+.fpos-tab.active{background:linear-gradient(135deg,#7C3AED,#5B21B6);color:#fff;border-color:transparent}
+.fantasy-browse{max-height:260px;overflow-y:auto;background:var(--card2);border-radius:12px;padding:8px;margin-bottom:16px}
+.f-player-row{display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border-radius:8px;margin-bottom:4px;background:rgba(255,255,255,.02)}
+.f-player-row.f-added{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2)}
+.f-pname{font-size:.85rem;font-weight:700;color:var(--text)}
+.f-pteam{font-size:.68rem;color:var(--muted)}
+.f-price{font-size:.78rem;font-weight:900;color:var(--gold)}
+.f-btn{padding:6px 12px;border-radius:7px;border:none;font-family:'Cairo',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer}
+.f-add{background:var(--green);color:#fff}
+.f-add:disabled{background:var(--border);color:var(--muted);cursor:not-allowed}
+.f-remove{background:rgba(224,52,52,.15);color:#f87171}
+.f-empty{text-align:center;padding:30px 12px;color:var(--muted);font-size:.82rem}
+.fantasy-squad-title{font-size:.92rem;font-weight:900;color:var(--gold);margin:6px 0 10px}
+.f-squad-pos-label{font-size:.72rem;font-weight:700;color:#a78bfa;margin:10px 0 6px}
+.f-squad-row{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:8px;margin-bottom:4px;background:var(--card2)}
+.f-squad-row.f-starting{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25)}
+.f-check{display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:700;color:var(--text);cursor:pointer}
+.f-check input{width:17px;height:17px;accent-color:var(--gold)}
+.f-cap-btn{width:26px;height:26px;border-radius:50%;border:1px solid var(--border);background:var(--dark);color:var(--muted);font-weight:900;font-size:.75rem;cursor:pointer}
+.f-cap-btn.active{background:var(--gold);color:#0A1628;border-color:var(--gold)}
+.fantasy-save-btn{width:100%;padding:13px;margin-top:16px;background:linear-gradient(135deg,#7C3AED,#5B21B6);border:none;border-radius:11px;color:#fff;font-family:'Cairo',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer}
+.fantasy-note{font-size:.7rem;color:var(--muted);text-align:center;margin-top:10px;line-height:1.6}
+.fantasy-lb-details{margin-bottom:16px}
+.fantasy-lb-summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;font-size:.9rem;font-weight:800;color:var(--gold);padding:12px 16px;background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(10,22,40,.4));border:1px solid rgba(201,168,76,.3);border-radius:12px}
+.fantasy-lb-summary::-webkit-details-marker{display:none}
+.fantasy-lb-summary .chevron{transition:transform .25s}
+.fantasy-lb-details[open] .fantasy-lb-summary .chevron{transform:rotate(180deg)}
+.f-lb-row{display:flex;justify-content:space-between;padding:7px 12px;font-size:.82rem;border-bottom:1px solid var(--border)}
+.f-lb-row b{color:var(--gold)}
 .badge-open{background:rgba(0,105,62,.2);color:#4ade80}
 .badge-locked{background:rgba(224,52,52,.15);color:#f87171}
 .badge-soon{background:rgba(217,119,6,.15);color:#fbbf24}
@@ -394,6 +433,7 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
     </div>
     <div class="tabs">
       <button class="tab-btn active" onclick="showTab('matches',this)">📅 المباريات</button>
+      <button class="tab-btn" onclick="showTab('fantasy',this)">🎮 الفانتزي</button>
       <button class="tab-btn" onclick="showTab('leaderboard',this)">🏅 الترتيب</button>
       <button class="tab-btn" onclick="showTab('rules',this)">📋 القواعد</button>
       <button class="tab-btn admin-tab" id="admin-tab-btn" style="display:none" onclick="showTab('admin',this)">🛡️ الإدارة</button>
@@ -401,6 +441,10 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
   </header>
   <main>
     <div id="tab-matches" class="tab-panel active"><div id="matches-container"></div></div>
+
+    <div id="tab-fantasy" class="tab-panel">
+      <div id="fantasy-container"></div>
+    </div>
 
     <div id="tab-leaderboard" class="tab-panel">
       <div class="stats-grid" id="my-stats"></div>
@@ -453,6 +497,10 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
           <div class="admin-sec-title">⚔️ تحديث المتأهلين للأدوار التالية</div>
           <div style="font-size:.78rem;color:var(--muted);margin-bottom:10px;line-height:1.5">يضع الفرق الفائزة في مواقعها الصحيحة بالأدوار التالية (دور الـ16 ← ربع ← نصف ← النهائي) تلقائياً حسب النتائج المُدخلة.</div>
           <button class="btn-admin" onclick="syncBracket()" style="width:100%">🔄 تحديث جدول الأدوار التالية الآن</button>
+        </div>
+        <div class="admin-sec">
+          <div class="admin-sec-title">🎮 فانتزي — استيراد نقاط الجولة</div>
+          <div id="admin-fantasy"></div>
         </div>
         <div class="admin-sec">
           <div class="admin-sec-title">🏆 نتائج توقعات البطولة</div>
@@ -566,7 +614,7 @@ const MATCHES = [
 // ════════════════════════════════════════════
 const FB_URL = 'https://world-cup-2026-d3091-default-rtdb.europe-west1.firebasedatabase.app';
 
-let DB = { users:{}, predictions:{}, results:{}, tourneyPreds:{}, tourneyResults:null, goldenMatch:null, bracket:{} };
+let DB = { users:{}, predictions:{}, results:{}, tourneyPreds:{}, tourneyResults:null, goldenMatch:null, bracket:{}, fantasyTeams:{}, fantasyGwPoints:{} };
 let currentUser = null;
 let adminFilter = 'pending';
 let liveStatus = { state:'idle', checking:false, lastCheck:null, lastFound:null };
@@ -592,7 +640,7 @@ async function fbPatch(path,val){
 }
 
 async function loadDB(){
-  const [u,p,r,tp,tr,gm,br] = await Promise.all([fbGet('users'),fbGet('predictions'),fbGet('results'),fbGet('tourneyPreds'),fbGet('tourneyResults'),fbGet('goldenMatch'),fbGet('bracket')]);
+  const [u,p,r,tp,tr,gm,br,ft,fgw] = await Promise.all([fbGet('users'),fbGet('predictions'),fbGet('results'),fbGet('tourneyPreds'),fbGet('tourneyResults'),fbGet('goldenMatch'),fbGet('bracket'),fbGet('fantasyTeams'),fbGet('fantasyGwPoints')]);
   // فشل الاتصال
   if(u===undefined && p===undefined && r===undefined){
     document.getElementById('loading-overlay').innerHTML=`<div style="text-align:center;padding:40px;max-width:420px">
@@ -610,6 +658,8 @@ async function loadDB(){
   DB.tourneyResults = tr || null;
   DB.goldenMatch = gm || null;
   DB.bracket = br || {};
+  DB.fantasyTeams = ft || {};
+  DB.fantasyGwPoints = fgw || {};
   // طبّق تحديثات الجدول (الفرق المتأهلة لدور الـ16) على MATCHES
   Object.entries(DB.bracket).forEach(([mid,data])=>{
     const mm=MATCHES.find(x=>x.id===mid);
@@ -637,6 +687,8 @@ async function saveResult(id)  { return await fbPatch('results',{[id]:DB.results
 async function saveTourneyPred(u){ return await fbPatch('tourneyPreds',{[u]:DB.tourneyPreds[u]}); }
 async function saveTourneyResults(){ return await fbPut('tourneyResults',DB.tourneyResults); }
 async function saveGolden(){ return await fbPut('goldenMatch',DB.goldenMatch); }
+async function saveFantasyTeam(u){ return await fbPatch('fantasyTeams',{[u]:DB.fantasyTeams[u]}); }
+async function saveFantasyGwPoints(gw){ return await fbPatch('fantasyGwPoints',{[gw]:DB.fantasyGwPoints[gw]}); }
 
 
 // ════════════════════════════════════════════
@@ -909,6 +961,195 @@ function tourneyClosed(){
   return now() >= new Date(dl);
 }
 
+// ════════════════════════════════════════════
+// FANTASY — منطق الفانتزي
+// ════════════════════════════════════════════
+function fPlayer(id){ return FANTASY_PLAYERS.find(p=>p.id===id); }
+function myFantasyTeam(){ return DB.fantasyTeams[currentUser.username] || {squad:[],starting:[],captain:null,vice:null}; }
+// المبلغ المُنفق حالياً
+function fantasySpent(squad){ return squad.reduce((s,id)=>{ const p=fPlayer(id); return s+(p?p.price:0); },0); }
+// هل الفريق مكتمل حسب قواعد المراكز؟
+function fantasySquadValid(squad){
+  const counts={GKP:0,DEF:0,MID:0,FWD:0};
+  squad.forEach(id=>{ const p=fPlayer(id); if(p) counts[p.pos]++; });
+  return Object.entries(FANTASY_SQUAD_RULES).every(([pos,n])=>counts[pos]===n);
+}
+// عدد لاعبي كل نادٍ في الفريق (لحد الأقصى 3 من نفس النادي)
+function fantasyClubCount(squad, team){ return squad.filter(id=>{ const p=fPlayer(id); return p&&p.team===team; }).length; }
+// نقاط لاعب في جولة معينة
+function fantasyPlayerGwPts(gw, playerId){ return DB.fantasyGwPoints?.[gw]?.[playerId] ?? null; }
+// إجمالي نقاط مشارك عبر كل الجولات المُدخلة (فقط التشكيلة الأساسية، والكابتن ×2)
+function fantasyTotalPts(username){
+  const t=DB.fantasyTeams[username]; if(!t||!t.starting||!t.starting.length) return 0;
+  let total=0;
+  Object.keys(DB.fantasyGwPoints||{}).forEach(gw=>{
+    t.starting.forEach(id=>{
+      const pts=fantasyPlayerGwPts(gw,id); if(pts==null) return;
+      total += (id===t.captain) ? pts*2 : pts;
+    });
+  });
+  return total;
+}
+async function saveMyFantasyTeam(squad,starting,captain,vice){
+  const u=currentUser.username;
+  DB.fantasyTeams[u]={squad,starting,captain,vice,updatedAt:Date.now()};
+  return await saveFantasyTeam(u);
+}
+
+// حالة عمل مؤقتة أثناء بناء الفريق (قبل الحفظ)
+let _fWorking = null;
+const POS_LABEL={GKP:'🧤 حراس',DEF:'🛡️ مدافعون',MID:'⚙️ وسط',FWD:'⚽ مهاجمون'};
+const POS_ORDER=['GKP','DEF','MID','FWD'];
+
+function renderFantasy(){
+  const c=document.getElementById('fantasy-container');
+  if(currentUser.isAdmin){
+    c.innerHTML=`<div style="text-align:center;padding:40px 20px;color:var(--muted)">🛡️ الفانتزي متاح للمشاركين فقط.<br>يمكنك إدارة نقاط الجولات من تبويب الإدارة.</div>`;
+    return;
+  }
+  if(!_fWorking){
+    const t=myFantasyTeam();
+    _fWorking={squad:[...t.squad], starting:[...t.starting], captain:t.captain, vice:t.vice, posTab:'GKP'};
+  }
+  renderFantasyUI();
+}
+
+function renderFantasyUI(){
+  const c=document.getElementById('fantasy-container');
+  const w=_fWorking;
+  const spent=fantasySpent(w.squad);
+  const remain=(FANTASY_BUDGET-spent).toFixed(1);
+  const counts={GKP:0,DEF:0,MID:0,FWD:0};
+  w.squad.forEach(id=>{ const p=fPlayer(id); if(p)counts[p.pos]++; });
+
+  // ترتيب الفانتزي بين المشاركين
+  const fLbRows=Object.keys(DB.users).filter(u=>!DB.users[u].admin)
+    .map(u=>({name:DB.users[u].name, pts:fantasyTotalPts(u), hasTeam:!!(DB.fantasyTeams[u]&&DB.fantasyTeams[u].squad?.length===15)}))
+    .filter(r=>r.hasTeam).sort((a,b)=>b.pts-a.pts);
+  const fLbHTML = fLbRows.length ? `<details class="fantasy-lb-details">
+      <summary class="fantasy-lb-summary"><span>🎮 ترتيب الفانتزي (${fLbRows.length})</span><span class="chevron">▾</span></summary>
+      <div style="padding-top:8px">${fLbRows.map((r,i)=>`<div class="f-lb-row"><span>${i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)}. ${r.name}</span><b>${r.pts}</b></div>`).join('')}</div>
+    </details>` : '';
+
+  // شريط الميزانية والتبويبات
+  let html=`
+    ${fLbHTML}
+    <div class="fantasy-budget-bar">
+      <div><div class="fb-label">الميزانية المتبقية</div><div class="fb-val ${remain<0?'fb-neg':''}">£${remain}م</div></div>
+      <div><div class="fb-label">حجم الفريق</div><div class="fb-val">${w.squad.length}/15</div></div>
+    </div>
+    <div class="fantasy-pos-tabs">
+      ${POS_ORDER.map(pos=>`<button class="fpos-tab ${w.posTab===pos?'active':''}" onclick="fSwitchTab('${pos}')">${POS_LABEL[pos]} <span>${counts[pos]}/${FANTASY_SQUAD_RULES[pos]}</span></button>`).join('')}
+    </div>
+    <div class="fantasy-browse" id="fantasy-browse"></div>
+    <div class="fantasy-squad-title">📋 فريقي (${w.squad.length}/15) <span style="font-size:.7rem;color:var(--muted);font-weight:400">اختر 11 أساسيين + كابتن</span></div>
+    <div id="fantasy-squad-list"></div>
+    <button class="fantasy-save-btn" onclick="submitFantasyTeam()">💾 حفظ فريقي</button>
+    <div class="fantasy-note">💡 الكابتن يحصل على ضعف نقاطه · فقط الأساسيون (11) يسجّلون نقاطاً · يمكنك تعديل فريقك في أي وقت</div>
+  `;
+  c.innerHTML=html;
+  renderFantasyBrowse();
+  renderFantasySquadList();
+}
+
+function fSwitchTab(pos){ _fWorking.posTab=pos; renderFantasyUI(); }
+
+function renderFantasyBrowse(){
+  const w=_fWorking;
+  const pool=FANTASY_PLAYERS.filter(p=>p.pos===w.posTab).sort((a,b)=>b.price-a.price);
+  const el=document.getElementById('fantasy-browse');
+  if(!pool.length){ el.innerHTML=`<div class="f-empty">لاعبو هذا المركز قيد الإضافة قريباً ⏳</div>`; return; }
+  el.innerHTML=pool.map(p=>{
+    const inSquad=w.squad.includes(p.id);
+    const clubCount=fantasyClubCount(w.squad,p.team);
+    const posCount=w.squad.filter(id=>fPlayer(id)?.pos===p.pos).length;
+    const canAdd = !inSquad && posCount<FANTASY_SQUAD_RULES[p.pos] && clubCount<FANTASY_MAX_PER_CLUB && (fantasySpent(w.squad)+p.price)<=FANTASY_BUDGET;
+    return `<div class="f-player-row ${inSquad?'f-added':''}">
+      <div><div class="f-pname">${p.name}</div><div class="f-pteam">${p.team}</div></div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="f-price">£${p.price.toFixed(1)}م</span>
+        ${inSquad?`<button class="f-btn f-remove" onclick="fRemovePlayer(${p.id})">✕ إزالة</button>`:`<button class="f-btn f-add" ${canAdd?'':'disabled'} onclick="fAddPlayer(${p.id})">+ إضافة</button>`}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderFantasySquadList(){
+  const w=_fWorking;
+  const el=document.getElementById('fantasy-squad-list');
+  if(!w.squad.length){ el.innerHTML=`<div class="f-empty">لم تختر أي لاعب بعد — تصفّح المراكز أعلاه وابدأ ببناء فريقك</div>`; return; }
+  let html='';
+  POS_ORDER.forEach(pos=>{
+    const players=w.squad.filter(id=>fPlayer(id)?.pos===pos);
+    if(!players.length) return;
+    html+=`<div class="f-squad-pos-label">${POS_LABEL[pos]}</div>`;
+    players.forEach(id=>{
+      const p=fPlayer(id); if(!p) return;
+      const isStarting=w.starting.includes(id);
+      const isCap=w.captain===id, isVice=w.vice===id;
+      html+=`<div class="f-squad-row ${isStarting?'f-starting':''}">
+        <label class="f-check"><input type="checkbox" ${isStarting?'checked':''} onchange="fToggleStarting(${id})"><span>${p.name}</span></label>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span class="f-price">£${p.price.toFixed(1)}م</span>
+          ${isStarting?`<button class="f-cap-btn ${isCap?'active':''}" onclick="fSetCaptain(${id})" title="كابتن">C</button><button class="f-cap-btn ${isVice?'active':''}" onclick="fSetVice(${id})" title="نائب الكابتن">V</button>`:''}
+        </div>
+      </div>`;
+    });
+  });
+  el.innerHTML=html;
+}
+
+function fAddPlayer(id){
+  const w=_fWorking, p=fPlayer(id);
+  const posCount=w.squad.filter(x=>fPlayer(x)?.pos===p.pos).length;
+  if(posCount>=FANTASY_SQUAD_RULES[p.pos]){ toast(`⚠️ اكتمل عدد ${POS_LABEL[p.pos]}`); return; }
+  if(fantasyClubCount(w.squad,p.team)>=FANTASY_MAX_PER_CLUB){ toast('⚠️ الحد الأقصى 3 لاعبين من نفس النادي'); return; }
+  if(fantasySpent(w.squad)+p.price>FANTASY_BUDGET){ toast('⚠️ الميزانية لا تكفي'); return; }
+  w.squad.push(id);
+  renderFantasyUI();
+}
+function fRemovePlayer(id){
+  const w=_fWorking;
+  w.squad=w.squad.filter(x=>x!==id);
+  w.starting=w.starting.filter(x=>x!==id);
+  if(w.captain===id) w.captain=null;
+  if(w.vice===id) w.vice=null;
+  renderFantasyUI();
+}
+function fToggleStarting(id){
+  const w=_fWorking, p=fPlayer(id);
+  if(w.starting.includes(id)){
+    w.starting=w.starting.filter(x=>x!==id);
+    if(w.captain===id) w.captain=null;
+    if(w.vice===id) w.vice=null;
+  } else {
+    if(w.starting.length>=11){ toast('⚠️ التشكيلة الأساسية مكتملة (11)'); renderFantasyUI(); return; }
+    const posInXI=w.starting.filter(x=>fPlayer(x)?.pos===p.pos).length;
+    if(posInXI>=FANTASY_XI_RULES[p.pos][1]){ toast(`⚠️ الحد الأقصى لعدد ${POS_LABEL[p.pos]} بالتشكيلة الأساسية`); renderFantasyUI(); return; }
+    w.starting.push(id);
+  }
+  renderFantasyUI();
+}
+function fSetCaptain(id){ _fWorking.captain=id; if(_fWorking.vice===id)_fWorking.vice=null; renderFantasyUI(); }
+function fSetVice(id){ _fWorking.vice=id; if(_fWorking.captain===id)_fWorking.captain=null; renderFantasyUI(); }
+
+async function submitFantasyTeam(){
+  const w=_fWorking;
+  if(w.squad.length!==15){ toast(`⚠️ يجب اختيار 15 لاعباً بالضبط (${w.squad.length}/15 حالياً)`); return; }
+  if(!fantasySquadValid(w.squad)){ toast('⚠️ تحقق من توزيع المراكز: 2 حراس، 5 مدافعين، 5 وسط، 3 مهاجمين'); return; }
+  if(w.starting.length!==11){ toast(`⚠️ اختر 11 لاعباً أساسياً بالضبط (${w.starting.length}/11 حالياً)`); return; }
+  const xiCounts={GKP:0,DEF:0,MID:0,FWD:0};
+  w.starting.forEach(id=>{ const p=fPlayer(id); if(p)xiCounts[p.pos]++; });
+  for(const pos of POS_ORDER){
+    const [min,max]=FANTASY_XI_RULES[pos];
+    if(xiCounts[pos]<min||xiCounts[pos]>max){ toast(`⚠️ عدد ${POS_LABEL[pos]} بالتشكيلة الأساسية غير صحيح`); return; }
+  }
+  if(!w.captain){ toast('⚠️ اختر الكابتن (C) من التشكيلة الأساسية'); return; }
+  const ok=await saveMyFantasyTeam(w.squad,w.starting,w.captain,w.vice);
+  if(ok){ toast('✅ تم حفظ فريقك بنجاح'); renderLeaderboard(); }
+  else toast('⚠️ تعذّر الحفظ');
+}
+
 
 // نقاط توقعات البطولة: البطل 10، طرفا النهائي (تطابق الاثنين) 5، الهداف 5
 function tourneyPts(u){
@@ -1020,6 +1261,7 @@ function showTab(tab, btn){
   document.getElementById('tab-'+tab).classList.add('active');
   if(btn) btn.classList.add('active');
   if(tab==='leaderboard') renderLeaderboard();
+  if(tab==='fantasy') renderFantasy();
   if(tab==='admin'&&currentUser?.isAdmin) renderAdmin();
 }
 
@@ -1582,8 +1824,38 @@ function renderAdmin(){
     <div class="stat-card"><div class="stat-num">${MATCHES.length-ts}</div><div class="stat-label">بانتظار</div></div>`;
   updateLiveUI();
   renderAdminMatches();
+  renderAdminFantasy();
   renderAdminTourney();
   renderAdminPlayers();
+}
+
+// ════════════════════════════════════════════
+// ADMIN — استيراد نقاط الفانتزي أسبوعياً
+// ════════════════════════════════════════════
+function renderAdminFantasy(){
+  const gws=Object.keys(DB.fantasyGwPoints||{}).sort((a,b)=>b-a);
+  const teamsCount=Object.keys(DB.fantasyTeams||{}).length;
+  document.getElementById('admin-fantasy').innerHTML=`
+    <div style="font-size:.78rem;color:var(--muted);margin-bottom:10px;line-height:1.6">
+      ${teamsCount} مشارك بنى فريق فانتزي · اطلبي من Claude تحديث نقاط أي جولة (يجلبها من الموقع الرسمي لـ Fantasy Premier League)، ثم الصقي النتيجة هنا بصيغة JSON.
+      ${gws.length?`<br>الجولات المُدخلة حالياً: ${gws.join('، ')}`:''}
+    </div>
+    <label class="admin-t-label">رقم الجولة</label>
+    <input id="fgw-number" class="admin-t-inp" type="number" min="1" max="38" placeholder="مثال: 1">
+    <label class="admin-t-label">نقاط اللاعبين (JSON: {"معرّف":"نقاط"})</label>
+    <textarea id="fgw-json" class="admin-t-inp" style="min-height:90px;font-family:monospace;direction:ltr;text-align:left" placeholder='{"12":14,"13":8,"25":10}'></textarea>
+    <button class="btn-admin" onclick="importFantasyGw()" style="width:100%;margin-top:6px">📥 استيراد نقاط الجولة</button>`;
+}
+async function importFantasyGw(){
+  const gw=document.getElementById('fgw-number').value;
+  const raw=document.getElementById('fgw-json').value.trim();
+  if(!gw){ toast('⚠️ أدخلي رقم الجولة'); return; }
+  let parsed;
+  try{ parsed=JSON.parse(raw); }catch(e){ toast('⚠️ صيغة JSON غير صحيحة'); return; }
+  DB.fantasyGwPoints[gw]={...(DB.fantasyGwPoints[gw]||{}), ...parsed};
+  const ok=await saveFantasyGwPoints(gw);
+  if(ok){ toast(`✅ تم استيراد نقاط الجولة ${gw}`); renderAdmin(); renderLeaderboard(); }
+  else toast('⚠️ تعذّر الحفظ');
 }
 
 function renderAdminTourney(){
@@ -1792,6 +2064,58 @@ function updateLiveUI(){
   ${pending?`<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:5px">${MATCHES.filter(m=>{const e=new Date(new Date(m.ko).getTime()+105*60*1000);return !DB.results[m.id]&&now()>e;}).slice(0,6).map(m=>`<span style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:6px;padding:2px 8px;font-size:.7rem;color:#fbbf24">${m.home} vs ${m.away}</span>`).join('')}</div>`:''}
   <div style="margin-top:10px;font-size:.7rem;color:var(--muted);line-height:1.5;background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.15);border-radius:8px;padding:8px 10px">💡 الجلب التلقائي يحاول من مصدر مجاني قد يتأخر في التحديث. الأضمن والأسرع: أدخل النتيجة يدوياً من الأسفل فور انتهاء المباراة.</div>`;
 }
+
+// ════════════════════════════════════════════
+// قوائم فرق الدوري الإنجليزي الممتاز 2026-27
+// تُضاف الفرق تدريجياً — أي فريق غير موجود يظهر "قريباً"
+// ════════════════════════════════════════════
+// ════════════════════════════════════════════
+// نظام الفانتزي — بيانات حقيقية من Fantasy Premier League الرسمي
+// الأسعار والنقاط بمقياس FPL الفعلي (مليون جنيه إسترليني)
+// تُضاف الأندية تدريجياً — الأندية غير المضافة تظهر "قريباً"
+// ════════════════════════════════════════════
+const FANTASY_SQUAD_RULES = { GKP:2, DEF:5, MID:5, FWD:3 }; // 15 لاعباً
+const FANTASY_BUDGET = 100.0; // مليون جنيه إسترليني
+const FANTASY_MAX_PER_CLUB = 3;
+const FANTASY_XI_RULES = { GKP:[1,1], DEF:[3,5], MID:[2,5], FWD:[1,3] }; // الحد الأدنى/الأقصى بالتشكيلة الأساسية (11)
+// نقاط كل فعل (للعرض في القواعد فقط — النقاط الفعلية تُستورد جاهزة من الإدارة كل جولة)
+const FANTASY_SCORING_INFO = {
+  goals:{GKP:10,DEF:6,MID:5,FWD:4}, assists:3, cleanSheet:{GKP:4,DEF:4,MID:1,FWD:0},
+  yellow:-1, red:-3, save3:1, penSaved:5, penMissed:-2, ownGoal:-2, bonus:'1-3'
+};
+const FANTASY_PLAYERS = [
+  // ── أرسنال ──
+  {id:1,name:'رايا',team:'أرسنال',pos:'GKP',price:6.0},
+  {id:2,name:'كيبا',team:'أرسنال',pos:'GKP',price:5.0},
+  {id:3,name:'مسلييه',team:'أرسنال',pos:'GKP',price:5.0},
+  {id:4,name:'غابرييل ماغالهايش',team:'أرسنال',pos:'DEF',price:8.0},
+  {id:5,name:'تيمبر',team:'أرسنال',pos:'DEF',price:6.5},
+  {id:6,name:'ساليبا',team:'أرسنال',pos:'DEF',price:6.0},
+  {id:7,name:'لويس-سكيلي',team:'أرسنال',pos:'MID',price:5.5},
+  {id:8,name:'كالافيوري',team:'أرسنال',pos:'DEF',price:5.5},
+  {id:9,name:'هينكابيي',team:'أرسنال',pos:'DEF',price:5.5},
+  {id:10,name:'وايت',team:'أرسنال',pos:'DEF',price:5.5},
+  {id:11,name:'موسكيرا',team:'أرسنال',pos:'DEF',price:5.5},
+  {id:12,name:'ساكا',team:'أرسنال',pos:'MID',price:9.5},
+  {id:13,name:'رايس',team:'أرسنال',pos:'MID',price:7.5},
+  {id:14,name:'إيزي',team:'أرسنال',pos:'MID',price:6.5},
+  {id:15,name:'أوديغارد',team:'أرسنال',pos:'MID',price:6.5},
+  {id:16,name:'مادويكي',team:'أرسنال',pos:'MID',price:6.5},
+  {id:17,name:'مرينو',team:'أرسنال',pos:'MID',price:6.0},
+  {id:18,name:'مارتينيلli',team:'أرسنال',pos:'MID',price:6.5},
+  {id:19,name:'زوبيمندي',team:'أرسنال',pos:'MID',price:5.5},
+  {id:22,name:'نوانيري',team:'أرسنال',pos:'MID',price:5.5},
+  {id:24,name:'نيلسون',team:'أرسنال',pos:'MID',price:5.5},
+  {id:25,name:'جيوكيريس',team:'أرسنال',pos:'FWD',price:7.5},
+  {id:26,name:'هافرتز',team:'أرسنال',pos:'FWD',price:7.5},
+  {id:27,name:'غابرييل جيزوس',team:'أرسنال',pos:'FWD',price:6.0},
+  // ── أستون فيلا ──
+  {id:28,name:'إيميليانو مارتينيز',team:'أستون فيلا',pos:'GKP',price:5.0},
+  {id:30,name:'ديني',team:'أستون فيلا',pos:'DEF',price:4.5},
+  {id:31,name:'كونسا',team:'أستون فيلا',pos:'DEF',price:4.5},
+  {id:32,name:'كاش',team:'أستون فيلا',pos:'DEF',price:4.5},
+  {id:33,name:'مينغز',team:'أستون فيلا',pos:'DEF',price:4.5},
+];
 
 // ════════════════════════════════════════════
 // قوائم فرق الدوري الإنجليزي الممتاز 2026-27
