@@ -549,24 +549,26 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 
     <div id="tab-rules" class="tab-panel">
       <div class="rules-box">
-        <h3>⚽ نظام احتساب النقاط</h3>
-        <div class="rule-item"><div class="rule-pts r3">3</div><div><div class="rule-desc">توقع دقيق للنتيجة الكاملة</div><div class="rule-sub">مثال: توقعت 2-1 وانتهت 2-1 ✅</div></div></div>
-        <div class="rule-item"><div class="rule-pts r1">1</div><div><div class="rule-desc">توقع صحيح للفائز بنتيجة مختلفة</div><div class="rule-sub">مثال: توقعت 2-0 وانتهت 3-1 أو تعادل بتعادل ✅</div></div></div>
-        <div class="rule-item"><div class="rule-pts r0">0</div><div><div class="rule-desc">توقع خاطئ</div><div class="rule-sub">مثال: توقعت فوز فريق وفاز الآخر ❌</div></div></div>
+        <h3>🎮 الترتيب الرئيسي — مبني على الفانتزي</h3>
+        <div class="rule-item"><div class="rule-pts" style="background:rgba(233,0,82,.15);color:var(--gold);font-size:.875rem">🏆</div><div><div class="rule-desc">الترتيب العام يُحسب من نقاط فريق الفانتزي فقط</div><div class="rule-sub">نقاط لاعبيك الحقيقيين كل جولة، تتراكم طوال الموسم</div></div></div>
+        <div class="rule-item" style="border:none"><div class="rule-pts" style="background:rgba(0,255,135,.12);color:var(--green);font-size:.875rem">🔁</div><div><div class="rule-desc">انتقالات بلا حدود</div><div class="rule-sub">بيعي أي لاعب واشتري بديلاً عنه في أي جولة وبأي وقت</div></div></div>
       </div>
       <div class="rules-box">
-        <h3>🏆 توقعات الموسم (مرة واحدة قبل الموعد النهائي)</h3>
+        <h3>⚽ نظام نقاط الفانتزي</h3>
+        <div class="rule-item"><div class="rule-pts r3">×2</div><div><div class="rule-desc">الكابتن (C)</div><div class="rule-sub">يحصل على ضعف نقاطه كل جولة — اختاريه من التشكيلة الأساسية</div></div></div>
+        <div class="rule-item"><div class="rule-pts" style="background:linear-gradient(135deg,#ff8a00,#e52e71);color:#fff">×3</div><div><div class="rule-desc">رقاقة تربل كابتن 🔥</div><div class="rule-sub">تُستخدم مرة واحدة فقط طوال الموسم — تضاعف نقاط الكابتن ×3 بدل ×2 لجولة واحدة تختارينها</div></div></div>
+        <div class="rule-item" style="border:none"><div class="rule-pts" style="background:rgba(122,143,174,.15);color:var(--muted)">11</div><div><div class="rule-desc">فقط الأساسيون يسجّلون نقاطاً</div><div class="rule-sub">الاحتياط (4 لاعبين) لا يحتسبون — رقّي احتياطياً لمركز أساسي إن أردتِ نقاطه</div></div></div>
+      </div>
+      <div class="rules-box">
+        <h3>🏆 توقعات الموسم (منفصلة عن الفانتزي — مرة واحدة قبل الموعد النهائي)</h3>
         <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:#a78bfa">10</div><div><div class="rule-desc">توقع بطل الدوري</div><div class="rule-sub">10 نقاط لمن يصيب الفريق البطل 🏆</div></div></div>
         <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:#a78bfa">5</div><div><div class="rule-desc">توقع وصيف الدوري</div><div class="rule-sub">5 نقاط لمن يصيب الفريق الوصيف 🥈</div></div></div>
         <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:#a78bfa">5</div><div><div class="rule-desc">توقع هداف الدوري</div><div class="rule-sub">5 نقاط لمن يصيب هداف الموسم ⚽</div></div></div>
-        <div class="rule-item" style="border:none"><div class="rule-pts" style="background:rgba(239,68,68,.15);color:#f87171;font-size:.875rem">🔒</div><div><div class="rule-desc">توقعات الموسم تُدخل مرة واحدة وتُقفل</div><div class="rule-sub">لا يمكن تعديلها بعد الحفظ</div></div></div>
+        <div class="rule-item" style="border:none"><div class="rule-pts" style="background:rgba(239,68,68,.15);color:#f87171;font-size:.875rem">🔒</div><div><div class="rule-desc">تُدخل مرة واحدة وتُقفل، ونقاطها لا تدخل بترتيب الفانتزي</div><div class="rule-sub">مسابقة جانبية مستقلة تماماً</div></div></div>
       </div>
       <div class="rules-box">
-        <h3>⏰ نظام فتح وإغلاق التوقعات</h3>
-        <div class="rule-item"><div class="rule-pts" style="background:rgba(22,163,74,.2);color:#4ade80;font-size:.875rem">🟢</div><div><div class="rule-desc">تُفتح التوقعات قبل 24 ساعة من المباراة</div></div></div>
-        <div class="rule-item"><div class="rule-pts" style="background:rgba(224,52,52,.1);color:#f87171;font-size:.875rem">🔴</div><div><div class="rule-desc">تُغلق التوقعات قبل ساعة من الانطلاق</div></div></div>
-        <div class="rule-item"><div class="rule-pts" style="background:rgba(14,165,233,.2);color:#38bdf8;font-size:.875rem">🔒</div><div><div class="rule-desc">توقعات المشاركين مخفية حتى نهاية المباراة</div></div></div>
-        <div class="rule-item"><div class="rule-pts" style="background:rgba(74,222,128,.1);color:#4ade80;font-size:.875rem">🔄</div><div><div class="rule-desc">النتائج والنقاط تتحدث تلقائياً من الإنترنت</div></div></div>
+        <h3>📅 تبويب المباريات</h3>
+        <div class="rule-item" style="border:none"><div class="rule-pts" style="background:rgba(56,189,248,.15);color:#38bdf8;font-size:.875rem">👁️</div><div><div class="rule-desc">للعرض فقط — مواعيد ونتائج المباريات</div><div class="rule-sub">لا توقعات ولا نقاط من هذا التبويب</div></div></div>
       </div>
     </div>
 
@@ -1056,7 +1058,7 @@ function renderFantasyUI(){
     <div id="fantasy-squad-list"></div>
     <div id="fantasy-pitch-wrap"></div>
     <button class="fantasy-save-btn" onclick="submitFantasyTeam()">💾 حفظ فريقي</button>
-    <div class="fantasy-note">💡 الكابتن يحصل على ضعف نقاطه · فقط الأساسيون (11) يسجّلون نقاطاً · يمكنك تعديل فريقك في أي وقت</div>
+    <div class="fantasy-note">💡 الكابتن يحصل على ضعف نقاطه · فقط الأساسيون (11) يسجّلون نقاطاً · 🔁 يمكنك بيع أي لاعب وشراء بديل عنه في أي جولة وبأي وقت — لا قيود على عدد الانتقالات، فقط اضغطي "حفظ فريقي" بعد كل تعديل</div>
   `;
   c.innerHTML=html;
   renderFantasyBrowse();
@@ -1506,71 +1508,20 @@ function renderMatches(){
 
 function buildCard(m){
   const status=matchStatus(m), result=DB.results[m.id];
-  const myPred=DB.predictions[currentUser?.username]?.[m.id];
-  const myPts=(result&&myPred)?pts(myPred,result):null;
-  const done=status==='completed';
 
   const card=document.createElement('div');
-  card.className=`match-card ${status}${myPred?' predicted':''}`;
+  card.className=`match-card ${status}`;
   card.id='card-'+m.id;
 
   // badges
   let badges='';
   if(m.g) badges+=`<span class="badge badge-group">المجموعة ${m.g}</span>`;
-  if(status==='open')      badges+=`<span class="badge badge-open">🟢 مفتوح</span>`;
-  else if(status==='locked') badges+=`<span class="badge badge-locked">🔴 مغلق</span>`;
+  if(status==='open')      badges+=`<span class="badge badge-open">🟢 قادمة</span>`;
+  else if(status==='locked') badges+=`<span class="badge badge-locked">⏱️ اليوم</span>`;
   else if(status==='soon')   badges+=`<span class="badge badge-soon">⏳ قريباً</span>`;
   else                       badges+=`<span class="badge badge-done">✅ انتهت</span>`;
 
   const scoreHTML=result?`<div class="score-result">${result.a} - ${result.h}</div>`:`<div class="vs-label">VS</div>`;
-
-  // prediction section
-  let predHTML='';
-  if(status==='open'){
-    const ph=myPred?.h??0, pa=myPred?.a??0;
-    predHTML=`<div class="prediction-area">
-      <div class="pred-label">🎯 يُغلق التوقع في: ${formatTime(new Date(new Date(m.ko).getTime()-3600*1000).toISOString())}</div>
-      <div class="score-inputs">
-        <span style="font-size:.6875rem;color:var(--muted)">${m.away}</span>
-        <div class="score-input-wrap"><button onclick="adj('${m.id}','a',-1)">−</button><input class="score-num" type="number" id="a_${m.id}" value="${pa}" min="0" max="20" oninput="clamp(this)"><button onclick="adj('${m.id}','a',1)">+</button></div>
-        <span style="color:var(--muted);font-weight:900">-</span>
-        <div class="score-input-wrap"><button onclick="adj('${m.id}','h',-1)">−</button><input class="score-num" type="number" id="h_${m.id}" value="${ph}" min="0" max="20" oninput="clamp(this)"><button onclick="adj('${m.id}','h',1)">+</button></div>
-        <span style="font-size:.6875rem;color:var(--muted)">${m.home}</span>
-      </div>
-      <button class="save-pred-btn" onclick="savePred('${m.id}',event)">حفظ التوقع ✓</button>
-    </div>`;
-  } else if(done){
-    // show MY prediction with points
-    let mySection='';
-    if(myPred){
-      let badge='';
-      if(myPts===3) badge=`<span class="pts-badge pts-3">+3 🎯</span>`;
-      else if(myPts===1) badge=`<span class="pts-badge pts-1">+1 ✓</span>`;
-      else badge=`<span class="pts-badge pts-0">0 ✗</span>`;
-      mySection=`<div class="my-pred-display"><div><div class="pred-mine-label">توقعي</div><div class="pred-mine-score">${m.home} ${myPred.h}-${myPred.a} ${m.away}</div></div><div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap">${badge}</div></div>`;
-    }
-    // show ALL predictions
-    const allRows=Object.entries(DB.predictions)
-      .filter(([u,preds])=>preds[m.id]!==undefined)
-      .map(([u,preds])=>{
-        const pr=preds[m.id], v=pts(pr,result), isMe=u===currentUser?.username;
-        const name=DB.users[u]?.name||u;
-        let badge='';
-        if(v===3) badge=`<span class="pts-badge pts-3">+3</span>`;
-        else if(v===1) badge=`<span class="pts-badge pts-1">+1</span>`;
-        else badge=`<span class="pts-badge pts-0">0</span>`;
-        return `<div class="all-pred-row${isMe?' me':''}">
-          <span class="all-pred-name">${isMe?'⭐ ':''} ${name}</span>
-          <div style="display:flex;align-items:center;gap:8px"><span class="all-pred-score">${pr.a}-${pr.h}</span>${badge}</div>
-        </div>`;
-      }).join('');
-    const predCount = Object.values(DB.predictions).filter(p=>p[m.id]!==undefined).length;
-    predHTML=`<div class="prediction-area">${mySection}${allRows?`<details class="all-preds-details"><summary class="all-preds-summary"><span>🌍 توقعات الجميع (${predCount})</span><span class="chevron">▾</span></summary><div class="all-preds-section">${allRows}</div></details>`:''}</div>`;
-  } else if(myPred){
-    // locked — show only my pred
-    let badge=`<span class="pts-badge" style="background:rgba(122,143,174,.1);color:var(--muted)">⏳</span>`;
-    predHTML=`<div class="prediction-area"><div class="my-pred-display"><div><div class="pred-mine-label">🔒 توقعي (سري حتى النهاية)</div><div class="pred-mine-score">${m.home} ${myPred.h}-${myPred.a} ${m.away}</div></div>${badge}</div></div>`;
-  }
 
   card.innerHTML=`
     <div class="match-meta"><div class="match-badges">${badges}</div><div class="match-time">${formatTime(m.ko)}</div></div>
@@ -1578,31 +1529,8 @@ function buildCard(m){
       <div class="team team-clickable" onclick="event.stopPropagation();openSquad('${m.home}')"><div class="team-flag">${m.hf}</div><div class="team-name">${m.home}</div><div class="squad-hint">القائمة ›</div></div>
       <div class="vs-area">${scoreHTML}<div class="venue-label">${m.venue.split('،')[0]}</div></div>
       <div class="team team-clickable" onclick="event.stopPropagation();openSquad('${m.away}')"><div class="team-flag">${m.af}</div><div class="team-name">${m.away}</div><div class="squad-hint">القائمة ›</div></div>
-    </div>${predHTML}`;
+    </div>`;
   return card;
-}
-
-function adj(id,side,d){ const i=document.getElementById(side+'_'+id); if(!i)return; i.value=Math.max(0,Math.min(20,(+i.value||0)+d)); }
-function clamp(i){ const v=+i.value; if(isNaN(v)||v<0)i.value=0; else if(v>20)i.value=20; }
-
-async function savePred(id,ev){
-  const btn = ev?.target?.closest('button');
-  if(btn){ if(btn.disabled) return; btn.disabled=true; btn.dataset.orig=btn.textContent; btn.textContent='جارٍ الحفظ... ⏳'; }
-  const h=Math.max(0,+document.getElementById('h_'+id)?.value||0);
-  const a=Math.max(0,+document.getElementById('a_'+id)?.value||0);
-  const u=currentUser.username;
-  if(!DB.predictions[u]) DB.predictions[u]={};
-  DB.predictions[u][id]={h,a};
-  const ok = await savePrediction(u);
-  const m=MATCHES.find(x=>x.id===id);
-  if(ok){
-    toast(`تم حفظ توقعك: ${m?.home} ${h}-${a} ${m?.away} ✓`);
-  } else {
-    toast('⚠️ تعذّر الحفظ — تحقق من قواعد Firebase');
-    if(btn){ btn.disabled=false; btn.textContent=btn.dataset.orig; }
-  }
-  document.getElementById('card-'+id)?.replaceWith(buildCard(m));
-  renderLeaderboard();
 }
 
 // ════════════════════════════════════════════
@@ -1610,21 +1538,21 @@ async function savePred(id,ev){
 // ════════════════════════════════════════════
 function renderLeaderboard(){
   if(currentUser?.isAdmin){
-    document.getElementById('my-stats').innerHTML=`<div class="stat-card" style="grid-column:1/-1"><div style="color:var(--muted);font-size:.875rem">🛡️ أنت مشرف · تدير المسابقة من تبويب الإدارة. الترتيب أدناه لجميع المشاركين.</div></div>`;
+    document.getElementById('my-stats').innerHTML=`<div class="stat-card" style="grid-column:1/-1"><div style="color:var(--muted);font-size:.875rem">🛡️ أنت مشرف · تدير المسابقة من تبويب الإدارة. الترتيب أدناه لجميع المشاركين حسب نقاط الفانتزي.</div></div>`;
   } else {
-    const s=statOf(currentUser?.username), myP=totalPts(currentUser?.username);
-    const streak=currentStreak(currentUser?.username);
+    const myTeam=DB.fantasyTeams[currentUser?.username];
+    const myP=fantasyTotalPts(currentUser?.username);
+    const squadDone=myTeam&&myTeam.squad?.length===15;
     document.getElementById('my-stats').innerHTML=`
-      <div class="stat-card"><div class="stat-num">${myP}</div><div class="stat-label">نقاطي الإجمالية</div></div>
-      <div class="stat-card"><div class="stat-num">${s.p3}</div><div class="stat-label">توقع دقيق 🎯</div></div>
-      <div class="stat-card"><div class="stat-num">${streak>0?streak+' 🔥':'—'}</div><div class="stat-label">سلسلة حالية</div></div>
-      <div class="stat-card"><div class="stat-num">${Object.keys(DB.predictions[currentUser?.username]||{}).length}</div><div class="stat-label">توقعاتي</div></div>`;
+      <div class="stat-card"><div class="stat-num">${myP}</div><div class="stat-label">نقاط الفانتزي</div></div>
+      <div class="stat-card"><div class="stat-num">${myTeam?.squad?.length||0}/15</div><div class="stat-label">حجم فريقي</div></div>
+      <div class="stat-card"><div class="stat-num">${squadDone?'✅':'⏳'}</div><div class="stat-label">${squadDone?'الفريق مكتمل':'أكملي فريقك'}</div></div>`;
   }
 
   const players=Object.keys(DB.users)
     .filter(u=>!DB.users[u].admin)
-    .map(u=>({u, name:DB.users[u].name, pts:totalPts(u), preds:Object.keys(DB.predictions[u]||{}).length}))
-    .sort((a,b)=>{ if(b.pts!==a.pts)return b.pts-a.pts; return b.preds-a.preds; });
+    .map(u=>({u, name:DB.users[u].name, pts:fantasyTotalPts(u), hasTeam: !!(DB.fantasyTeams[u]&&DB.fantasyTeams[u].squad?.length===15)}))
+    .sort((a,b)=> b.pts-a.pts);
 
   if(!players.length){ document.getElementById('lb-container').innerHTML='<div style="text-align:center;padding:40px;color:var(--muted)">لا يوجد مشاركون بعد</div>'; return; }
 
@@ -1632,35 +1560,25 @@ function renderLeaderboard(){
     const rc=i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'';
     const ri=i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
     const isMe=p.u===currentUser?.username;
-    const done=Object.entries(DB.predictions[p.u]||{}).filter(([id])=>DB.results[id]).length;
-    const streak=currentStreak(p.u);
-    const badges=badgesOf(p.u);
-    const badgesHTML=badges.length?`<span class="lb-badges">${badges.map(b=>`<span class="lb-badge-ico" title="${b.t}">${b.e}</span>`).join('')}</span>`:'';
-    const streakHTML=streak>=2?`<span class="lb-streak">${streak}🔥</span>`:'';
-    // المتذيّل الساخر: آخر مشارك (إذا كان هناك 2+ مشاركين ولديه توقعات محسوبة)
-    const isLast = (i===players.length-1) && players.length>=2 && done>0;
+    // المتذيّل الساخر: آخر مشارك (إذا كان هناك 2+ مشاركين ولديه فريق فانتزي مكتمل)
+    const isLast = (i===players.length-1) && players.length>=2 && p.hasTeam;
     const lastHTML = isLast
       ? `<span class="last-place"><span class="last-bubble">تراك مسخرة ياولد</span><span class="last-emoji">🤡</span></span>`
       : '';
-    return `<div class="lb-row ${rc}${isMe?' me-row':''}${isLast?' last-row':''}" onclick="openProfile('${p.u}')" style="animation-delay:${Math.min(i*30,300)}ms">
+    return `<div class="lb-row ${rc}${isMe?' me-row':''}${isLast?' last-row':''}" style="animation-delay:${Math.min(i*30,300)}ms">
       <div class="lb-rank ${rc}">${ri}</div>
       <div class="lb-info">
-        ${badgesHTML}
         <div class="lb-name" style="color:${isMe?'var(--gold)':'var(--text)'}">
-          <span>${isMe?'⭐ ':''}${p.name}${isMe?' (أنت)':''}</span>${streakHTML}${lastHTML}
+          <span>${isMe?'⭐ ':''}${p.name}${isMe?' (أنت)':''}</span>${lastHTML}
         </div>
-        <div class="player-meta">${done} توقع محسوب · اضغط للتفاصيل ›</div>
+        <div class="player-meta">${p.hasTeam?'🎮 فريق فانتزي مكتمل':'⏳ لم يكمل فريقه بعد'}</div>
       </div>
       <div class="lb-pts">${p.pts}</div>
     </div>`;
   }).join('');
 
-  const compareBtn = (!currentUser?.isAdmin && players.length>1)
-    ? `<button class="compare-btn" onclick="openCompare()">⚔️ قارن نفسك بمنافس</button>` : '';
-
   document.getElementById('lb-container').innerHTML=`
-    <div class="lb-hint">🔒 توقعات كل مشارك مخفية حتى انتهاء المباراة · اضغط على أي اسم لرؤية سجله ومسار احتساب نقاطه 📊</div>
-    ${compareBtn}
+    <div class="lb-hint">🎮 الترتيب مبني على نقاط فرق الفانتزي فقط · افتحي تبويب الفانتزي لبناء فريقك</div>
     <div class="lb-list">${rows}</div>`;
 }
 
@@ -2011,16 +1929,18 @@ function renderAdminPlayers(){
     return;
   }
   document.getElementById('admin-players').innerHTML=`
-    <table class="admin-players-table"><thead><tr><th>الاسم</th><th style="text-align:center">التوقعات</th><th style="text-align:center">النقاط</th><th style="text-align:center">إجراءات</th></tr></thead>
-    <tbody>${participants.map(([u,d])=>`<tr>
+    <table class="admin-players-table"><thead><tr><th>الاسم</th><th style="text-align:center">فريق الفانتزي</th><th style="text-align:center">النقاط</th><th style="text-align:center">إجراءات</th></tr></thead>
+    <tbody>${participants.map(([u,d])=>{
+      const ft=DB.fantasyTeams[u];
+      const teamStatus = ft&&ft.squad?.length===15 ? '✅ مكتمل' : '⏳ غير مكتمل';
+      return `<tr>
       <td>${d.name}</td>
-      <td style="text-align:center">${Object.keys(DB.predictions[u]||{}).length}</td>
-      <td style="text-align:center;color:var(--gold);font-weight:700">${totalPts(u)}</td>
+      <td style="text-align:center">${teamStatus}</td>
+      <td style="text-align:center;color:var(--gold);font-weight:700">${fantasyTotalPts(u)}</td>
       <td style="text-align:center;white-space:nowrap">
-        <button class="btn-admin" style="padding:6px 10px;font-size:.75rem" onclick="openProfile('${u}')">👁️ توقعاته</button>
         <button class="btn-danger" style="padding:6px 10px;font-size:.75rem" onclick="adminDeletePlayer('${u}')">🗑️ حذف</button>
       </td>
-    </tr>`).join('')}
+    </tr>`;}).join('')}
     </tbody></table>`;
 }
 
