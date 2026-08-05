@@ -156,6 +156,9 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .fb-val{font-size:1.25rem;font-weight:900;color:var(--gold)}
 .fb-neg{color:#f87171}
 .fantasy-pos-tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto}
+.fantasy-chip-bar{width:100%;padding:11px;margin-bottom:12px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:.8125rem;font-weight:800;text-align:center;border:none;cursor:pointer}
+.fantasy-chip-btn{background:linear-gradient(135deg,#ff8a00,#e52e71);color:#fff;box-shadow:var(--el-2)}
+.fantasy-chip-used{background:rgba(255,138,0,.12);color:#ffb347;border:1px dashed rgba(255,138,0,.4);cursor:default}
 .fantasy-search{width:100%;padding:10px 14px;margin-bottom:10px;background:var(--dark);border:1.5px solid var(--border);border-radius:20px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.8125rem;outline:none;transition:border-color var(--dur-base) var(--ease-standard),box-shadow var(--dur-base) var(--ease-standard)}
 .fantasy-search:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(233,0,82,.15)}
 .fpos-tab{flex:1;white-space:nowrap;padding:10px 8px;background:var(--card2);border:1px solid var(--border);border-radius:9px;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer}
@@ -965,17 +968,35 @@ function fantasyTotalPts(username){
   const t=DB.fantasyTeams[username]; if(!t||!t.starting||!t.starting.length) return 0;
   let total=0;
   Object.keys(DB.fantasyGwPoints||{}).forEach(gw=>{
+    // هل استُخدم تربل كابتن في هذه الجولة تحديداً؟
+    const isTripleGw = t.tripleCaptainGw!=null && String(t.tripleCaptainGw)===String(gw);
     t.starting.forEach(id=>{
       const pts=fantasyPlayerGwPts(gw,id); if(pts==null) return;
-      total += (id===t.captain) ? pts*2 : pts;
+      const mult = (id===t.captain) ? (isTripleGw?3:2) : 1;
+      total += pts*mult;
     });
   });
   return total;
 }
 async function saveMyFantasyTeam(squad,starting,captain,vice){
   const u=currentUser.username;
-  DB.fantasyTeams[u]={squad,starting,captain,vice,updatedAt:Date.now()};
+  const prev=DB.fantasyTeams[u]||{};
+  DB.fantasyTeams[u]={squad,starting,captain,vice,tripleCaptainGw:prev.tripleCaptainGw??null,updatedAt:Date.now()};
   return await saveFantasyTeam(u);
+}
+// تفعيل رقاقة تربل كابتن (مرة واحدة فقط طوال الموسم) لجولة مُحدّدة
+async function activateTripleCaptain(){
+  const u=currentUser.username;
+  const t=DB.fantasyTeams[u];
+  if(!t){ toast('⚠️ احفظي فريقك أولاً'); return; }
+  if(t.tripleCaptainGw!=null){ toast(`⚠️ سبق استخدام تربل كابتن بالجولة ${t.tripleCaptainGw}`); return; }
+  const gw=prompt('رقم الجولة القادمة التي تريدين تفعيل تربل كابتن فيها؟\n(تُستخدم مرة واحدة فقط طوال الموسم ولا يمكن التراجع)');
+  if(!gw||isNaN(gw)) return;
+  if(!confirm(`⚠️ تأكيد تفعيل تربل كابتن للجولة ${gw}؟ لن تتمكني من استخدامها مرة أخرى هذا الموسم!`)) return;
+  DB.fantasyTeams[u].tripleCaptainGw=Number(gw);
+  const ok=await saveFantasyTeam(u);
+  if(ok){ toast(`🔥 تم تفعيل تربل كابتن للجولة ${gw}`); renderFantasy(); }
+  else toast('⚠️ تعذّر الحفظ');
 }
 
 // حالة عمل مؤقتة أثناء بناء الفريق (قبل الحفظ)
@@ -1014,12 +1035,18 @@ function renderFantasyUI(){
     </details>` : '';
 
   // شريط الميزانية والتبويبات
+  const savedTeam = DB.fantasyTeams[currentUser.username];
+  const tcGw = savedTeam?.tripleCaptainGw;
+  const tcHTML = tcGw!=null
+    ? `<div class="fantasy-chip-bar fantasy-chip-used">🔥 تربل كابتن مُستخدمة — الجولة ${tcGw}</div>`
+    : `<button class="fantasy-chip-bar fantasy-chip-btn" onclick="activateTripleCaptain()">🔥 استخدام رقاقة تربل كابتن (×3 لمرة واحدة)</button>`;
   let html=`
     ${fLbHTML}
     <div class="fantasy-budget-bar">
       <div><div class="fb-label">الميزانية المتبقية</div><div class="fb-val ${remain<0?'fb-neg':''}">£${remain}م</div></div>
       <div><div class="fb-label">حجم الفريق</div><div class="fb-val">${w.squad.length}/15</div></div>
     </div>
+    ${tcHTML}
     <div class="fantasy-pos-tabs">
       ${POS_ORDER.map(pos=>`<button class="fpos-tab ${w.posTab===pos?'active':''}" onclick="fSwitchTab('${pos}')">${POS_LABEL[pos]} <span>${counts[pos]}/${FANTASY_SQUAD_RULES[pos]}</span></button>`).join('')}
     </div>
