@@ -159,6 +159,13 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .fantasy-chip-bar{width:100%;padding:11px;margin-bottom:12px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:.8125rem;font-weight:800;text-align:center;border:none;cursor:pointer}
 .fantasy-chip-btn{background:linear-gradient(135deg,#ff8a00,#e52e71);color:#fff;box-shadow:var(--el-2)}
 .fantasy-chip-used{background:rgba(255,138,0,.12);color:#ffb347;border:1px dashed rgba(255,138,0,.4);cursor:default}
+.fantasy-goto-pitch-btn{width:100%;padding:16px;margin:14px 0;background:linear-gradient(135deg,#0d5c2e,#0a4a24);border:2px solid var(--gold);border-radius:14px;color:#fff;font-family:'Cairo',sans-serif;font-size:.9375rem;font-weight:900;cursor:pointer;box-shadow:var(--el-2)}
+.fantasy-swap-hint{background:rgba(233,0,82,.12);border:1px solid var(--gold);border-radius:10px;padding:10px 14px;margin-bottom:10px;font-size:.8125rem;font-weight:800;color:var(--gold);text-align:center;animation:pulseSwap 1.2s ease-in-out infinite}
+@keyframes pulseSwap{0%,100%{opacity:1}50%{opacity:.6}}
+.fp-chip.fp-selected .fp-jersey{outline:3px solid var(--gold);outline-offset:2px;animation:pulseSwap 1s ease-in-out infinite}
+.fp-add-cards{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.fp-add-card{width:100%;padding:11px;background:var(--card2);border:1.5px dashed var(--gold);border-radius:10px;color:var(--gold);font-family:'Cairo',sans-serif;font-size:.8125rem;font-weight:800;cursor:pointer}
+.fp-add-card:hover{background:rgba(233,0,82,.08)}
 .fantasy-search{width:100%;padding:10px 14px;margin-bottom:10px;background:var(--dark);border:1.5px solid var(--border);border-radius:20px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.8125rem;outline:none;transition:border-color var(--dur-base) var(--ease-standard),box-shadow var(--dur-base) var(--ease-standard)}
 .fantasy-search:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(233,0,82,.15)}
 .fpos-tab{flex:1;white-space:nowrap;padding:10px 8px;background:var(--card2);border:1px solid var(--border);border-radius:9px;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer}
@@ -216,17 +223,27 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
   overflow:hidden;
   box-shadow:var(--el-2);
 }
-/* خطوط الملعب: دائرة المنتصف وخط نصف الملعب */
-.fantasy-pitch::before{
-  content:'';
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  width:70px; height:70px; border:2px solid rgba(255,255,255,.3); border-radius:50%;
-}
-.fantasy-pitch::after{
-  content:'';
-  position:absolute; top:50%; left:8px; right:8px; height:2px;
-  background:rgba(255,255,255,.3);
-}
+.fantasy-pitch-detailed{min-height:460px;padding:52px 6px 46px}
+/* خطوط الملعب الحقيقية — عناصر فعلية وليست زخرفية فقط */
+.pitch-line.pitch-halfway{position:absolute;top:50%;left:6px;right:6px;height:2px;background:rgba(255,255,255,.35);z-index:0}
+.pitch-circle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:76px;height:76px;border:2px solid rgba(255,255,255,.35);border-radius:50%;z-index:0}
+.pitch-spot{position:absolute;left:50%;transform:translateX(-50%);width:5px;height:5px;background:rgba(255,255,255,.5);border-radius:50%;z-index:0}
+.pitch-spot-top{top:96px}
+.pitch-spot-bottom{bottom:88px}
+/* منطقة الجزاء الكبرى (18 ياردة) */
+.pitch-box{position:absolute;left:50%;transform:translateX(-50%);width:62%;height:60px;border:2px solid rgba(255,255,255,.35);z-index:0}
+.pitch-box-top{top:6px;border-top:none}
+.pitch-box-bottom{bottom:6px;border-bottom:none}
+/* منطقة المرمى الصغرى (6 ياردات) */
+.pitch-box-small{position:absolute;left:50%;transform:translateX(-50%);width:32%;height:26px;border:2px solid rgba(255,255,255,.35);z-index:0}
+.pitch-box-small-top{top:6px;border-top:none}
+.pitch-box-small-bottom{bottom:6px;border-bottom:none}
+/* أقواس الزوايا الأربعة */
+.pitch-arc{position:absolute;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);z-index:0}
+.pitch-arc-tl{top:0;left:0;border-radius:0 0 16px 0;border-top:none;border-left:none}
+.pitch-arc-tr{top:0;right:0;border-radius:0 0 0 16px;border-top:none;border-right:none}
+.pitch-arc-bl{bottom:0;left:0;border-radius:0 16px 0 0;border-bottom:none;border-left:none}
+.pitch-arc-br{bottom:0;right:0;border-radius:16px 0 0 0;border-bottom:none;border-right:none}
 .fp-row{display:flex;justify-content:space-evenly;align-items:flex-start;gap:4px;flex-wrap:wrap;position:relative;z-index:1}
 .fp-chip{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;width:62px;transition:transform var(--dur-fast) var(--ease-standard)}
 .fp-chip:active{transform:scale(.94)}
@@ -247,8 +264,7 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .fp-cap.fp-vice{background:#9b7ab0}
 .fp-flag{position:absolute;bottom:-2px;right:-2px;color:var(--red);font-size:.75rem;text-shadow:0 0 3px #000}
 .fp-bench-label{font-size:.8125rem;font-weight:800;color:var(--muted);margin:14px 0 8px}
-.fp-bench-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:14px 6px;background:linear-gradient(180deg,#0d5c2e,#0a4a24);border:2px solid rgba(255,255,255,.2);border-radius:12px}
-.fb-col{display:flex;flex-direction:column;align-items:center;gap:6px}
+.fp-bench-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:14px 6px;background:linear-gradient(180deg,#0d5c2e,#0a4a24);border:2px solid rgba(255,255,255,.2);border-radius:12px}
 .fb-col-label{font-size:.5625rem;font-weight:900;color:rgba(255,255,255,.6);letter-spacing:.5px}
 
 /* ── شاشة اختيار اللاعب (منفصلة عن الملعب) ── */
@@ -552,6 +568,7 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
     <div class="tabs">
       <button class="tab-btn active" onclick="showTab('matches',this)">📅 المباريات</button>
       <button class="tab-btn" onclick="showTab('fantasy',this)">🎮 الفانتزي</button>
+      <button class="tab-btn" onclick="showTab('pitch',this)">⚽ ملعبي</button>
       <button class="tab-btn" onclick="showTab('leaderboard',this)">🏅 الترتيب</button>
       <button class="tab-btn" onclick="showTab('rules',this)">📋 القواعد</button>
       <button class="tab-btn admin-tab" id="admin-tab-btn" style="display:none" onclick="showTab('admin',this)">🛡️ الإدارة</button>
@@ -562,6 +579,10 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 
     <div id="tab-fantasy" class="tab-panel">
       <div id="fantasy-container"></div>
+    </div>
+
+    <div id="tab-pitch" class="tab-panel">
+      <div id="pitch-container"></div>
     </div>
 
     <div id="tab-leaderboard" class="tab-panel">
@@ -1042,44 +1063,14 @@ const POS_LABEL_ONE={GKP:'حارس',DEF:'مدافع',MID:'لاعب وسط',FWD:'
 const POS_ORDER=['GKP','DEF','MID','FWD'];
 const POS_ICON={GKP:'🧤',DEF:'🛡️',MID:'⚙️',FWD:'⚽'};
 
-// قالب الخانات الثابت: 11 بالملعب (تشكيلة 4-4-2) + 4 بالاحتياط — يطابق قواعد الفريق (2 حراس، 5 مدافعين، 5 وسط، 3 مهاجمين)
-const FANTASY_SLOT_TEMPLATE = [
-  {area:'pitch',pos:'GKP'},
-  {area:'pitch',pos:'DEF'},{area:'pitch',pos:'DEF'},{area:'pitch',pos:'DEF'},{area:'pitch',pos:'DEF'},
-  {area:'pitch',pos:'MID'},{area:'pitch',pos:'MID'},{area:'pitch',pos:'MID'},{area:'pitch',pos:'MID'},
-  {area:'pitch',pos:'FWD'},{area:'pitch',pos:'FWD'},
-  {area:'bench',pos:'GKP'},{area:'bench',pos:'DEF'},{area:'bench',pos:'MID'},{area:'bench',pos:'FWD'},
-];
-
-function renderFantasy(){
-  const c=document.getElementById('fantasy-container');
-  if(currentUser.isAdmin){
-    c.innerHTML=`<div style="text-align:center;padding:40px 20px;color:var(--muted)">🛡️ الفانتزي متاح للمشاركين فقط.<br>يمكنك إدارة نقاط الجولات من تبويب الإدارة.</div>`;
-    return;
-  }
+// يضمن وجود بيانات عمل جاهزة (تُحمّل مرة واحدة وتبقى بالذاكرة أثناء التنقّل بين التبويبات)
+function fEnsureWorking(){
   if(!_fWorking){
     const t=myFantasyTeam();
-    _fWorking={slots:fBuildSlotsFromTeam(t), captain:t.captain||null, vice:t.vice||null, pickerSlot:null, query:''};
+    _fWorking={squad:[...(t.squad||[])], starting:[...(t.starting||[])], captain:t.captain||null, vice:t.vice||null, swapMode:null, pickerPos:null, query:''};
   }
-  renderFantasyUI();
 }
-// يبني مصفوفة الخانات (15) من فريق محفوظ سابقاً (متوافق مع بيانات squad/starting القديمة)
-function fBuildSlotsFromTeam(t){
-  const slots=FANTASY_SLOT_TEMPLATE.map(s=>({...s, playerId:null}));
-  const starting=t.starting||[];
-  const bench=(t.squad||[]).filter(id=>!starting.includes(id));
-  POS_ORDER.forEach(pos=>{
-    const pitchSlots=slots.filter(s=>s.area==='pitch'&&s.pos===pos);
-    const starters=starting.filter(id=>fPlayer(id)?.pos===pos);
-    pitchSlots.forEach((slot,i)=>{ if(starters[i]) slot.playerId=starters[i]; });
-    const benchSlot=slots.find(s=>s.area==='bench'&&s.pos===pos);
-    const benchP=bench.filter(id=>fPlayer(id)?.pos===pos);
-    if(benchSlot&&benchP[0]) benchSlot.playerId=benchP[0];
-  });
-  return slots;
-}
-function fSquadIds(){ return _fWorking.slots.filter(s=>s.playerId).map(s=>s.playerId); }
-function fStartingIds(){ return _fWorking.slots.filter(s=>s.area==='pitch'&&s.playerId).map(s=>s.playerId); }
+function fPlayersByPos(ids,pos){ return ids.filter(id=>fPlayer(id)?.pos===pos); }
 function fInitials(name){ const parts=(name||'').trim().split(/\s+/); return parts[0]?parts[0].slice(0,4):'?'; }
 function fStatusBadge(p){
   if(p.status==='injured') return `<span class="f-status f-status-injured" title="${p.note||'مصاب'}">🔴 مصاب</span>`;
@@ -1088,24 +1079,34 @@ function fStatusBadge(p){
   if(p.rotation) return `<span class="f-status f-status-rot" title="لا يلعب أساسياً غالباً">⚪ احتياطي</span>`;
   return '';
 }
+// تسمية التشكيلة الحالية مثل 4-4-2 (دفاع-وسط-هجوم)
+function fFormationLabel(){
+  if(!_fWorking) return '';
+  const d=fPlayersByPos(_fWorking.starting,'DEF').length, m=fPlayersByPos(_fWorking.starting,'MID').length, f=fPlayersByPos(_fWorking.starting,'FWD').length;
+  return `${d}-${m}-${f}`;
+}
 
-function renderFantasyUI(){
-  const w=_fWorking;
+// ════════════════════════════════════════════
+// تبويب "الفانتزي" — نظرة عامة (ترتيب + ميزانية + رقاقة)
+// ════════════════════════════════════════════
+function renderFantasy(){
   const c=document.getElementById('fantasy-container');
-  if(w.pickerSlot!=null){ renderFantasyPicker(); return; }
-
-  const squadIds=fSquadIds();
-  const spent=fantasySpent(squadIds);
+  if(currentUser.isAdmin){
+    c.innerHTML=`<div style="text-align:center;padding:40px 20px;color:var(--muted)">🛡️ الفانتزي متاح للمشاركين فقط.<br>يمكنك إدارة نقاط الجولات من تبويب الإدارة.</div>`;
+    return;
+  }
+  fEnsureWorking();
+  const w=_fWorking;
+  const spent=fantasySpent(w.squad);
   const remain=(FANTASY_BUDGET-spent).toFixed(1);
 
-  // ترتيب الفانتزي بين المشاركين
   const fLbRows=Object.keys(DB.users).filter(u=>!DB.users[u].admin)
     .map(u=>({name:DB.users[u].name, pts:fantasyTotalPts(u), hasTeam:!!(DB.fantasyTeams[u]&&DB.fantasyTeams[u].squad?.length===15)}))
     .filter(r=>r.hasTeam).sort((a,b)=>b.pts-a.pts);
-  const fLbHTML = fLbRows.length ? `<details class="fantasy-lb-details">
+  const fLbHTML = fLbRows.length ? `<details class="fantasy-lb-details" open>
       <summary class="fantasy-lb-summary"><span>🎮 ترتيب الفانتزي (${fLbRows.length})</span><span class="chevron">▾</span></summary>
       <div style="padding-top:8px">${fLbRows.map((r,i)=>`<div class="f-lb-row"><span>${i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)}. ${r.name}</span><b>${r.pts}</b></div>`).join('')}</div>
-    </details>` : '';
+    </details>` : '<div class="f-empty">لا يوجد مشاركون بفرق مكتملة بعد</div>';
 
   const savedTeam=DB.fantasyTeams[currentUser.username];
   const tcGw=savedTeam?.tripleCaptainGw;
@@ -1113,83 +1114,181 @@ function renderFantasyUI(){
     ? `<div class="fantasy-chip-bar fantasy-chip-used">🔥 تربل كابتن مُستخدمة — الجولة ${tcGw}</div>`
     : `<button class="fantasy-chip-bar fantasy-chip-btn" onclick="activateTripleCaptain()">🔥 استخدام رقاقة تربل كابتن (×3 لمرة واحدة)</button>`;
 
-  // صفوف الملعب: مهاجمون أعلى ← حراس أسفل (اتجاه الهجوم للأعلى)
-  const pitchRowsHTML=['FWD','MID','DEF','GKP'].map(pos=>{
-    const slots=w.slots.filter(s=>s.area==='pitch'&&s.pos===pos);
-    return `<div class="fp-row">${slots.map(s=>fSlotChip(s,w.slots.indexOf(s))).join('')}</div>`;
-  }).join('');
-
-  const benchColsHTML=POS_ORDER.map(pos=>{
-    const slot=w.slots.find(s=>s.area==='bench'&&s.pos===pos);
-    const idx=w.slots.indexOf(slot);
-    return `<div class="fb-col"><div class="fb-col-label">${POS_ICON[pos]} ${pos}</div>${fSlotChip(slot,idx)}</div>`;
-  }).join('');
-
   c.innerHTML=`
-    ${fLbHTML}
     <div class="fantasy-budget-bar">
       <div><div class="fb-label">الميزانية المتبقية</div><div class="fb-val ${remain<0?'fb-neg':''}">£${remain}م</div></div>
-      <div><div class="fb-label">حجم الفريق</div><div class="fb-val">${squadIds.length}/15</div></div>
+      <div><div class="fb-label">حجم الفريق</div><div class="fb-val">${w.squad.length}/15</div></div>
     </div>
     ${tcHTML}
-    <div class="fantasy-pitch-title">⚽ اضغط أي خانة فارغة لاختيار لاعب — أو خانة مشغولة لخياراتها</div>
-    <div class="fantasy-pitch">
-      <div class="fantasy-pitch-banner"><span>⚽ فانتزي العزبة</span><span>فانتزي العزبة ⚽</span></div>
-      ${pitchRowsHTML}
-    </div>
-    <div class="fp-bench-label">🪑 الاحتياط</div>
-    <div class="fp-bench-cols">${benchColsHTML}</div>
-    <button class="fantasy-save-btn" onclick="submitFantasyTeam()">💾 حفظ فريقي</button>
-    <div class="fantasy-note">💡 الكابتن يحصل على ضعف نقاطه · فقط الأساسيون (11) يسجّلون نقاطاً · 🔁 يمكنك بيع أي لاعب وشراء بديل عنه في أي جولة وبأي وقت</div>
+    <button class="fantasy-goto-pitch-btn" onclick="showTab('pitch',document.querySelectorAll('.tab-btn')[2])">⚽ إدارة فريقي بالملعب — تشكيلة ${fFormationLabel()}</button>
+    ${fLbHTML}
   `;
 }
 
-// بطاقة خانة (فارغة = زر إضافة، مشغولة = بطاقة لاعب قابلة للضغط)
-function fSlotChip(slot, idx){
-  if(!slot.playerId){
-    return `<div class="fp-chip fp-empty-slot" onclick="openFantasySlotPicker(${idx})">
-      <div class="fp-jersey fp-jersey-empty">+</div>
-      <div class="fp-name" style="color:rgba(255,255,255,.65)">${POS_LABEL_ONE[slot.pos]}</div>
-    </div>`;
+// ════════════════════════════════════════════
+// تبويب "ملعبي" — ملعب حقيقي بتفاصيله + تشكيلة مرنة بالكامل
+// ════════════════════════════════════════════
+function renderPitchTab(){
+  const c=document.getElementById('pitch-container');
+  if(currentUser.isAdmin){
+    c.innerHTML=`<div style="text-align:center;padding:40px 20px;color:var(--muted)">🛡️ متاح للمشاركين فقط.</div>`;
+    return;
   }
-  const p=fPlayer(slot.playerId); if(!p) return '';
-  const isCap=_fWorking.captain===slot.playerId, isVice=_fWorking.vice===slot.playerId;
+  fEnsureWorking();
+  renderPitchUI();
+}
+
+function renderPitchUI(){
+  const w=_fWorking;
+  const c=document.getElementById('pitch-container');
+  if(w.pickerPos){ renderFantasyPicker(); return; }
+
+  const spent=fantasySpent(w.squad);
+  const remain=(FANTASY_BUDGET-spent).toFixed(1);
+  const counts={GKP:0,DEF:0,MID:0,FWD:0};
+  w.squad.forEach(id=>{ const p=fPlayer(id); if(p)counts[p.pos]++; });
+
+  // صفوف الملعب: تُبنى ديناميكياً حسب التشكيلة الفعلية الحالية (وليست عدداً ثابتاً) — مهاجمون أعلى ← حراس أسفل
+  const pitchRowsHTML=['FWD','MID','DEF','GKP'].map(pos=>{
+    const ids=fPlayersByPos(w.starting,pos);
+    if(!ids.length) return '';
+    return `<div class="fp-row">${ids.map(id=>fChip(id,'pitch')).join('')}</div>`;
+  }).join('');
+
+  const addCardsHTML = POS_ORDER.filter(pos=>counts[pos]<FANTASY_SQUAD_RULES[pos]).map(pos=>
+    `<button class="fp-add-card" onclick="openFantasyPicker('${pos}')">+ إضافة ${POS_LABEL_ONE[pos]} (${counts[pos]}/${FANTASY_SQUAD_RULES[pos]})</button>`
+  ).join('');
+
+  const benchIds=w.squad.filter(id=>!w.starting.includes(id));
+  const benchHTML = benchIds.length ? benchIds.map(id=>fChip(id,'bench')).join('') : `<div class="f-empty" style="padding:14px">لا يوجد احتياط بعد</div>`;
+
+  c.innerHTML=`
+    <div class="fantasy-budget-bar">
+      <div><div class="fb-label">الميزانية المتبقية</div><div class="fb-val ${remain<0?'fb-neg':''}">£${remain}م</div></div>
+      <div><div class="fb-label">التشكيلة الحالية</div><div class="fb-val">${fFormationLabel()}</div></div>
+    </div>
+    ${w.swapMode?`<div class="fantasy-swap-hint">🔁 اضغطي لاعباً آخر للتبديل معه، أو اضغطيه مجدداً للإلغاء</div>`:`<div class="fantasy-pitch-title">⚽ اضغطي أي لاعب بالملعب لخياراته — كابتن، نقل للاحتياط، إزالة</div>`}
+    <div class="fantasy-pitch fantasy-pitch-detailed">
+      <div class="fantasy-pitch-banner"><span>⚽ فانتزي العزبة</span><span>فانتزي العزبة ⚽</span></div>
+      <div class="pitch-line pitch-halfway"></div>
+      <div class="pitch-circle"></div>
+      <div class="pitch-spot pitch-spot-top"></div>
+      <div class="pitch-spot pitch-spot-bottom"></div>
+      <div class="pitch-box pitch-box-top"></div>
+      <div class="pitch-box-small pitch-box-small-top"></div>
+      <div class="pitch-arc pitch-arc-tl"></div><div class="pitch-arc pitch-arc-tr"></div>
+      ${pitchRowsHTML}
+      <div class="pitch-box-small pitch-box-small-bottom"></div>
+      <div class="pitch-box pitch-box-bottom"></div>
+      <div class="pitch-arc pitch-arc-bl"></div><div class="pitch-arc pitch-arc-br"></div>
+    </div>
+    ${addCardsHTML?`<div class="fp-add-cards">${addCardsHTML}</div>`:''}
+    <div class="fp-bench-label">🪑 الاحتياط (${benchIds.length})</div>
+    <div class="fp-bench-row">${benchHTML}</div>
+    <button class="fantasy-save-btn" onclick="submitFantasyTeam()">💾 حفظ فريقي</button>
+    <div class="fantasy-note">💡 بدّلي لاعب وسط بمدافع فتصبح 5 مدافعين تلقائياً، أو مدافع بمهاجم فتصبح 3 مهاجمين — التشكيلة تتغيّر حسب اختياراتك · الكابتن يحصل على ضعف نقاطه · 🔁 بيع/شراء بلا حدود بأي وقت</div>
+  `;
+}
+
+function fChip(id, area){
+  const p=fPlayer(id); if(!p) return '';
+  const isCap=_fWorking.captain===id, isVice=_fWorking.vice===id;
   const badge = isCap?'<span class="fp-cap">C</span>' : isVice?'<span class="fp-cap fp-vice">V</span>' : '';
   const statusDot = (p.status==='injured'||p.status==='suspended'||p.status==='doubt') ? '<span class="fp-flag">●</span>' : '';
-  return `<div class="fp-chip" onclick="openFantasySlotActions(${idx})">
+  const selected = _fWorking.swapMode===id ? ' fp-selected' : '';
+  return `<div class="fp-chip${selected}" onclick="fChipTap(${id},'${area}')">
     <div class="fp-jersey">${fInitials(p.name)}${badge}${statusDot}</div>
     <div class="fp-name">${p.name}</div>
     <div class="fp-price">£${p.price.toFixed(1)}م</div>
   </div>`;
 }
 
-// ── شاشة اختيار لاعب (منفصلة تماماً عن الملعب) ──
-function openFantasySlotPicker(idx){ _fWorking.pickerSlot=idx; _fWorking.query=''; renderFantasyUI(); }
-function closeFantasyPicker(){ _fWorking.pickerSlot=null; renderFantasyUI(); }
+// نقرة على لاعب: أثناء وضع الاستبدال تُنفّذ التبديلة، وإلا تفتح نافذة الإجراءات
+function fChipTap(id, area){
+  const w=_fWorking;
+  if(w.swapMode!=null){
+    if(w.swapMode===id){ w.swapMode=null; renderPitchUI(); return; }
+    fPerformSwap(w.swapMode, id);
+    return;
+  }
+  openFantasyPlayerActions(id, area);
+}
+
+// تبديل لاعبين (ملعب↔احتياط) بغض النظر عن مركزيهما — تتغيّر التشكيلة تلقائياً حسب النتيجة، مع التحقق من صحتها
+function fPerformSwap(idA, idB){
+  const w=_fWorking;
+  const pA=fPlayer(idA), pB=fPlayer(idB);
+  const aOnPitch=w.starting.includes(idA), bOnPitch=w.starting.includes(idB);
+  if(aOnPitch===bOnPitch){ toast('⚠️ اختاري لاعباً من الملعب وآخر من الاحتياط للتبديل'); w.swapMode=null; renderPitchUI(); return; }
+  if((pA.pos==='GKP')!==(pB.pos==='GKP')){ toast('⚠️ الحارس يُستبدل بحارس آخر فقط'); w.swapMode=null; renderPitchUI(); return; }
+  const newStarting=w.starting.map(id=> id===idA?idB : id===idB?idA : id);
+  const counts={GKP:0,DEF:0,MID:0,FWD:0};
+  newStarting.forEach(id=>{ const p=fPlayer(id); if(p)counts[p.pos]++; });
+  for(const pos of POS_ORDER){
+    const [min,max]=FANTASY_XI_RULES[pos];
+    if(counts[pos]<min||counts[pos]>max){ toast(`⚠️ هذا التبديل يجعل عدد ${POS_LABEL[pos]} غير قانوني (المسموح ${min}-${max})`); w.swapMode=null; renderPitchUI(); return; }
+  }
+  w.starting=newStarting;
+  w.swapMode=null;
+  toast(`🔁 تم التبديل — التشكيلة الآن ${counts.DEF}-${counts.MID}-${counts.FWD}`);
+  renderPitchUI();
+}
+
+// ── نافذة إجراءات اللاعب ──
+let _fpaId=null, _fpaArea=null;
+function openFantasyPlayerActions(id, area){
+  const w=_fWorking;
+  _fpaId=id; _fpaArea=area;
+  const p=fPlayer(id);
+  const isCap=w.captain===id, isVice=w.vice===id;
+  const onPitch=area==='pitch';
+  document.getElementById('fpa-title').textContent=`${p.name} — ${p.team}`;
+  let html=`<div style="font-size:.8125rem;color:var(--muted);margin-bottom:14px">£${p.price.toFixed(1)}م ${fStatusBadge(p)}</div>`;
+  if(onPitch) html+=`<button class="fpa-btn ${isCap?'fpa-active':''}" onclick="fpaSetCaptain()"><span>🅲 تعيين كابتن</span>${isCap?'<span>✓</span>':''}</button>`;
+  if(onPitch) html+=`<button class="fpa-btn ${isVice?'fpa-active':''}" onclick="fpaSetVice()"><span>🆅 تعيين نائب كابتن</span>${isVice?'<span>✓</span>':''}</button>`;
+  html+=`<button class="fpa-btn" onclick="fpaStartSwap()"><span>🔁 ${onPitch?'نقل للاحتياط':'نقل للملعب'} (اختاري بديله)</span></button>`;
+  html+=`<button class="fpa-btn fpa-danger" onclick="fpaRemove()"><span>✕ إزالة من الفريق</span></button>`;
+  document.getElementById('fpa-body').innerHTML=html;
+  document.getElementById('fpa-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeFPA(e){ if(e.target===document.getElementById('fpa-overlay'))closeFPADirect(); }
+function closeFPADirect(){ document.getElementById('fpa-overlay').classList.remove('open'); document.body.style.overflow=''; }
+function fpaSetCaptain(){ _fWorking.captain=_fpaId; if(_fWorking.vice===_fpaId)_fWorking.vice=null; closeFPADirect(); renderPitchUI(); }
+function fpaSetVice(){ _fWorking.vice=_fpaId; if(_fWorking.captain===_fpaId)_fWorking.captain=null; closeFPADirect(); renderPitchUI(); }
+function fpaStartSwap(){ _fWorking.swapMode=_fpaId; closeFPADirect(); toast('🔁 اضغطي الآن لاعباً آخر لتبديله معه'); renderPitchUI(); }
+function fpaRemove(){
+  const w=_fWorking;
+  if(w.captain===_fpaId)w.captain=null; if(w.vice===_fpaId)w.vice=null;
+  w.squad=w.squad.filter(id=>id!==_fpaId);
+  w.starting=w.starting.filter(id=>id!==_fpaId);
+  closeFPADirect(); renderPitchUI();
+}
+
+// ── شاشة إضافة لاعب جديد (منفصلة تماماً، لمركز محدد فقط) ──
+function openFantasyPicker(pos){ _fWorking.pickerPos=pos; _fWorking.query=''; renderPitchUI(); }
+function closeFantasyPicker(){ _fWorking.pickerPos=null; renderPitchUI(); }
 function fPickerSearch(q){ _fWorking.query=q; renderFantasyPicker(); }
 
 function renderFantasyPicker(){
   const w=_fWorking;
-  const slot=w.slots[w.pickerSlot];
-  const c=document.getElementById('fantasy-container');
+  const pos=w.pickerPos;
+  const c=document.getElementById('pitch-container');
   const q=(w.query||'').trim();
-  let pool=FANTASY_PLAYERS.filter(p=>p.pos===slot.pos);
+  let pool=FANTASY_PLAYERS.filter(p=>p.pos===pos);
   if(q) pool=pool.filter(p=>p.name.includes(q)||p.team.includes(q));
   pool=pool.sort((a,b)=>b.price-a.price);
 
-  const squadIdsExceptSlot=fSquadIds().filter(id=>id!==slot.playerId);
-  const spentExceptSlot=fantasySpent(squadIdsExceptSlot);
-  const remain=FANTASY_BUDGET-spentExceptSlot;
-
+  const remain=FANTASY_BUDGET-fantasySpent(w.squad);
   const rows = pool.length ? pool.map(p=>{
-    const alreadyOwned=squadIdsExceptSlot.includes(p.id);
-    const clubCount=fantasyClubCount(squadIdsExceptSlot,p.team);
-    const canPick=!alreadyOwned && clubCount<FANTASY_MAX_PER_CLUB && remain>=p.price;
-    return `<div class="f-player-row ${alreadyOwned?'f-added':''}">
+    const owned=w.squad.includes(p.id);
+    const clubCount=fantasyClubCount(w.squad,p.team);
+    const canPick=!owned && clubCount<FANTASY_MAX_PER_CLUB && remain>=p.price;
+    return `<div class="f-player-row ${owned?'f-added':''}">
       <div><div class="f-pname">${p.name} ${fStatusBadge(p)}</div><div class="f-pteam">${p.team}</div></div>
       <div style="display:flex;align-items:center;gap:8px">
         <span class="f-price">£${p.price.toFixed(1)}م</span>
-        <button class="f-btn f-add" ${canPick?'':'disabled'} onclick="fPickForSlot(${p.id})">${alreadyOwned?'✓ مُختار':'اختيار'}</button>
+        <button class="f-btn f-add" ${canPick?'':'disabled'} onclick="fPickNewPlayer(${p.id})">${owned?'✓ مُختار':'شراء'}</button>
       </div>
     </div>`;
   }).join('') : `<div class="f-empty">لاعبو هذا المركز قيد الإضافة قريباً ⏳</div>`;
@@ -1197,87 +1296,51 @@ function renderFantasyPicker(){
   c.innerHTML=`
     <div class="fantasy-picker-hdr">
       <button class="fantasy-back-btn" onclick="closeFantasyPicker()">→ رجوع للملعب</button>
-      <div class="fantasy-picker-title">${POS_ICON[slot.pos]} اختر ${POS_LABEL[slot.pos]}</div>
+      <div class="fantasy-picker-title">${POS_ICON[pos]} اختر ${POS_LABEL[pos]}</div>
     </div>
     <div class="fantasy-budget-bar">
-      <div><div class="fb-label">الميزانية المتاحة لهذه الخانة</div><div class="fb-val ${remain<0?'fb-neg':''}">£${remain.toFixed(1)}م</div></div>
-      <div><div class="fb-label">حجم الفريق</div><div class="fb-val">${fSquadIds().length}/15</div></div>
+      <div><div class="fb-label">الميزانية المتبقية</div><div class="fb-val ${remain<0?'fb-neg':''}">£${remain.toFixed(1)}م</div></div>
+      <div><div class="fb-label">حجم الفريق</div><div class="fb-val">${w.squad.length}/15</div></div>
     </div>
     <input class="fantasy-search" id="fantasy-search" placeholder="🔍 ابحث عن لاعب بالاسم..." value="${q}" oninput="fPickerSearch(this.value)">
     <div class="fantasy-browse fantasy-browse-full">${rows}</div>
   `;
 }
 
-// اختيار لاعب لملء الخانة المفتوحة (ينقل اللاعب هنا لو كان بخانة أخرى)
-function fPickForSlot(playerId){
-  const w=_fWorking;
-  const idx=w.pickerSlot, slot=w.slots[idx];
-  const p=fPlayer(playerId); if(!p) return;
-  const squadIdsExceptSlot=fSquadIds().filter(id=>id!==slot.playerId);
-  if(squadIdsExceptSlot.includes(playerId)){ toast('⚠️ اللاعب موجود بفريقك بالفعل'); return; }
-  if(fantasyClubCount(squadIdsExceptSlot,p.team)>=FANTASY_MAX_PER_CLUB){ toast('⚠️ الحد الأقصى 3 لاعبين من نفس النادي'); return; }
-  if(fantasySpent(squadIdsExceptSlot)+p.price>FANTASY_BUDGET){ toast('⚠️ الميزانية لا تكفي'); return; }
-  w.slots.forEach(s=>{ if(s.playerId===playerId) s.playerId=null; }); // أفرغ أي خانة أخرى كان بها هذا اللاعب
-  const oldId=slot.playerId;
-  slot.playerId=playerId;
-  if(oldId){ if(w.captain===oldId)w.captain=null; if(w.vice===oldId)w.vice=null; }
-  w.pickerSlot=null;
-  toast(`✅ تم اختيار ${p.name}`);
-  renderFantasyUI();
-}
-
-// ── نافذة إجراءات اللاعب (كابتن/نائب/إزالة/نقل ملعب↔احتياط) ──
-let _fpaSlotIdx=null;
-function openFantasySlotActions(idx){
-  const w=_fWorking, slot=w.slots[idx]; if(!slot.playerId) return;
-  _fpaSlotIdx=idx;
-  const p=fPlayer(slot.playerId);
-  const isCap=w.captain===slot.playerId, isVice=w.vice===slot.playerId;
-  const canCapVice=slot.area==='pitch';
-  const otherArea=slot.area==='pitch'?'bench':'pitch';
-  const swapExists=!!w.slots.find(s=>s.area===otherArea&&s.pos===slot.pos);
-  document.getElementById('fpa-title').textContent=`${p.name} — ${p.team}`;
-  let html=`<div style="font-size:.8125rem;color:var(--muted);margin-bottom:14px">£${p.price.toFixed(1)}م ${fStatusBadge(p)}</div>`;
-  if(canCapVice) html+=`<button class="fpa-btn ${isCap?'fpa-active':''}" onclick="fpaSetCaptain()"><span>🅲 تعيين كابتن</span>${isCap?'<span>✓</span>':''}</button>`;
-  if(canCapVice) html+=`<button class="fpa-btn ${isVice?'fpa-active':''}" onclick="fpaSetVice()"><span>🆅 تعيين نائب كابتن</span>${isVice?'<span>✓</span>':''}</button>`;
-  if(swapExists) html+=`<button class="fpa-btn" onclick="fpaSwapArea()"><span>${slot.area==='pitch'?'⬇️ نقل للاحتياط':'⬆️ نقل للملعب'}</span></button>`;
-  html+=`<button class="fpa-btn" onclick="fpaChangePlayer()"><span>🔁 استبدال بلاعب آخر</span></button>`;
-  html+=`<button class="fpa-btn fpa-danger" onclick="fpaRemove()"><span>✕ إزالة من الفريق</span></button>`;
-  document.getElementById('fpa-body').innerHTML=html;
-  document.getElementById('fpa-overlay').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeFPA(e){ if(e.target===document.getElementById('fpa-overlay'))closeFPADirect(); }
-function closeFPADirect(){ document.getElementById('fpa-overlay').classList.remove('open'); document.body.style.overflow=''; _fpaSlotIdx=null; }
-function fpaSetCaptain(){ const w=_fWorking, slot=w.slots[_fpaSlotIdx]; w.captain=slot.playerId; if(w.vice===slot.playerId)w.vice=null; closeFPADirect(); renderFantasyUI(); }
-function fpaSetVice(){ const w=_fWorking, slot=w.slots[_fpaSlotIdx]; w.vice=slot.playerId; if(w.captain===slot.playerId)w.captain=null; closeFPADirect(); renderFantasyUI(); }
-function fpaSwapArea(){
-  const w=_fWorking, slot=w.slots[_fpaSlotIdx];
-  const otherArea=slot.area==='pitch'?'bench':'pitch';
-  const swapSlot=w.slots.find(s=>s.area===otherArea&&s.pos===slot.pos);
-  if(!swapSlot) return;
-  const tmp=swapSlot.playerId; swapSlot.playerId=slot.playerId; slot.playerId=tmp;
-  closeFPADirect(); renderFantasyUI();
-}
-function fpaChangePlayer(){ const idx=_fpaSlotIdx; closeFPADirect(); openFantasySlotPicker(idx); }
-function fpaRemove(){
-  const w=_fWorking, slot=w.slots[_fpaSlotIdx];
-  if(w.captain===slot.playerId)w.captain=null; if(w.vice===slot.playerId)w.vice=null;
-  slot.playerId=null;
-  closeFPADirect(); renderFantasyUI();
+// شراء لاعب جديد: يذهب للملعب تلقائياً إن كان بمركزه مساحة بالتشكيلة الحالية، وإلا للاحتياط
+function fPickNewPlayer(playerId){
+  const w=_fWorking, p=fPlayer(playerId); if(!p) return;
+  if(w.squad.includes(playerId)){ toast('⚠️ اللاعب موجود بفريقك بالفعل'); return; }
+  const posCount=fPlayersByPos(w.squad,p.pos).length;
+  if(posCount>=FANTASY_SQUAD_RULES[p.pos]){ toast(`⚠️ اكتمل عدد ${POS_LABEL[p.pos]} (${FANTASY_SQUAD_RULES[p.pos]})`); return; }
+  if(fantasyClubCount(w.squad,p.team)>=FANTASY_MAX_PER_CLUB){ toast('⚠️ الحد الأقصى 3 لاعبين من نفس النادي'); return; }
+  if(fantasySpent(w.squad)+p.price>FANTASY_BUDGET){ toast('⚠️ الميزانية لا تكفي'); return; }
+  w.squad.push(playerId);
+  const startingPosCount=fPlayersByPos(w.starting,p.pos).length;
+  const [,max]=FANTASY_XI_RULES[p.pos];
+  if(w.starting.length<11 && startingPosCount<max){ w.starting.push(playerId); }
+  w.pickerPos=null;
+  toast(`✅ تم شراء ${p.name}`);
+  renderPitchUI();
 }
 
 let _fSaving=false;
 async function submitFantasyTeam(){
   if(_fSaving) return;
   const w=_fWorking;
-  const squad=fSquadIds(), starting=fStartingIds();
-  if(squad.length!==15){ toast(`⚠️ يجب ملء كل الخانات الـ15 (${squad.length}/15 حالياً)`); return; }
+  if(w.squad.length!==15){ toast(`⚠️ يجب اختيار 15 لاعباً بالضبط (${w.squad.length}/15 حالياً)`); return; }
+  if(w.starting.length!==11){ toast(`⚠️ التشكيلة الأساسية يجب أن تكون 11 بالضبط (${w.starting.length}/11 حالياً)`); return; }
+  const counts={GKP:0,DEF:0,MID:0,FWD:0};
+  w.starting.forEach(id=>{ const p=fPlayer(id); if(p)counts[p.pos]++; });
+  for(const pos of POS_ORDER){
+    const [min,max]=FANTASY_XI_RULES[pos];
+    if(counts[pos]<min||counts[pos]>max){ toast(`⚠️ عدد ${POS_LABEL[pos]} بالتشكيلة الأساسية غير صحيح (يجب ${min}-${max})`); return; }
+  }
   if(!w.captain){ toast('⚠️ اختر الكابتن — اضغط أي لاعب أساسي بالملعب'); return; }
   const btn=document.querySelector('.fantasy-save-btn');
   _fSaving=true;
   if(btn){ btn.disabled=true; btn.textContent='جارٍ الحفظ... ⏳'; }
-  const ok=await saveMyFantasyTeam(squad,starting,w.captain,w.vice);
+  const ok=await saveMyFantasyTeam(w.squad,w.starting,w.captain,w.vice);
   _fSaving=false;
   if(ok){ toast('✅ تم حفظ فريقك بنجاح'); renderLeaderboard(); }
   else toast('⚠️ تعذّر الحفظ');
@@ -1399,6 +1462,7 @@ function showTab(tab, btn){
   if(btn) btn.classList.add('active');
   if(tab==='leaderboard') renderLeaderboard();
   if(tab==='fantasy') renderFantasy();
+  if(tab==='pitch') renderPitchTab();
   if(tab==='admin'&&currentUser?.isAdmin) renderAdmin();
 }
 
