@@ -13,9 +13,9 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
 :root{
-  --green:#00693E;--gold:#C9A84C;--dark:#0A1628;--card:#0E1F3C;
-  --card2:#122444;--border:#1E3A5F;--text:#E8EDF5;--muted:#7A8FAE;
-  --red:#E03434;--purple:#7C3AED;
+  --green:#00FF87;--gold:#E90052;--dark:#1A0530;--card:#2B0A42;
+  --card2:#35104F;--border:#4E1A66;--text:#F3EEFA;--muted:#B296C7;
+  --red:#FF3B5C;--purple:#37003C;--cyan:#04F5FF;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Cairo',sans-serif;background:var(--dark);color:var(--text);min-height:100vh}
@@ -26,7 +26,7 @@ body{font-family:'Cairo',sans-serif;background:var(--dark);color:var(--text);min
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* ── HEADER ── */
-header{background:linear-gradient(135deg,#062A1A 0%,#0A3D25 50%,#072030 100%);border-bottom:2px solid var(--gold);position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+header{background:linear-gradient(135deg,#25002B 0%,#37003C 50%,#4A0057 100%);border-bottom:2px solid var(--gold);position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,.5)}
 .header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;flex-wrap:wrap;gap:10px}
 .logo-area{display:flex;align-items:center;gap:12px}
 .trophy{font-size:2.2rem;filter:drop-shadow(0 0 8px rgba(201,168,76,.6))}
@@ -161,7 +161,7 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
 .match-time{font-size:.75rem;color:var(--muted);direction:ltr}
 .teams-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .team{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1}
-.team-flag{font-size:.78rem;font-weight:900;line-height:1;background:linear-gradient(135deg,var(--green),#00482b);color:#fff;border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:6px 9px;display:inline-block;letter-spacing:.5px}
+.team-flag{font-size:.78rem;font-weight:900;line-height:1;background:linear-gradient(135deg,var(--purple),#5C0068);color:#fff;border:1px solid rgba(233,0,82,.35);border-radius:8px;padding:6px 9px;display:inline-block;letter-spacing:.5px}
 .team-name{font-size:.82rem;font-weight:700;text-align:center;line-height:1.2}
 .vs-area{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:72px}
 .score-result{font-size:1.4rem;font-weight:900;color:var(--gold);direction:ltr;letter-spacing:2px}
@@ -178,7 +178,7 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
 .score-num{width:38px;text-align:center;background:none;border:none;color:var(--gold);font-size:1.15rem;font-weight:900;font-family:'Cairo',sans-serif;outline:none}
 .score-num::-webkit-outer-spin-button,.score-num::-webkit-inner-spin-button{-webkit-appearance:none}
 .score-num[type=number]{-moz-appearance:textfield}
-.save-pred-btn{margin-top:10px;width:100%;padding:9px;background:linear-gradient(135deg,var(--green),#005530);border:none;border-radius:8px;color:#fff;font-family:'Cairo',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer}
+.save-pred-btn{margin-top:10px;width:100%;padding:9px;background:linear-gradient(135deg,var(--gold),#A5003D);border:none;border-radius:8px;color:#fff;font-family:'Cairo',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer}
 .save-pred-btn:hover{opacity:.9}
 .my-pred-display{margin-top:10px;padding:9px 14px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);border-radius:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:7px}
 .pred-mine-label{color:var(--muted);font-size:.75rem}
@@ -252,15 +252,8 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
 .last-bubble::after{content:'';position:absolute;left:-4px;top:50%;transform:translateY(-50%);border-width:4px 4px 4px 0;border-style:solid;border-color:transparent #fff transparent transparent}
 @keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
 .last-row td{background:rgba(224,52,52,.04)}
-.ko-extra{margin-top:12px;padding:12px;background:rgba(124,58,237,.07);border:1px solid rgba(124,58,237,.25);border-radius:10px}
-.ko-note{font-size:.72rem;color:#a78bfa;margin-bottom:10px;line-height:1.5}
-.ko-field{margin-bottom:10px}
-.ko-field label{display:block;font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:5px}
-.ko-field select{width:100%;padding:9px 12px;background:var(--dark);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.85rem;outline:none}
-.ko-field select:focus{border-color:var(--gold)}
-.ko-bonus{background:rgba(124,58,237,.15);color:#a78bfa;font-size:.7rem;font-weight:900;padding:2px 8px;border-radius:10px}
-.admin-ko-row{margin-top:8px;padding-top:8px;border-top:1px dashed var(--border)}
-.admin-ko-warn{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.35);border-radius:8px;padding:8px 11px;font-size:.72rem;color:#fbbf24;margin-bottom:8px;line-height:1.5}
+
+
 #profile-badges-bar{padding:0 20px 6px}
 .profile-badges{display:flex;flex-wrap:wrap;gap:6px}
 .profile-badge{font-size:.72rem;font-weight:700;color:var(--gold);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);border-radius:20px;padding:4px 11px}
@@ -482,21 +475,12 @@ main{max-width:1100px;margin:0 auto;padding:22px 16px}
           <div class="stats-grid" id="admin-stats"></div>
         </div>
         <div class="admin-sec">
-          <div class="admin-sec-title">🌐 جلب النتائج تلقائياً</div>
-          <div class="live-status-box" id="live-status-box"><div style="color:var(--muted);font-size:.85rem">⏳ جاري التهيئة...</div></div>
-        </div>
-        <div class="admin-sec">
           <div class="admin-sec-title">⚽ إدخال نتائج يدوياً</div>
           <div class="filter-row">
             <button class="filter-btn active" onclick="setFilter('pending',this)">بانتظار النتيجة</button>
             <button class="filter-btn" onclick="setFilter('all',this)">جميع المباريات</button>
           </div>
           <div id="admin-matches"></div>
-        </div>
-        <div class="admin-sec">
-          <div class="admin-sec-title">⚔️ تحديث المتأهلين للأدوار التالية</div>
-          <div style="font-size:.78rem;color:var(--muted);margin-bottom:10px;line-height:1.5">يضع الفرق الفائزة في مواقعها الصحيحة بالأدوار التالية (دور الـ16 ← ربع ← نصف ← النهائي) تلقائياً حسب النتائج المُدخلة.</div>
-          <button class="btn-admin" onclick="syncBracket()" style="width:100%">🔄 تحديث جدول الأدوار التالية الآن</button>
         </div>
         <div class="admin-sec">
           <div class="admin-sec-title">🎮 فانتزي — استيراد نقاط الجولة</div>
@@ -617,7 +601,6 @@ const FB_URL = 'https://world-cup-2026-d3091-default-rtdb.europe-west1.firebased
 let DB = { users:{}, predictions:{}, results:{}, tourneyPreds:{}, tourneyResults:null, goldenMatch:null, bracket:{}, fantasyTeams:{}, fantasyGwPoints:{} };
 let currentUser = null;
 let adminFilter = 'pending';
-let liveStatus = { state:'idle', checking:false, lastCheck:null, lastFound:null };
 
 async function fbGet(path){
   try{ const r=await fetch(`${FB_URL}/${path}.json`); if(!r.ok)return null; return await r.json(); }
@@ -709,8 +692,6 @@ window.addEventListener('DOMContentLoaded', async ()=>{
   if(s && DB.users[s]){ loginAs(s); }
   else{ document.getElementById('loading-overlay').style.display='none'; document.getElementById('auth-screen').style.display='block'; }
   setInterval(autoRefresh, 20000);
-  setTimeout(()=>checkLive(false), 5000);
-  setInterval(()=>checkLive(false), 3*60*1000);
 });
 
 // ════════════════════════════════════════════
@@ -802,146 +783,18 @@ function formatDate(iso){ const d=mkt(iso); const days=['الأحد','الاثن
 function formatTime(iso){ const d=mkt(iso); return `${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')} مسقط`; }
 function outcome(h,a){ return h>a?'h':a>h?'a':'d'; }
 function pts(pred,res){ if(!res||!pred)return null; const ph=+pred.h,pa=+pred.a; if(ph===res.h&&pa===res.a)return 3; if(outcome(ph,pa)===outcome(res.h,res.a))return 1; return 0; }
-// مباراة إقصائية؟ (كل ما ليس دور المجموعات)
-// الدوري الإنجليزي نظام دوري بلا إقصاء — لا وجود لأشواط إضافية أو ترجيح
-function isKnockout(m){ return false; }
-// خريطة تأهل دور الـ32 → دور الـ16 (حسب bracket فيفا الرسمي)
-// كل مباراة r32 → [مباراة r16 الهدف، الموضع 'home'/'away']
-const BRACKET_R32_TO_R16 = {
-  'r32_1':['r16_1','home'], 'r32_4':['r16_1','away'],
-  'r32_3':['r16_2','home'], 'r32_6':['r16_2','away'],
-  'r32_2':['r16_3','home'], 'r32_5':['r16_3','away'],
-  'r32_7':['r16_4','home'], 'r32_8':['r16_4','away'],
-  'r32_12':['r16_5','home'],'r32_11':['r16_5','away'],
-  'r32_10':['r16_6','home'],'r32_9':['r16_6','away'],
-  'r32_15':['r16_7','home'],'r32_14':['r16_7','away'],
-  'r32_13':['r16_8','home'],'r32_16':['r16_8','away'],
-};
-// خريطة تأهل دور الـ16 → ربع النهائي
-const BRACKET_R16_TO_QF = {
-  'r16_1':['qf1','home'], 'r16_2':['qf1','away'],
-  'r16_5':['qf2','home'], 'r16_6':['qf2','away'],
-  'r16_3':['qf3','home'], 'r16_4':['qf3','away'],
-  'r16_7':['qf4','home'], 'r16_8':['qf4','away'],
-};
-// خريطة تأهل ربع النهائي → نصف النهائي
-const BRACKET_QF_TO_SF = {
-  'qf1':['sf1','home'], 'qf2':['sf1','away'],
-  'qf3':['sf2','home'], 'qf4':['sf2','away'],
-};
-// خريطة نصف النهائي → النهائي (والفائزان)، والخاسران لمباراة المركز الثالث
-const BRACKET_SF_TO_FINAL = {
-  'sf1':['final','home'], 'sf2':['final','away'],
-};
-// الخريطة الموحّدة لكل الأدوار
-const BRACKET_ALL = {...BRACKET_R32_TO_R16, ...BRACKET_R16_TO_QF, ...BRACKET_QF_TO_SF, ...BRACKET_SF_TO_FINAL};
-// يحدد الفائز من نتيجة مباراة إقصائية (مع مراعاة الإضافي والترجيح)
-function knockoutWinner(m,res){
-  if(!res) return null;
-  // الوقت الأصلي حسم النتيجة
-  if(res.h>res.a) return {name:m.home,flag:m.hf};
-  if(res.a>res.h) return {name:m.away,flag:m.af};
-  // تعادل في الوقت الأصلي → ننظر للإضافي/الترجيح
-  if(res.et==='h') return {name:m.home,flag:m.hf};
-  if(res.et==='a') return {name:m.away,flag:m.af};
-  if(res.et==='draw'){
-    if(res.pk==='h') return {name:m.home,flag:m.hf};
-    if(res.pk==='a') return {name:m.away,flag:m.af};
-  }
-  return null; // لم تُحسم بعد
-}
-// يحدّث مباراة دور الـ16 بالفريق المتأهل من دور الـ32 (يُستدعى بعد حفظ نتيجة r32)
-async function advanceBracket(matchId){
-  const map=BRACKET_ALL[matchId];
-  if(!map) return;
-  const [nextId,slot]=map;
-  const mCur=MATCHES.find(x=>x.id===matchId);
-  const mNext=MATCHES.find(x=>x.id===nextId);
-  if(!mCur||!mNext) return;
-  const winner=knockoutWinner(mCur, DB.results[matchId]);
-  if(!winner) return;
-  if(slot==='home'){ mNext.home=winner.name; mNext.hf=winner.flag; }
-  else { mNext.away=winner.name; mNext.af=winner.flag; }
-  if(!DB.bracket) DB.bracket={};
-  DB.bracket[nextId]={home:mNext.home,hf:mNext.hf,away:mNext.away,af:mNext.af};
-  await fbPatch('bracket',{[nextId]:DB.bracket[nextId]});
-}
-// تحديث شامل: يعيد بناء كل الأدوار الإقصائية من النتائج الموجودة (بالترتيب الصحيح)
-async function syncBracket(){
-  let count=0;
-  const updates={};
-  // الترتيب مهم: الـ32 أولاً ثم الـ16 ثم الربع ثم النصف (حتى تُبنى الأدوار المتتابعة)
-  const orderedMaps=[BRACKET_R32_TO_R16, BRACKET_R16_TO_QF, BRACKET_QF_TO_SF, BRACKET_SF_TO_FINAL];
-  orderedMaps.forEach(mapObj=>{
-    Object.keys(mapObj).forEach(curId=>{
-      const [nextId,slot]=mapObj[curId];
-      const mCur=MATCHES.find(x=>x.id===curId);
-      const mNext=MATCHES.find(x=>x.id===nextId);
-      if(!mCur||!mNext) return;
-      const winner=knockoutWinner(mCur, DB.results[curId]);
-      if(!winner) return;
-      if(slot==='home'){ mNext.home=winner.name; mNext.hf=winner.flag; }
-      else { mNext.away=winner.name; mNext.af=winner.flag; }
-      if(!DB.bracket) DB.bracket={};
-      DB.bracket[nextId]={home:mNext.home,hf:mNext.hf,away:mNext.away,af:mNext.af};
-      updates[nextId]=DB.bracket[nextId];
-      count++;
-    });
-  });
-  if(count>0){
-    await fbPatch('bracket',updates);
-    toast(`✅ تم تحديث ${count} متأهل في الأدوار التالية`);
-    renderMatches();
-  } else {
-    toast('⏳ لا توجد نتائج مكتملة بعد');
-  }
-}
-// pred.et = 'h'/'a'/'draw' (من يفوز بالإضافي أو استمرار التعادل)، pred.pk = 'h'/'a' (الفائز بالترجيح)
-// res.et = 'h'/'a'/'draw'، res.pk = 'h'/'a'
-function knockoutBonus(pred,res){
-  if(!res||!pred) return 0;
-  // الإضافي يُحتسب فقط إذا توقّع المشارك تعادلاً في الوقت الأصلي (لأن الخانة تظهر حينها فقط)
-  if(outcome(+pred.h,+pred.a)!=='d') return 0;
-  if(!pred.et || !res.et) return 0;
-  let bonus=0;
-  if(pred.et===res.et){
-    bonus+=1; // توقع الإضافي صحيح
-    // الترجيح يُحتسب فقط إذا توقّع استمرار التعادل وصحّ، ثم توقّع الفائز بالترجيح
-    if(pred.et==='draw' && res.et==='draw' && pred.pk && res.pk && pred.pk===res.pk){
-      bonus+=1;
-    }
-  }
-  return bonus;
-}
 // تطبيع اسم اللاعب للمقارنة (إزالة مسافات/تشكيل بسيط)
 function normName(s){ return (s||'').toString().trim().toLowerCase().replace(/\s+/g,' ').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه'); }
-function totalPts(u){ const p=DB.predictions[u]||{}; let s=0; Object.entries(p).forEach(([id,pred])=>{ const r=DB.results[id]; if(r){ s+=(pts(pred,r)||0)+knockoutBonus(pred,r); } }); s+=tourneyPts(u); return s; }
+function totalPts(u){ const p=DB.predictions[u]||{}; let s=0; Object.entries(p).forEach(([id,pred])=>{ const r=DB.results[id]; if(r){ s+=(pts(pred,r)||0); } }); s+=tourneyPts(u); return s; }
+
 // مسار احتساب النقاط: يشرح كل نقطة خطوة بخطوة (للمباريات المنتهية)
 function pointsBreakdown(m,pred,res){
   if(!res) return [];
   const steps=[];
   const v=pts(pred,res);
-  if(v===3) steps.push({ok:true, txt:'توقع دقيق للنتيجة (90 دقيقة)', pts:3});
+  if(v===3) steps.push({ok:true, txt:'توقع دقيق للنتيجة', pts:3});
   else if(v===1) steps.push({ok:true, txt:'توقع صحيح للفائز/التعادل', pts:1});
-  else steps.push({ok:false, txt:'توقع الوقت الأصلي خاطئ', pts:0});
-  if(isKnockout(m)){
-    const predDraw = outcome(+pred.h,+pred.a)==='d';
-    if(predDraw && pred.et){
-      if(res.et){
-        if(pred.et===res.et){
-          steps.push({ok:true, txt:'توقع الأشواط الإضافية صحيح', pts:1});
-          if(pred.et==='draw' && res.et==='draw'){
-            if(pred.pk && res.pk && pred.pk===res.pk) steps.push({ok:true, txt:'توقع الفائز بالترجيح صحيح', pts:1});
-            else if(pred.pk) steps.push({ok:false, txt:'توقع الفائز بالترجيح خاطئ', pts:0});
-          }
-        } else {
-          steps.push({ok:false, txt:'توقع الأشواط الإضافية خاطئ', pts:0});
-        }
-      } else {
-        steps.push({ok:null, txt:'بانتظار إدخال نتيجة الإضافي', pts:0});
-      }
-    }
-  }
+  else steps.push({ok:false, txt:'توقع خاطئ', pts:0});
   return steps;
 }
 // قائمة كل الفرق المشاركة (مرتبة أبجدياً) مع رمز كل فريق
@@ -1421,29 +1274,6 @@ function buildCard(m){
   let predHTML='';
   if(status==='open'){
     const ph=myPred?.h??0, pa=myPred?.a??0;
-    const ko=isKnockout(m);
-    const etSel=myPred?.et||'', pkSel=myPred?.pk||'';
-    const koHTML = ko ? `
-      <div class="ko-extra" id="koextra_${m.id}">
-        <div class="ko-note">⚔️ مباراة إقصائية: إذا توقّعت <b>تعادلاً</b> في الوقت الأصلي، اختر ما يحدث بعده</div>
-        <div class="ko-field" id="etfield_${m.id}">
-          <label>الأشواط الإضافية <span class="t-pts">+1 للصحيح</span></label>
-          <select id="et_${m.id}" onchange="onEtChange('${m.id}')">
-            <option value="">— اختر —</option>
-            <option value="h" ${etSel==='h'?'selected':''}>فوز ${m.home}</option>
-            <option value="a" ${etSel==='a'?'selected':''}>فوز ${m.away}</option>
-            <option value="draw" ${etSel==='draw'?'selected':''}>يستمر التعادل (ترجيح)</option>
-          </select>
-        </div>
-        <div class="ko-field" id="pkfield_${m.id}" style="display:${etSel==='draw'?'block':'none'}">
-          <label>الفائز بضربات الترجيح <span class="t-pts">+1 للصحيح</span></label>
-          <select id="pk_${m.id}">
-            <option value="">— اختر —</option>
-            <option value="h" ${pkSel==='h'?'selected':''}>${m.home}</option>
-            <option value="a" ${pkSel==='a'?'selected':''}>${m.away}</option>
-          </select>
-        </div>
-      </div>` : '';
     predHTML=`<div class="prediction-area">
       <div class="pred-label">🎯 يُغلق التوقع في: ${formatTime(new Date(new Date(m.ko).getTime()-3600*1000).toISOString())}</div>
       <div class="score-inputs">
@@ -1453,7 +1283,6 @@ function buildCard(m){
         <div class="score-input-wrap"><button onclick="adj('${m.id}','h',-1)">−</button><input class="score-num" type="number" id="h_${m.id}" value="${ph}" min="0" max="20" oninput="clamp(this)"><button onclick="adj('${m.id}','h',1)">+</button></div>
         <span style="font-size:.7rem;color:var(--muted)">${m.home}</span>
       </div>
-      ${koHTML}
       <button class="save-pred-btn" onclick="savePred('${m.id}')">حفظ التوقع ✓</button>
     </div>`;
   } else if(done){
@@ -1464,15 +1293,7 @@ function buildCard(m){
       if(myPts===3) badge=`<span class="pts-badge pts-3">+3 🎯</span>`;
       else if(myPts===1) badge=`<span class="pts-badge pts-1">+1 ✓</span>`;
       else badge=`<span class="pts-badge pts-0">0 ✗</span>`;
-      const kb=knockoutBonus(myPred,result);
-      const kbHTML=kb>0?`<span class="ko-bonus">⚔️ +${kb} إضافي/ترجيح</span>`:'';
-      // وصف توقع الإضافي/الترجيح إن وُجد
-      let etShow='';
-      if(isKnockout(m)&&myPred.et){
-        const etTxt=myPred.et==='draw'?`ترجيح لـ ${myPred.pk==='h'?m.home:myPred.pk==='a'?m.away:'؟'}`:(myPred.et==='h'?`إضافي: ${m.home}`:`إضافي: ${m.away}`);
-        etShow=`<div style="font-size:.68rem;color:var(--muted);margin-top:3px">⚔️ ${etTxt}</div>`;
-      }
-      mySection=`<div class="my-pred-display"><div><div class="pred-mine-label">توقعي</div><div class="pred-mine-score">${m.home} ${myPred.h}-${myPred.a} ${m.away}</div>${etShow}</div><div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap">${badge}${kbHTML}</div></div>`;
+      mySection=`<div class="my-pred-display"><div><div class="pred-mine-label">توقعي</div><div class="pred-mine-score">${m.home} ${myPred.h}-${myPred.a} ${m.away}</div></div><div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap">${badge}</div></div>`;
     }
     // show ALL predictions
     const allRows=Object.entries(DB.predictions)
@@ -1509,26 +1330,13 @@ function buildCard(m){
 
 function adj(id,side,d){ const i=document.getElementById(side+'_'+id); if(!i)return; i.value=Math.max(0,Math.min(20,(+i.value||0)+d)); }
 function clamp(i){ const v=+i.value; if(isNaN(v)||v<0)i.value=0; else if(v>20)i.value=20; }
-// عند تغيير اختيار الإضافي: أظهر خانة الترجيح فقط إذا اختار "يستمر التعادل"
-function onEtChange(id){
-  const et=document.getElementById('et_'+id)?.value;
-  const pkField=document.getElementById('pkfield_'+id);
-  if(pkField) pkField.style.display=(et==='draw')?'block':'none';
-}
 
 async function savePred(id){
   const h=Math.max(0,+document.getElementById('h_'+id)?.value||0);
   const a=Math.max(0,+document.getElementById('a_'+id)?.value||0);
   const u=currentUser.username;
   if(!DB.predictions[u]) DB.predictions[u]={};
-  const rec={h,a};
-  // الإقصائيات: احفظ توقع الإضافي/الترجيح فقط إذا توقّع تعادلاً
-  const etEl=document.getElementById('et_'+id);
-  if(etEl && outcome(h,a)==='d'){
-    const et=etEl.value;
-    if(et){ rec.et=et; if(et==='draw'){ const pk=document.getElementById('pk_'+id)?.value; if(pk) rec.pk=pk; } }
-  }
-  DB.predictions[u][id]=rec;
+  DB.predictions[u][id]={h,a};
   const ok = await savePrediction(u);
   const m=MATCHES.find(x=>x.id===id);
   if(ok){
@@ -1650,19 +1458,14 @@ function openProfile(username){
     byStage[stage].sort((a,b)=>new Date(b.m.ko)-new Date(a.m.ko)).forEach(({m,pred})=>{
       const res=DB.results[m.id], v=pts(pred,res), me=username===currentUser?.username;
       const status=matchStatus(m);
-      const kb=res?knockoutBonus(pred,res):0;
-      const totalV=(v||0)+kb;
+      const totalV=(v||0);
       let badge='', border='';
       if(v===3){ badge=`<span class="pts-badge pts-3">+${totalV} 🎯</span>`; border='border-right:3px solid #16A34A'; }
       else if(v===1){ badge=`<span class="pts-badge pts-1">+${totalV} ✓</span>`; border='border-right:3px solid #0EA5E9'; }
-      else if(v===0){ badge=`<span class="pts-badge pts-0">${totalV>0?'+'+totalV:'0'} ${totalV>0?'⚔️':'✗'}</span>`; border=`border-right:3px solid ${totalV>0?'#7C3AED':'var(--red)'}`; }
+      else if(v===0){ badge=`<span class="pts-badge pts-0">0 ✗</span>`; border='border-right:3px solid var(--red)'; }
       else { badge=`<span class="pts-badge" style="background:rgba(122,143,174,.12);color:var(--muted)">⏳</span>`; }
       const predText = `${m.home} ${pred.h} - ${pred.a} ${m.away}`;
       const resText  = res ? `${m.home} ${res.h} - ${res.a} ${m.away}` : '';
-      // تفاصيل الإضافي/الترجيح
-      const etTxt=(et,pk)=>{ if(!et)return ''; if(et==='h')return `إضافي: ${m.home}`; if(et==='a')return `إضافي: ${m.away}`; if(et==='draw')return `ترجيح: ${pk==='h'?m.home:pk==='a'?m.away:'؟'}`; return ''; };
-      const predKo = (isKnockout(m)&&pred.et)?`<div class="d-ko-detail">⚔️ توقّع: ${etTxt(pred.et,pred.pk)}</div>`:'';
-      const resKo = (isKnockout(m)&&res&&res.et)?`<div class="d-ko-detail" style="color:#4ade80">⚔️ فعلي: ${etTxt(res.et,res.pk)}</div>`:'';
       // مسار احتساب النقاط (لكل المباريات المنتهية - شفافية كاملة للجميع)
       const steps=res?pointsBreakdown(m,pred,res):[];
       let breakdownHTML='';
@@ -1679,10 +1482,9 @@ function openProfile(username){
           <div class="d-pred-head">
             <div class="d-pred-teams">${m.hf} ${m.home} <span style="color:var(--muted);font-size:.72rem">vs</span> ${m.away} ${m.af}
               ${res?`<div class="d-pred-actual">النتيجة: <bdi>${resText}</bdi></div>`:`<div class="d-pred-actual">${status==='completed'?'':'لم تُلعب بعد'}</div>`}
-              ${resKo}
             </div>
             <div style="display:flex;align-items:center;gap:8px">
-              <div style="text-align:center"><div style="font-size:.63rem;color:var(--muted)">توقع</div><div class="d-pred-score" style="color:var(--gold)"><bdi>${predText}</bdi></div>${predKo}</div>
+              <div style="text-align:center"><div style="font-size:.63rem;color:var(--muted)">توقع</div><div class="d-pred-score" style="color:var(--gold)"><bdi>${predText}</bdi></div></div>
               ${badge}
             </div>
           </div>
@@ -1822,7 +1624,6 @@ function renderAdmin(){
     <div class="stat-card"><div class="stat-num">${tr}</div><div class="stat-label">توقع مُدخل</div></div>
     <div class="stat-card"><div class="stat-num">${ts}</div><div class="stat-label">نتيجة مُدخلة</div></div>
     <div class="stat-card"><div class="stat-num">${MATCHES.length-ts}</div><div class="stat-label">بانتظار</div></div>`;
-  updateLiveUI();
   renderAdminMatches();
   renderAdminFantasy();
   renderAdminTourney();
@@ -1891,24 +1692,6 @@ function renderAdminMatches(){
   const buildItem=(m)=>{
     const r=DB.results[m.id];
     const badges=(r?`<span class="result-badge">${r.h}-${r.a}</span>`:'')+(r?.auto?`<span class="auto-badge">🌐 تلقائي</span>`:'');
-    const ko=isKnockout(m);
-    const koAdmin = ko ? `
-      <div class="admin-ko-row">
-        ${r && r.h===r.a ? `<div class="admin-ko-warn">⚠️ هذه المباراة انتهت بتعادل في الوقت الأصلي — أدخل نتيجة الإضافي والترجيح ثم اضغط حفظ مجدداً لاحتساب نقاط المشاركين</div>` : ''}
-        <label class="admin-t-label" style="margin-top:6px">⚔️ نتيجة الأشواط الإضافية (للإقصائيات)</label>
-        <select class="admin-t-inp" id="aet_${m.id}" onchange="onAdminEtChange('${m.id}')">
-          <option value="">— لم تذهب لإضافي —</option>
-          <option value="h" ${r?.et==='h'?'selected':''}>فاز ${m.home} في الإضافي</option>
-          <option value="a" ${r?.et==='a'?'selected':''}>فاز ${m.away} في الإضافي</option>
-          <option value="draw" ${r?.et==='draw'?'selected':''}>تعادل ← ترجيح</option>
-        </select>
-        <label class="admin-t-label">🥅 الفائز بضربات الترجيح</label>
-        <select class="admin-t-inp" id="apk_${m.id}">
-          <option value="">— لا ترجيح —</option>
-          <option value="h" ${r?.pk==='h'?'selected':''}>${m.home}</option>
-          <option value="a" ${r?.pk==='a'?'selected':''}>${m.away}</option>
-        </select>
-      </div>` : '';
     return `<div class="admin-match-item">
       <div class="admin-match-title">${badges}${m.home} vs ${m.away} · ${formatDate(m.ko)}</div>
       <div class="admin-score-row">
@@ -1920,7 +1703,6 @@ function renderAdminMatches(){
         <button class="btn-admin" onclick="adminSave('${m.id}')">حفظ</button>
         ${r?`<button class="btn-danger" onclick="adminDel('${m.id}')">حذف</button>`:''}
       </div>
-      ${koAdmin}
     </div>`;
   };
 
@@ -1957,53 +1739,13 @@ async function adminSave(id){
   const a=parseInt(document.getElementById('aa_'+id)?.value);
   if(isNaN(h)||isNaN(a)||h<0||a<0){ toast('أدخل نتيجة صحيحة'); return; }
   const prev=DB.results[id]||{};
-  const rec={h,a,auto:prev.auto||false};
-  // الإقصائيات: احفظ نتيجة الإضافي والترجيح
-  const etEl=document.getElementById('aet_'+id);
-  if(etEl){
-    const et=etEl.value;
-    if(et){ rec.et=et; if(et==='draw'){ const pk=document.getElementById('apk_'+id)?.value; if(pk) rec.pk=pk; } }
-  }
-  DB.results[id]=rec;
+  DB.results[id]={h,a,auto:prev.auto||false};
   await saveResult(id);
-  // إذا كانت مباراة دور الـ32، حدّث دور الـ16 تلقائياً بالفريق المتأهل
-  if(BRACKET_ALL[id]) await advanceBracket(id);
   toast('✅ تم حفظ النتيجة'); renderAdmin(); renderMatches(); renderLeaderboard();
 }
-function onAdminEtChange(id){ /* placeholder للاتساق - الترجيح يبقى ظاهراً دائماً في الإدارة */ }
 async function adminDel(id){
   delete DB.results[id]; await saveResults();
-  // إذا كانت مباراة دور الـ32، أعد موضعها في دور الـ16 إلى الحالة المؤقتة
-  if(BRACKET_ALL[id]) await revertBracket(id);
   toast('تم حذف النتيجة'); renderAdmin(); renderMatches(); renderLeaderboard();
-}
-// أصل المسميات المؤقتة لمباريات دور الـ16 (للتراجع عند حذف نتيجة)
-const R16_DEFAULTS={
-  'r16_1':{home:'فائز م73',hf:'⚽',away:'فائز م75',af:'⚽'},
-  'r16_2':{home:'فائز م74',hf:'⚽',away:'فائز م77',af:'⚽'},
-  'r16_3':{home:'فائز م76',hf:'⚽',away:'فائز م78',af:'⚽'},
-  'r16_4':{home:'فائز م79',hf:'⚽',away:'فائز م80',af:'⚽'},
-  'r16_5':{home:'فائز م83',hf:'⚽',away:'فائز م84',af:'⚽'},
-  'r16_6':{home:'فائز م81',hf:'⚽',away:'فائز م82',af:'⚽'},
-  'r16_7':{home:'فائز م86',hf:'⚽',away:'فائز م88',af:'⚽'},
-  'r16_8':{home:'فائز م85',hf:'⚽',away:'فائز م87',af:'⚽'},
-  'qf1':{home:'فائز ر16-89',hf:'⚽',away:'فائز ر16-90',af:'⚽'},
-  'qf2':{home:'فائز ر16-93',hf:'⚽',away:'فائز ر16-94',af:'⚽'},
-  'qf3':{home:'فائز ر16-91',hf:'⚽',away:'فائز ر16-92',af:'⚽'},
-  'qf4':{home:'فائز ر16-95',hf:'⚽',away:'فائز ر16-96',af:'⚽'},
-  'sf1':{home:'فائز ربع 97',hf:'⚽',away:'فائز ربع 98',af:'⚽'},
-  'sf2':{home:'فائز ربع 99',hf:'⚽',away:'فائز ربع 100',af:'⚽'},
-  'final':{home:'فائز نهائي 1',hf:'🏆',away:'فائز نهائي 2',af:'🏆'},
-};
-async function revertBracket(curId){
-  const map=BRACKET_ALL[curId]; if(!map) return;
-  const [nextId,slot]=map;
-  const mNext=MATCHES.find(x=>x.id===nextId); const def=R16_DEFAULTS[nextId];
-  if(!mNext||!def) return;
-  if(slot==='home'){ mNext.home=def.home; mNext.hf=def.hf; } else { mNext.away=def.away; mNext.af=def.af; }
-  if(!DB.bracket) DB.bracket={};
-  DB.bracket[nextId]={home:mNext.home,hf:mNext.hf,away:mNext.away,af:mNext.af};
-  await fbPatch('bracket',{[nextId]:DB.bracket[nextId]});
 }
 function renderAdminPlayers(){
   const participants = Object.entries(DB.users).filter(([u,d])=>!d.admin);
@@ -2040,34 +1782,6 @@ async function confirmReset(){ if(!confirm('⚠️ مسح جميع التوقع�
 
 // ════════════════════════════════════════════
 // LIVE SCORES — Auto fetch via Anthropic API
-// ════════════════════════════════════════════
-function updateLiveUI(){
-  const el=document.getElementById('live-status-box'); if(!el)return;
-  const {state,checking,lastCheck,lastFound}=liveStatus;
-  const pending=MATCHES.filter(m=>{ const e=new Date(new Date(m.ko).getTime()+105*60*1000); return !DB.results[m.id]&&now()>e; }).length;
-  let icon='🔵',txt='جاهز',col='#38bdf8';
-  if(checking){icon='⏳';txt='جاري الجلب...';col='#fbbf24';}
-  else if(state==='done'){icon='✅';txt='تم آخر فحص';col='#4ade80';}
-  else if(state==='error'){icon='⚠️';txt='خطأ في الاتصال';col='#f87171';}
-  const ago=lastCheck?`منذ ${Math.round((Date.now()-lastCheck)/60000)} دق`:'لم يتم';
-  const found=lastFound?new Date(lastFound).toLocaleTimeString('ar-SA'):'—';
-  el.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
-    <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:1.3rem">${icon}</span>
-      <div><div style="font-weight:700;color:${col}">${txt}</div><div style="font-size:.72rem;color:var(--muted)">آخر فحص: ${ago} · آخر نتيجة: ${found}</div></div>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:.78rem;color:var(--muted)">${pending} بانتظار نتيجة</span>
-      <button class="btn-admin" onclick="checkLive(true)" ${checking?'disabled':''}>🔄 جلب الآن</button>
-    </div>
-  </div>
-  ${pending?`<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:5px">${MATCHES.filter(m=>{const e=new Date(new Date(m.ko).getTime()+105*60*1000);return !DB.results[m.id]&&now()>e;}).slice(0,6).map(m=>`<span style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:6px;padding:2px 8px;font-size:.7rem;color:#fbbf24">${m.home} vs ${m.away}</span>`).join('')}</div>`:''}
-  <div style="margin-top:10px;font-size:.7rem;color:var(--muted);line-height:1.5;background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.15);border-radius:8px;padding:8px 10px">💡 الجلب التلقائي يحاول من مصدر مجاني قد يتأخر في التحديث. الأضمن والأسرع: أدخل النتيجة يدوياً من الأسفل فور انتهاء المباراة.</div>`;
-}
-
-// ════════════════════════════════════════════
-// قوائم فرق الدوري الإنجليزي الممتاز 2026-27
-// تُضاف الفرق تدريجياً — أي فريق غير موجود يظهر "قريباً"
 // ════════════════════════════════════════════
 // ════════════════════════════════════════════
 // نظام الفانتزي — بيانات حقيقية من Fantasy Premier League الرسمي
@@ -2125,84 +1839,6 @@ const SQUADS = {
 };
 
 
-// خريطة أسماء الفرق: عربي → إنجليزي (للمطابقة مع مصدر النتائج المجاني)
-const TEAM_EN = {
-  'المكسيك':'Mexico','جنوب أفريقيا':'South Africa','كوريا الجنوبية':'South Korea','التشيك':'Czech Republic',
-  'كندا':'Canada','البوسنة والهرسك':'Bosnia and Herzegovina','الولايات المتحدة':'United States','باراجواي':'Paraguay',
-  'قطر':'Qatar','سويسرا':'Switzerland','البرازيل':'Brazil','المغرب':'Morocco','هايتي':'Haiti','اسكتلندا':'Scotland',
-  'أستراليا':'Australia','تركيا':'Turkey','ألمانيا':'Germany','كوراساو':'Curacao','هولندا':'Netherlands','اليابان':'Japan',
-  'كوت ديفوار':'Ivory Coast','الإكوادور':'Ecuador','السويد':'Sweden','تونس':'Tunisia','إسبانيا':'Spain','الرأس الأخضر':'Cape Verde',
-  'بلجيكا':'Belgium','مصر':'Egypt','السعودية':'Saudi Arabia','أوروغواي':'Uruguay','إيران':'Iran','نيوزيلندا':'New Zealand',
-  'فرنسا':'France','السنغال':'Senegal','العراق':'Iraq','النرويج':'Norway','الأرجنتين':'Argentina','الجزائر':'Algeria',
-  'النمسا':'Austria','الأردن':'Jordan','البرتغال':'Portugal','الكونغو الديمقراطية':'DR Congo','إنجلترا':'England','كرواتيا':'Croatia',
-  'غانا':'Ghana','بنما':'Panama','أوزبكستان':'Uzbekistan','كولومبيا':'Colombia'
-};
-// مطابقة مرنة للأسماء الإنجليزية (يتعامل مع اختلافات التسمية في المصدر)
-function enAliases(en){
-  const a=[en.toLowerCase()];
-  const alt={'ivory coast':['côte d\'ivoire','cote d\'ivoire'],'turkey':['türkiye','turkiye'],
-    'united states':['usa','united states of america'],'dr congo':['d.r. congo','congo dr','democratic republic of the congo'],
-    'south korea':['korea republic','korea','republic of korea'],'curacao':['curaçao'],'czech republic':['czechia']};
-  if(alt[en.toLowerCase()]) a.push(...alt[en.toLowerCase()]);
-  return a;
-}
-
-async function checkLive(manual=false){
-  if(liveStatus.checking)return;
-  // المباريات التي بدأت منذ 105 دقيقة على الأقل وما زالت بلا نتيجة
-  const pending=MATCHES.filter(m=>{ const e=new Date(new Date(m.ko).getTime()+105*60*1000); return !DB.results[m.id]&&now()>e&&m.id.startsWith('m'); });
-  if(!pending.length){ if(manual)toast('لا توجد مباريات تحتاج تحديثاً'); return; }
-  liveStatus.checking=true; liveStatus.state='checking'; updateLiveUI();
-  try{
-    // جلب البيانات المجانية من openfootball (بدون مفتاح API)
-    const res=await fetch('https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json?t='+Date.now());
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const data=await res.json();
-    const srcMatches=data.matches||[];
-    let n=0, names=[];
-
-    pending.forEach(m=>{
-      const t1=TEAM_EN[m.home], t2=TEAM_EN[m.away];
-      if(!t1||!t2) return;
-      const a1=enAliases(t1), a2=enAliases(t2);
-      // ابحث عن المباراة المطابقة (بنفس الفريقين بأي ترتيب) ولها نتيجة نهائية
-      const found=srcMatches.find(s=>{
-        if(!s.score||!s.score.ft) return false;
-        const s1=(s.team1||'').toLowerCase(), s2=(s.team2||'').toLowerCase();
-        const match12 = a1.some(x=>s1.includes(x)||x.includes(s1)) && a2.some(x=>s2.includes(x)||x.includes(s2));
-        const match21 = a1.some(x=>s2.includes(x)||x.includes(s2)) && a2.some(x=>s1.includes(x)||x.includes(s1));
-        return match12||match21;
-      });
-      if(!found) return;
-      // حدّد النتيجة بالترتيب الصحيح (مضيفنا = home)
-      const s1=(found.team1||'').toLowerCase();
-      const homeIsTeam1 = a1.some(x=>s1.includes(x)||x.includes(s1));
-      const ft=found.score.ft; // [team1, team2]
-      const hg = homeIsTeam1 ? ft[0] : ft[1];
-      const ag = homeIsTeam1 ? ft[1] : ft[0];
-      if(typeof hg!=='number'||typeof ag!=='number') return;
-      DB.results[m.id]={h:hg,a:ag,auto:true,at:Date.now()};
-      names.push({m,h:hg,a:ag}); n++;
-    });
-
-    if(n>0){
-      await saveResults();
-      // لا تُعد بناء المباريات إذا كان المشارك يكتب أو قائمة البطولة مفتوحة غير محفوظة
-      const ae=document.activeElement;
-      const typing=ae&&(ae.tagName==='INPUT'||ae.tagName==='SELECT'||ae.tagName==='TEXTAREA');
-      const myT=DB.tourneyPreds?.[currentUser?.username];
-      const tourneyUnsaved=!!document.querySelector('.tourney-card[open]')&&!(myT&&myT.locked);
-      if(!typing&&!tourneyUnsaved) renderMatches();
-      renderLeaderboard();
-      if(currentUser?.isAdmin)renderAdmin();
-      toast(`🔄 ${n} نتيجة جديدة: ${names[0].m.home} ${names[0].h}-${names[0].a} ${names[0].m.away}`);
-      liveStatus.lastFound=Date.now();
-    } else if(manual){ toast('⏳ لا توجد نتائج نهائية جديدة في المصدر بعد'); }
-    liveStatus.state='done'; liveStatus.lastCheck=Date.now();
-  }catch(e){ console.error('Live fetch error:',e); liveStatus.state='error'; if(manual)toast('⚠️ تعذّر جلب النتائج — جرّب الإدخال اليدوي'); }
-  finally{ liveStatus.checking=false; updateLiveUI(); }
-}
-
 async function autoRefresh(){
   if(!currentUser)return;
   try{ await loadDB(); }catch(e){ return; }
@@ -2218,7 +1854,7 @@ async function autoRefresh(){
     renderMatches();
   }
   renderLeaderboard();
-  if(currentUser?.isAdmin){ if(document.getElementById('tab-admin').classList.contains('active')) renderAdmin(); else updateLiveUI(); }
+  if(currentUser?.isAdmin){ if(document.getElementById('tab-admin').classList.contains('active')) renderAdmin(); }
 }
 
 // ════════════════════════════════════════════
