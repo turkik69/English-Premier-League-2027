@@ -424,6 +424,7 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 #fpa-overlay{display:none;position:fixed;inset:0;z-index:450;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);align-items:flex-end;justify-content:center}
 #fpa-overlay.open{display:flex}
 #fpa-drawer{background:var(--card);border:1px solid var(--border);border-radius:20px 20px 0 0;width:100%;max-width:480px;max-height:70vh;overflow-y:auto;overscroll-behavior:contain;transform:translateY(100%);transition:transform var(--dur-slow) var(--ease-spring);padding-bottom:28px;box-shadow:var(--el-4)}
+#fpa-overlay.open #fpa-drawer{transform:translateY(0)}
 .fpa-btn{width:100%;text-align:right;padding:14px 16px;margin-bottom:8px;background:var(--card2);border:1px solid var(--border);border-radius:12px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.875rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:space-between}
 .fpa-btn:hover{border-color:var(--gold)}
 .fpa-btn.fpa-danger{color:var(--red)}
