@@ -15,7 +15,7 @@
 :root{
   --green:#00FF87;--gold:#E90052;--dark:#1A0530;--card:#2B0A42;
   --card2:#35104F;--border:#4E1A66;--text:#F3EEFA;--muted:#B296C7;
-  --red:#FF3B5C;--purple:#37003C;--cyan:#04F5FF;
+  --red:#FF3B5C;--purple:#37003C;--cyan:#04F5FF;--accent2:#a78bfa;
   /* ── نظام الارتفاع (Elevation) ── */
   --el-1:0 2px 8px rgba(0,0,0,.35);
   --el-2:0 4px 16px rgba(0,0,0,.4);
@@ -62,10 +62,10 @@ header{background:linear-gradient(135deg,#25002B 0%,#37003C 50%,#4A0057 100%);bo
 .logo-text p{font-size:.75rem;color:var(--muted);margin-top:2px}
 .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #player-name-display{font-size:.8125rem;color:var(--gold);font-weight:700;padding:6px 12px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:20px;display:none}
-#live-badge{display:flex;align-items:center;gap:6px;font-size:.75rem;color:#4ade80;padding:4px 10px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);border-radius:20px;font-weight:700}
-.live-dot{width:7px;height:7px;background:#4ade80;border-radius:50%;animation:pulse 1.5s infinite}
+#live-badge{display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--green);padding:4px 10px;background:rgba(0,255,135,.1);border:1px solid rgba(0,255,135,.3);border-radius:20px;font-weight:700}
+.live-dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 1.5s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
-#admin-badge{font-size:.75rem;color:#c4b5fd;padding:4px 10px;background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.4);border-radius:20px;font-weight:700;display:none}
+#admin-badge{font-size:.75rem;color:var(--accent2);padding:4px 10px;background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.4);border-radius:20px;font-weight:700;display:none}
 .logout-btn{font-size:.75rem;padding:6px 12px;background:none;border:1px solid var(--border);border-radius:20px;color:var(--muted);font-family:'Cairo',sans-serif;cursor:pointer}
 .theme-toggle{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform var(--dur-base) var(--ease-spring),background var(--dur-base) var(--ease-standard)}
 .theme-toggle:hover{background:rgba(255,255,255,.16);transform:rotate(15deg)}
@@ -75,8 +75,8 @@ header{background:linear-gradient(135deg,#25002B 0%,#37003C 50%,#4A0057 100%);bo
 .tabs{max-width:1100px;margin:0 auto;display:flex;border-bottom:2px solid var(--border);padding:0 20px;overflow-x:auto}
 .tab-btn{padding:14px 20px;background:none;border:none;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.875rem;font-weight:700;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap}
 .tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
-.tab-btn.admin-tab{color:#a78bfa}
-.tab-btn.admin-tab.active{color:#c4b5fd;border-bottom-color:var(--purple)}
+.tab-btn.admin-tab{color:var(--accent2)}
+.tab-btn.admin-tab.active{color:var(--accent2);border-bottom-color:var(--purple)}
 
 /* ── AUTH ── */
 .auth-wrap{max-width:460px;margin:40px auto;padding:0 16px}
@@ -94,7 +94,7 @@ header{background:linear-gradient(135deg,#25002B 0%,#37003C 50%,#4A0057 100%);bo
 .inp-grp input:focus{border-color:var(--gold)}
 .btn-main{width:100%;padding:14px;background:linear-gradient(135deg,var(--green),#005530);border:none;border-radius:9px;color:#fff;font-family:'Cairo',sans-serif;font-size:.9375rem;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 15px rgba(0,105,62,.4)}
 .btn-main:hover{transform:translateY(-1px)}
-.auth-err{color:#f87171;font-size:.8125rem;margin-top:8px;display:none}
+.auth-err{color:var(--red);font-size:.8125rem;margin-top:8px;display:none}
 .auth-note{font-size:.75rem;color:var(--muted);margin-top:14px}
 .admin-link{margin-top:20px;background:none;border:none;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.8125rem;cursor:pointer;text-decoration:underline;padding:4px}
 .admin-link:hover{color:var(--gold)}
@@ -132,11 +132,11 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .tourney-card[open] .tourney-summary .chevron{transform:rotate(180deg)}
 .tourney-body{padding:0 16px 16px}
 .tourney-hdr{font-size:1rem;font-weight:900;color:var(--gold);margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
-.tourney-locked{font-size:.75rem;background:rgba(239,68,68,.15);color:#f87171;padding:4px 10px;border-radius:12px}
+.tourney-locked{font-size:.75rem;background:rgba(239,68,68,.15);color:var(--red);padding:4px 10px;border-radius:12px}
 .tourney-note{font-size:.75rem;color:var(--muted);margin-bottom:14px;line-height:1.5}
 .tourney-field{margin-bottom:14px}
 .tourney-field label{display:block;font-size:.875rem;font-weight:700;color:var(--text);margin-bottom:6px}
-.t-pts{font-size:.6875rem;color:#a78bfa;font-weight:700;margin-right:4px}
+.t-pts{font-size:.6875rem;color:var(--accent2);font-weight:700;margin-right:4px}
 .tourney-field select,.tourney-field input,.admin-t-inp,.scorer-input,.compare-select{width:100%;padding:10px 12px;background:var(--dark);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.875rem;outline:none;transition:border-color var(--dur-base) var(--ease-standard),box-shadow var(--dur-base) var(--ease-standard)}
 .tourney-field select:focus,.tourney-field input:focus,.admin-t-inp:focus,.scorer-input:focus,.compare-select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(233,0,82,.15)}
 .admin-t-inp{margin-bottom:8px}
@@ -144,9 +144,9 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .tourney-save:hover{opacity:.9}
 .tourney-locked-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:.875rem;padding:8px 0;border-bottom:1px solid var(--border)}
 .tourney-locked-row b{color:var(--gold)}
-.t-correct{color:#4ade80;font-weight:900;font-size:.75rem}
-.t-wrong{color:#f87171;font-weight:900;font-size:.75rem}
-.admin-t-label{display:block;font-size:.75rem;font-weight:700;color:#a78bfa;margin:8px 0 4px}
+.t-correct{color:var(--green);font-weight:900;font-size:.75rem}
+.t-wrong{color:var(--red);font-weight:900;font-size:.75rem}
+.admin-t-label{display:block;font-size:.75rem;font-weight:700;color:var(--accent2);margin:8px 0 4px}
 
 
 /* ── FANTASY ── */
@@ -154,7 +154,7 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .fantasy-budget-bar>div{flex:1;background:linear-gradient(160deg,rgba(124,58,237,.15),rgba(10,22,40,.6));border:1px solid rgba(124,58,237,.3);border-radius:12px;padding:12px;text-align:center}
 .fb-label{font-size:.6875rem;color:var(--muted);margin-bottom:4px}
 .fb-val{font-size:1.25rem;font-weight:900;color:var(--gold)}
-.fb-neg{color:#f87171}
+.fb-neg{color:var(--red)}
 .fantasy-pos-tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto}
 .fantasy-chip-bar{width:100%;padding:11px;margin-bottom:12px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:.8125rem;font-weight:800;text-align:center;border:none;cursor:pointer}
 .fantasy-chip-btn{background:linear-gradient(135deg,#ff8a00,#e52e71);color:#fff;box-shadow:var(--el-2)}
@@ -166,25 +166,25 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .fpos-tab.active{background:linear-gradient(135deg,#7C3AED,#5B21B6);color:#fff;border-color:transparent}
 .fantasy-browse{max-height:260px;overflow-y:auto;overscroll-behavior:contain;background:var(--card2);border-radius:12px;padding:8px;margin-bottom:16px}
 .f-player-row{display:flex;align-items:center;justify-content:space-between;padding:10px 10px;border-radius:8px;margin-bottom:4px;background:rgba(255,255,255,.02)}
-.f-player-row.f-added{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2)}
+.f-player-row.f-added{background:rgba(0,255,135,.08);border:1px solid rgba(0,255,135,.2)}
 .f-pname{font-size:.875rem;font-weight:700;color:var(--text)}
 .f-pteam{font-size:.6875rem;color:var(--muted)}
 .f-status{font-size:.625rem;font-weight:700;padding:1px 6px;border-radius:8px;margin-right:4px;white-space:nowrap}
-.f-status-injured{background:rgba(255,59,92,.15);color:#ff6b85}
+.f-status-injured{background:rgba(255,59,92,.15);color:var(--red)}
 .f-status-susp{background:rgba(251,146,60,.15);color:#fb923c}
 .f-status-doubt{background:rgba(250,204,21,.15);color:#facc15}
 .f-status-rot{background:rgba(178,150,199,.15);color:var(--muted)}
-.f-warning{background:rgba(255,59,92,.08);border:1px solid rgba(255,59,92,.3);border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:.75rem;color:#ff8fa3;line-height:1.6}
+.f-warning{background:rgba(255,59,92,.08);border:1px solid rgba(255,59,92,.3);border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:.75rem;color:var(--red);line-height:1.6}
 .f-price{font-size:.75rem;font-weight:900;color:var(--gold)}
 .f-btn{padding:6px 12px;border-radius:7px;border:none;font-family:'Cairo',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer}
 .f-add{background:var(--green);color:#0A1628}
 .f-add:hover:not(:disabled){background:#00e078}
 .f-add:disabled{background:var(--border);color:var(--muted);cursor:not-allowed}
-.f-remove{background:rgba(255,59,92,.15);color:#ff6b85}
+.f-remove{background:rgba(255,59,92,.15);color:var(--red)}
 .f-remove:hover{background:rgba(255,59,92,.28)}
 .f-empty{text-align:center;padding:32px 12px;color:var(--muted);font-size:.8125rem}
 .fantasy-squad-title{font-size:.9375rem;font-weight:900;color:var(--gold);margin:6px 0 10px}
-.f-squad-pos-label{font-size:.75rem;font-weight:700;color:#a78bfa;margin:10px 0 6px}
+.f-squad-pos-label{font-size:.75rem;font-weight:700;color:var(--accent2);margin:10px 0 6px}
 .f-squad-row{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:8px;margin-bottom:4px;background:var(--card2)}
 .f-squad-row.f-starting{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25)}
 .f-check{display:flex;align-items:center;gap:8px;font-size:.875rem;font-weight:700;color:var(--text);cursor:pointer}
@@ -245,7 +245,7 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .fp-price{font-size:.5625rem;color:#e8d8ee;text-shadow:0 1px 3px rgba(0,0,0,.8)}
 .fp-cap{position:absolute;top:-4px;left:-4px;width:16px;height:16px;border-radius:50%;background:var(--gold);color:#fff;font-size:.5625rem;font-weight:900;display:flex;align-items:center;justify-content:center;border:1.5px solid #fff}
 .fp-cap.fp-vice{background:#9b7ab0}
-.fp-flag{position:absolute;bottom:-2px;right:-2px;color:#ff3b5c;font-size:.75rem;text-shadow:0 0 3px #000}
+.fp-flag{position:absolute;bottom:-2px;right:-2px;color:var(--red);font-size:.75rem;text-shadow:0 0 3px #000}
 .fp-bench-label{font-size:.8125rem;font-weight:800;color:var(--muted);margin:14px 0 8px}
 .fp-bench-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:14px 6px;background:linear-gradient(180deg,#0d5c2e,#0a4a24);border:2px solid rgba(255,255,255,.2);border-radius:12px}
 .fb-col{display:flex;flex-direction:column;align-items:center;gap:6px}
@@ -264,8 +264,8 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .fantasy-lb-details[open] .fantasy-lb-summary .chevron{transform:rotate(180deg)}
 .f-lb-row{display:flex;justify-content:space-between;padding:8px 12px;font-size:.8125rem;border-bottom:1px solid var(--border)}
 .f-lb-row b{color:var(--gold)}
-.badge-open{background:rgba(0,105,62,.2);color:#4ade80}
-.badge-locked{background:rgba(224,52,52,.15);color:#f87171}
+.badge-open{background:rgba(0,105,62,.2);color:var(--green)}
+.badge-locked{background:rgba(224,52,52,.15);color:var(--red)}
 .badge-soon{background:rgba(217,119,6,.15);color:#fbbf24}
 .badge-done{background:rgba(122,143,174,.15);color:var(--muted)}
 .match-time{font-size:.75rem;color:var(--muted);direction:ltr}
@@ -296,9 +296,9 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .pred-mine-label{color:var(--muted);font-size:.75rem}
 .pred-mine-score{font-weight:900;color:var(--gold);font-size:.9375rem;direction:ltr}
 .pts-badge{padding:4px 12px;border-radius:20px;font-weight:900;font-size:.75rem}
-.pts-3{background:rgba(22,163,74,.2);color:#4ade80}
+.pts-3{background:rgba(22,163,74,.2);color:var(--green)}
 .pts-1{background:rgba(14,165,233,.2);color:#38bdf8}
-.pts-0{background:rgba(224,52,52,.1);color:#f87171}
+.pts-0{background:rgba(224,52,52,.1);color:var(--red)}
 
 /* ── ALL PREDS (after match) ── */
 .all-preds-section{margin-top:10px}
@@ -312,7 +312,7 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .finished-details[open] .finished-summary .chevron{transform:rotate(180deg)}
 .finished-inner{border:1.5px solid rgba(201,168,76,.12);border-top:none;border-radius:0 0 14px 14px;padding:12px}
 .admin-finished-details{margin-top:10px}
-.admin-finished-summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;font-size:.875rem;font-weight:700;color:#4ade80;padding:12px 14px;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.2);border-radius:10px;user-select:none}
+.admin-finished-summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;font-size:.875rem;font-weight:700;color:var(--green);padding:12px 14px;background:rgba(0,255,135,.06);border:1px solid rgba(0,255,135,.2);border-radius:10px;user-select:none}
 .admin-search{width:100%;padding:12px 14px;background:var(--dark);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.875rem;outline:none;margin-bottom:12px}
 .admin-search:focus{border-color:var(--gold)}
 .admin-group-label{font-size:.75rem;font-weight:700;color:#fbbf24;margin:4px 0 8px}
@@ -387,7 +387,7 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .cmp-score-big{display:flex;align-items:center;justify-content:space-between;background:var(--dark);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:14px}
 .cmp-score-big>div:first-child,.cmp-score-big>div:last-child{font-size:2rem;font-weight:900;color:var(--text);flex:1;text-align:center}
 .cmp-score-big>div:nth-child(2){flex:0}
-.cmp-win{color:#4ade80!important}
+.cmp-win{color:var(--green)!important}
 .cmp-row{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--border)}
 .cmp-val{flex:1;text-align:center;font-weight:900;font-size:1rem;color:var(--text)}
 .cmp-label{flex:1.4;text-align:center;font-size:.75rem;color:var(--muted)}
@@ -410,7 +410,7 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 #fpa-drawer{background:var(--card);border:1px solid var(--border);border-radius:20px 20px 0 0;width:100%;max-width:480px;max-height:70vh;overflow-y:auto;overscroll-behavior:contain;transform:translateY(100%);transition:transform var(--dur-slow) var(--ease-spring);padding-bottom:28px;box-shadow:var(--el-4)}
 .fpa-btn{width:100%;text-align:right;padding:14px 16px;margin-bottom:8px;background:var(--card2);border:1px solid var(--border);border-radius:12px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.875rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:space-between}
 .fpa-btn:hover{border-color:var(--gold)}
-.fpa-btn.fpa-danger{color:#ff6b85}
+.fpa-btn.fpa-danger{color:var(--red)}
 .fpa-btn.fpa-active{background:rgba(233,0,82,.12);border-color:var(--gold);color:var(--gold)}
 #squad-overlay.open #squad-drawer{transform:translateY(0)}
 #squad-body{padding:0 20px}
@@ -419,7 +419,7 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .sii-label{font-size:.6875rem;color:var(--muted);margin-bottom:4px}
 .sii-val{font-size:.75rem;font-weight:700;color:var(--text)}
 .squad-count{text-align:center;font-size:.8125rem;font-weight:700;color:var(--gold);background:rgba(201,168,76,.08);border-radius:8px;padding:8px;margin-bottom:12px}
-.squad-pos-title{font-size:.8125rem;font-weight:900;color:#a78bfa;margin:14px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--border)}
+.squad-pos-title{font-size:.8125rem;font-weight:900;color:var(--accent2);margin:14px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--border)}
 .squad-player{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--card2);border-radius:8px;margin-bottom:6px}
 .squad-player-name{font-size:.875rem;font-weight:700;color:var(--text)}
 .squad-player-club{font-size:.75rem;color:var(--muted)}
@@ -431,7 +431,7 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .drawer-hdr{padding:20px 24px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
 .drawer-hdr h2{font-size:1rem;font-weight:900;color:var(--gold)}
 .drawer-close{background:var(--card2);border:1px solid var(--border);border-radius:20px;color:var(--muted);padding:6px 14px;font-family:'Cairo',sans-serif;cursor:pointer;font-size:.8125rem;transition:background var(--dur-base) var(--ease-standard),color var(--dur-base) var(--ease-standard)}
-.drawer-close:hover{background:rgba(255,59,92,.12);border-color:rgba(255,59,92,.3);color:#ff6b85}
+.drawer-close:hover{background:rgba(255,59,92,.12);border-color:rgba(255,59,92,.3);color:var(--red)}
 .drawer-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 20px}
 .d-stat{background:var(--dark);border:1px solid var(--border);border-radius:9px;padding:10px;text-align:center}
 .d-stat .n{font-size:1.5rem;font-weight:900;color:var(--gold);line-height:1}
@@ -442,7 +442,7 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .d-pred-row.me{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.18)}
 .d-pred-teams{font-size:.8125rem;font-weight:700;flex:1;line-height:1.4}
 .d-pred-actual{font-size:.75rem;color:var(--muted)}
-.d-ko-detail{font-size:.6875rem;color:#a78bfa;margin-top:4px;font-weight:700}
+.d-ko-detail{font-size:.6875rem;color:var(--accent2);margin-top:4px;font-weight:700}
 .d-pred-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .d-breakdown{margin-top:8px;padding:8px 10px;background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.18);border-radius:8px}
 .bd-title{font-size:.6875rem;font-weight:900;color:var(--gold);margin-bottom:6px}
@@ -453,19 +453,19 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 
 /* ── ADMIN ── */
 .admin-panel{background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(124,58,237,.04));border:1px solid rgba(124,58,237,.3);border-radius:12px;padding:24px;margin-bottom:24px}
-.admin-panel h3{color:#c4b5fd;font-size:.9375rem;font-weight:900;margin-bottom:14px}
+.admin-panel h3{color:var(--accent2);font-size:.9375rem;font-weight:900;margin-bottom:14px}
 .admin-sec{margin-bottom:24px}
-.admin-sec-title{font-size:.875rem;font-weight:900;color:#a78bfa;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid rgba(124,58,237,.2)}
+.admin-sec-title{font-size:.875rem;font-weight:900;color:var(--accent2);margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid rgba(124,58,237,.2)}
 .admin-match-item{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:12px 14px;margin-bottom:8px}
 .admin-match-title{font-size:.875rem;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .auto-badge{background:rgba(14,165,233,.15);color:#38bdf8;padding:2px 8px;border-radius:8px;font-size:.6875rem;font-weight:700}
-.result-badge{background:rgba(22,163,74,.15);color:#4ade80;padding:2px 8px;border-radius:8px;font-size:.6875rem;font-weight:700}
+.result-badge{background:rgba(22,163,74,.15);color:var(--green);padding:2px 8px;border-radius:8px;font-size:.6875rem;font-weight:700}
 .admin-score-row{display:flex;align-items:center;gap:10px;direction:ltr;flex-wrap:wrap}
 .admin-inp{width:52px;padding:8px;background:var(--dark);border:1px solid var(--border);border-radius:7px;color:var(--gold);font-size:.9375rem;font-weight:900;text-align:center;font-family:'Cairo',sans-serif;outline:none}
 .admin-inp:focus{border-color:var(--purple)}
 .btn-admin{padding:8px 14px;background:linear-gradient(135deg,var(--purple),#5B21B6);border:none;border-radius:9px;color:#fff;font-family:'Cairo',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;transition:transform var(--dur-base) var(--ease-standard),box-shadow var(--dur-base) var(--ease-standard)}
 .btn-admin:hover{transform:translateY(-1px);box-shadow:var(--el-2)}
-.btn-danger{padding:8px 14px;background:rgba(255,59,92,.12);border:1px solid rgba(255,59,92,.35);border-radius:9px;color:#ff6b85;font-family:'Cairo',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;transition:background var(--dur-base) var(--ease-standard)}
+.btn-danger{padding:8px 14px;background:rgba(255,59,92,.12);border:1px solid rgba(255,59,92,.35);border-radius:9px;color:var(--red);font-family:'Cairo',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;transition:background var(--dur-base) var(--ease-standard)}
 .btn-danger:hover{background:rgba(255,59,92,.22)}
 .btn-admin:disabled{opacity:.4;cursor:not-allowed}
 
@@ -473,7 +473,7 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .filter-btn{padding:6px 14px;background:none;border:1px solid var(--border);border-radius:20px;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.75rem;cursor:pointer;transition:all .2s}
 .filter-btn.active{background:rgba(0,255,135,.12);border-color:var(--green);color:var(--green)}
 .admin-players-table{width:100%;border-collapse:collapse;margin-top:10px}
-.admin-players-table th{background:rgba(124,58,237,.15);padding:10px 12px;text-align:right;font-size:.75rem;color:#c4b5fd;border-bottom:1px solid rgba(124,58,237,.25)}
+.admin-players-table th{background:rgba(124,58,237,.15);padding:10px 12px;text-align:right;font-size:.75rem;color:var(--accent2);border-bottom:1px solid rgba(124,58,237,.25)}
 .admin-players-table td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:.8125rem}
 .live-status-box{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:14px}
 
@@ -483,9 +483,9 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .rule-item{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--border)}
 .rule-item:last-child{border-bottom:none}
 .rule-pts{min-width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.125rem;font-weight:900;flex-shrink:0}
-.rule-pts.r3{background:rgba(22,163,74,.2);color:#4ade80}
+.rule-pts.r3{background:rgba(22,163,74,.2);color:var(--green)}
 .rule-pts.r1{background:rgba(14,165,233,.2);color:#38bdf8}
-.rule-pts.r0{background:rgba(224,52,52,.1);color:#f87171}
+.rule-pts.r0{background:rgba(224,52,52,.1);color:var(--red)}
 .rule-desc{font-size:.875rem;line-height:1.5}
 .rule-sub{font-size:.75rem;color:var(--muted);margin-top:2px}
 
@@ -577,16 +577,16 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
       </div>
       <div class="rules-box">
         <h3>⚽ نظام نقاط الفانتزي</h3>
-        <div class="rule-item"><div class="rule-pts r3">×2</div><div><div class="rule-desc">الكابتن (C)</div><div class="rule-sub">يحصل على ضعف نقاطه كل جولة — اختاريه من التشكيلة الأساسية</div></div></div>
+        <div class="rule-item"><div class="rule-pts r3">×2</div><div><div class="rule-desc">الكابتن (C)</div><div class="rule-sub">يحصل على ضعف نقاطه كل جولة — اختره من التشكيلة الأساسية</div></div></div>
         <div class="rule-item"><div class="rule-pts" style="background:linear-gradient(135deg,#ff8a00,#e52e71);color:#fff">×3</div><div><div class="rule-desc">رقاقة تربل كابتن 🔥</div><div class="rule-sub">تُستخدم مرة واحدة فقط طوال الموسم — تضاعف نقاط الكابتن ×3 بدل ×2 لجولة واحدة تختارينها</div></div></div>
         <div class="rule-item" style="border:none"><div class="rule-pts" style="background:rgba(122,143,174,.15);color:var(--muted)">11</div><div><div class="rule-desc">فقط الأساسيون يسجّلون نقاطاً</div><div class="rule-sub">الاحتياط (4 لاعبين) لا يحتسبون — رقّي احتياطياً لمركز أساسي إن أردتِ نقاطه</div></div></div>
       </div>
       <div class="rules-box">
         <h3>🏆 توقعات الموسم (منفصلة عن الفانتزي — مرة واحدة قبل الموعد النهائي)</h3>
-        <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:#a78bfa">10</div><div><div class="rule-desc">توقع بطل الدوري</div><div class="rule-sub">10 نقاط لمن يصيب الفريق البطل 🏆</div></div></div>
-        <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:#a78bfa">5</div><div><div class="rule-desc">توقع وصيف الدوري</div><div class="rule-sub">5 نقاط لمن يصيب الفريق الوصيف 🥈</div></div></div>
-        <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:#a78bfa">5</div><div><div class="rule-desc">توقع هداف الدوري</div><div class="rule-sub">5 نقاط لمن يصيب هداف الموسم ⚽</div></div></div>
-        <div class="rule-item" style="border:none"><div class="rule-pts" style="background:rgba(239,68,68,.15);color:#f87171;font-size:.875rem">🔒</div><div><div class="rule-desc">تُدخل مرة واحدة وتُقفل، ونقاطها لا تدخل بترتيب الفانتزي</div><div class="rule-sub">مسابقة جانبية مستقلة تماماً</div></div></div>
+        <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:var(--accent2)">10</div><div><div class="rule-desc">توقع بطل الدوري</div><div class="rule-sub">10 نقاط لمن يصيب الفريق البطل 🏆</div></div></div>
+        <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:var(--accent2)">5</div><div><div class="rule-desc">توقع وصيف الدوري</div><div class="rule-sub">5 نقاط لمن يصيب الفريق الوصيف 🥈</div></div></div>
+        <div class="rule-item"><div class="rule-pts r3" style="background:rgba(124,58,237,.2);color:var(--accent2)">5</div><div><div class="rule-desc">توقع هداف الدوري</div><div class="rule-sub">5 نقاط لمن يصيب هداف الموسم ⚽</div></div></div>
+        <div class="rule-item" style="border:none"><div class="rule-pts" style="background:rgba(239,68,68,.15);color:var(--red);font-size:.875rem">🔒</div><div><div class="rule-desc">تُدخل مرة واحدة وتُقفل، ونقاطها لا تدخل بترتيب الفانتزي</div><div class="rule-sub">مسابقة جانبية مستقلة تماماً</div></div></div>
       </div>
       <div class="rules-box">
         <h3>📅 تبويب المباريات</h3>
@@ -623,7 +623,7 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
         </div>
         <div class="admin-sec">
           <div class="admin-sec-title">⚠️ منطقة الخطر</div>
-          <div style="font-size:.75rem;color:var(--muted);margin-bottom:10px;line-height:1.6">🧹 تنظيف بقايا كأس العالم: يمسح توقعات المباريات القديمة، النتائج القديمة، وتوقعات بطل/وصيف/هداف الموسم المقفلة (كانت أسماء منتخبات كأس العالم) — ويعيد ترتيب المشاركين للصفر. <b style="color:#4ade80">لن يمسّ هذا حسابات المشاركين ولا فرق الفانتزي إطلاقاً.</b></div>
+          <div style="font-size:.75rem;color:var(--muted);margin-bottom:10px;line-height:1.6">🧹 تنظيف بقايا كأس العالم: يمسح توقعات المباريات القديمة، النتائج القديمة، وتوقعات بطل/وصيف/هداف الموسم المقفلة (كانت أسماء منتخبات كأس العالم) — ويعيد ترتيب المشاركين للصفر. <b style="color:var(--green)">لن يمسّ هذا حسابات المشاركين ولا فرق الفانتزي إطلاقاً.</b></div>
           <button class="btn-danger" onclick="confirmReset()" style="width:100%">🧹 تنظيف بيانات كأس العالم القديمة بالكامل</button>
         </div>
       </div>
@@ -768,7 +768,7 @@ async function loadDB(){
   if(u===undefined && p===undefined && r===undefined){
     document.getElementById('loading-overlay').innerHTML=`<div style="text-align:center;padding:40px;max-width:420px">
       <div style="font-size:2.5rem;margin-bottom:14px">⚠️</div>
-      <div style="color:#f87171;font-size:1rem;font-weight:700;margin-bottom:10px">تعذّر الاتصال بقاعدة البيانات</div>
+      <div style="color:var(--red);font-size:1rem;font-weight:700;margin-bottom:10px">تعذّر الاتصال بقاعدة البيانات</div>
       <div style="color:#7A8FAE;font-size:.875rem;line-height:1.6;margin-bottom:20px">تحقق من اتصال الإنترنت ثم أعد المحاولة.</div>
       <button onclick="location.reload()" style="padding:10px 24px;background:#00693E;border:none;border-radius:8px;color:#fff;font-family:Cairo,sans-serif;font-weight:700;cursor:pointer">إعادة المحاولة</button>
     </div>`;
@@ -1024,7 +1024,7 @@ async function saveMyFantasyTeam(squad,starting,captain,vice){
 async function activateTripleCaptain(){
   const u=currentUser.username;
   const t=DB.fantasyTeams[u];
-  if(!t){ toast('⚠️ احفظي فريقك أولاً'); return; }
+  if(!t){ toast('⚠️ احفظ فريقك أولاً'); return; }
   if(t.tripleCaptainGw!=null){ toast(`⚠️ سبق استخدام تربل كابتن بالجولة ${t.tripleCaptainGw}`); return; }
   const gw=prompt('رقم الجولة القادمة التي تريدين تفعيل تربل كابتن فيها؟\n(تُستخدم مرة واحدة فقط طوال الموسم ولا يمكن التراجع)');
   if(!gw||isNaN(gw)) return;
@@ -1132,7 +1132,7 @@ function renderFantasyUI(){
       <div><div class="fb-label">حجم الفريق</div><div class="fb-val">${squadIds.length}/15</div></div>
     </div>
     ${tcHTML}
-    <div class="fantasy-pitch-title">⚽ اضغطي أي خانة فارغة لاختيار لاعب — أو خانة مشغولة لخياراتها</div>
+    <div class="fantasy-pitch-title">⚽ اضغط أي خانة فارغة لاختيار لاعب — أو خانة مشغولة لخياراتها</div>
     <div class="fantasy-pitch">
       <div class="fantasy-pitch-banner"><span>⚽ فانتزي العزبة</span><span>فانتزي العزبة ⚽</span></div>
       ${pitchRowsHTML}
@@ -1197,13 +1197,13 @@ function renderFantasyPicker(){
   c.innerHTML=`
     <div class="fantasy-picker-hdr">
       <button class="fantasy-back-btn" onclick="closeFantasyPicker()">→ رجوع للملعب</button>
-      <div class="fantasy-picker-title">${POS_ICON[slot.pos]} اختاري ${POS_LABEL[slot.pos]}</div>
+      <div class="fantasy-picker-title">${POS_ICON[slot.pos]} اختر ${POS_LABEL[slot.pos]}</div>
     </div>
     <div class="fantasy-budget-bar">
       <div><div class="fb-label">الميزانية المتاحة لهذه الخانة</div><div class="fb-val ${remain<0?'fb-neg':''}">£${remain.toFixed(1)}م</div></div>
       <div><div class="fb-label">حجم الفريق</div><div class="fb-val">${fSquadIds().length}/15</div></div>
     </div>
-    <input class="fantasy-search" id="fantasy-search" placeholder="🔍 ابحثي عن لاعب بالاسم..." value="${q}" oninput="fPickerSearch(this.value)">
+    <input class="fantasy-search" id="fantasy-search" placeholder="🔍 ابحث عن لاعب بالاسم..." value="${q}" oninput="fPickerSearch(this.value)">
     <div class="fantasy-browse fantasy-browse-full">${rows}</div>
   `;
 }
@@ -1273,7 +1273,7 @@ async function submitFantasyTeam(){
   const w=_fWorking;
   const squad=fSquadIds(), starting=fStartingIds();
   if(squad.length!==15){ toast(`⚠️ يجب ملء كل الخانات الـ15 (${squad.length}/15 حالياً)`); return; }
-  if(!w.captain){ toast('⚠️ اختاري الكابتن — اضغطي أي لاعب أساسي بالملعب'); return; }
+  if(!w.captain){ toast('⚠️ اختر الكابتن — اضغط أي لاعب أساسي بالملعب'); return; }
   const btn=document.querySelector('.fantasy-save-btn');
   _fSaving=true;
   if(btn){ btn.disabled=true; btn.textContent='جارٍ الحفظ... ⏳'; }
@@ -1579,7 +1579,7 @@ function renderLeaderboard(){
     document.getElementById('my-stats').innerHTML=`
       <div class="stat-card"><div class="stat-num">${myP}</div><div class="stat-label">نقاط الفانتزي</div></div>
       <div class="stat-card"><div class="stat-num">${myTeam?.squad?.length||0}/15</div><div class="stat-label">حجم فريقي</div></div>
-      <div class="stat-card"><div class="stat-num">${squadDone?'✅':'⏳'}</div><div class="stat-label">${squadDone?'الفريق مكتمل':'أكملي فريقك'}</div></div>`;
+      <div class="stat-card"><div class="stat-num">${squadDone?'✅':'⏳'}</div><div class="stat-label">${squadDone?'الفريق مكتمل':'أكمل فريقك'}</div></div>`;
   }
 
   const players=Object.keys(DB.users)
@@ -1611,7 +1611,7 @@ function renderLeaderboard(){
   }).join('');
 
   document.getElementById('lb-container').innerHTML=`
-    <div class="lb-hint">🎮 الترتيب مبني على نقاط فرق الفانتزي فقط · افتحي تبويب الفانتزي لبناء فريقك</div>
+    <div class="lb-hint">🎮 الترتيب مبني على نقاط فرق الفانتزي فقط · افتح تبويب الفانتزي لبناء فريقك</div>
     <div class="lb-list">${rows}</div>`;
 }
 
@@ -1659,7 +1659,7 @@ function openProfile(username){
     return nb-na;
   });
   let html='';
-  if(isAdmin && !isMe){ html+=`<div style="padding:8px 12px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.3);border-radius:8px;font-size:.75rem;color:#c4b5fd;margin-bottom:12px">🛡️ عرض المشرف — جميع التوقعات مرئية لك بما فيها المباريات القادمة</div>`; }
+  if(isAdmin && !isMe){ html+=`<div style="padding:8px 12px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.3);border-radius:8px;font-size:.75rem;color:var(--accent2);margin-bottom:12px">🛡️ عرض المشرف — جميع التوقعات مرئية لك بما فيها المباريات القادمة</div>`; }
   stagesOrdered.forEach(stage=>{
     html+=`<div class="d-stage">${stage}</div>`;
     // داخل كل مرحلة: الأحدث انتهاءً أولاً
@@ -1680,7 +1680,7 @@ function openProfile(username){
       if(steps.length){
         const rows=steps.map(s=>{
           const icon=s.ok===true?'✅':s.ok===false?'❌':'⏳';
-          const ptsTxt=s.pts>0?`<b style="color:#4ade80">+${s.pts}</b>`:`<span style="color:var(--muted)">0</span>`;
+          const ptsTxt=s.pts>0?`<b style="color:var(--green)">+${s.pts}</b>`:`<span style="color:var(--muted)">0</span>`;
           return `<div class="bd-step"><span>${icon} ${s.txt}</span>${ptsTxt}</div>`;
         }).join('');
         breakdownHTML=`<div class="d-breakdown"><div class="bd-title">📊 مسار النقاط — الإجمالي: ${totalV}</div>${rows}</div>`;
@@ -1846,7 +1846,7 @@ function renderAdminFantasy(){
   const teamsCount=Object.keys(DB.fantasyTeams||{}).length;
   document.getElementById('admin-fantasy').innerHTML=`
     <div style="font-size:.75rem;color:var(--muted);margin-bottom:10px;line-height:1.6">
-      ${teamsCount} مشارك بنى فريق فانتزي · اطلبي من Claude تحديث نقاط أي جولة (يجلبها من الموقع الرسمي لـ Fantasy Premier League)، ثم الصقي النتيجة هنا بصيغة JSON.
+      ${teamsCount} مشارك بنى فريق فانتزي · اطلب من Claude تحديث نقاط أي جولة (يجلبها من الموقع الرسمي لـ Fantasy Premier League)، ثم الصق النتيجة هنا بصيغة JSON.
       ${gws.length?`<br>الجولات المُدخلة حالياً: ${gws.join('، ')}`:''}
     </div>
     <label class="admin-t-label">رقم الجولة</label>
@@ -1989,7 +1989,7 @@ async function adminDeletePlayer(username){
 }
 
 async function confirmReset(){
-  if(!confirm('⚠️ سيُمسح نهائياً:\n• كل توقعات المباريات القديمة\n• كل النتائج القديمة\n• توقعات بطل/وصيف/هداف الموسم المقفلة (كأس العالم)\n• ترتيب ونقاط المشاركين (تعود للصفر)\n\nلن يُمسّ: حسابات المشاركين، ولا فرق الفانتزي.\n\nهل أنتِ متأكدة؟ لا يمكن التراجع!')) return;
+  if(!confirm('⚠️ سيُمسح نهائياً:\n• كل توقعات المباريات القديمة\n• كل النتائج القديمة\n• توقعات بطل/وصيف/هداف الموسم المقفلة (كأس العالم)\n• ترتيب ونقاط المشاركين (تعود للصفر)\n\nلن يُمسّ: حسابات المشاركين، ولا فرق الفانتزي.\n\nهل أنت متأكد؟ لا يمكن التراجع!')) return;
   if(!confirm('تأكيد أخير: هذا المسح نهائي ولا رجعة فيه. متابعة؟')) return;
   DB.predictions={}; DB.results={}; DB.tourneyPreds={}; DB.tourneyResults=null; DB.bracket={}; DB.goldenMatch=null;
   await Promise.all([
