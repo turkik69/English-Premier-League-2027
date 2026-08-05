@@ -1189,14 +1189,26 @@ function fAddPlayer(id){
   if(fantasyClubCount(w.squad,p.team)>=FANTASY_MAX_PER_CLUB){ toast('⚠️ الحد الأقصى 3 لاعبين من نفس النادي'); return; }
   if(fantasySpent(w.squad)+p.price>FANTASY_BUDGET){ toast('⚠️ الميزانية لا تكفي'); return; }
   w.squad.push(id);
+  // توزيع تلقائي: يذهب اللاعب مباشرة للملعب طالما مركزه لم يمتلئ بالتشكيلة الأساسية ولم تكتمل الـ11، وإلا يذهب للاحتياط تلقائياً
+  const startingPosCount = w.starting.filter(x=>fPlayer(x)?.pos===p.pos).length;
+  if(w.starting.length<11 && startingPosCount<FANTASY_AUTO_XI[p.pos]){
+    w.starting.push(id);
+  }
   renderFantasyUI();
 }
 function fRemovePlayer(id){
   const w=_fWorking;
+  const wasStarting = w.starting.includes(id);
+  const removedPos = fPlayer(id)?.pos;
   w.squad=w.squad.filter(x=>x!==id);
   w.starting=w.starting.filter(x=>x!==id);
   if(w.captain===id) w.captain=null;
   if(w.vice===id) w.vice=null;
+  // إن كان اللاعب المُزال أساسياً، رقّي أول احتياطي من نفس المركز تلقائياً (لا يترك فراغاً بالملعب)
+  if(wasStarting && w.starting.length<11){
+    const replacement = w.squad.find(x=>!w.starting.includes(x) && fPlayer(x)?.pos===removedPos);
+    if(replacement) w.starting.push(replacement);
+  }
   renderFantasyUI();
 }
 function fToggleStarting(id){
@@ -2050,6 +2062,8 @@ const FANTASY_SQUAD_RULES = { GKP:2, DEF:5, MID:5, FWD:3 }; // 15 لاعباً
 const FANTASY_BUDGET = 100.0; // مليون جنيه إسترليني
 const FANTASY_MAX_PER_CLUB = 3;
 const FANTASY_XI_RULES = { GKP:[1,1], DEF:[3,5], MID:[2,5], FWD:[1,3] }; // الحد الأدنى/الأقصى بالتشكيلة الأساسية (11)
+// تشكيلة تلقائية افتراضية (4-4-2) عند الشراء — تجمع 11 بالضبط وتبقى ضمن الحدود دائماً
+const FANTASY_AUTO_XI = { GKP:1, DEF:4, MID:4, FWD:2 };
 // نقاط كل فعل (للعرض في القواعد فقط — النقاط الفعلية تُستورد جاهزة من الإدارة كل جولة)
 const FANTASY_SCORING_INFO = {
   goals:{GKP:10,DEF:6,MID:5,FWD:4}, assists:3, cleanSheet:{GKP:4,DEF:4,MID:1,FWD:0},
