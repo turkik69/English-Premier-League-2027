@@ -27,8 +27,20 @@
   --ease-out:cubic-bezier(0,0,.2,1);
   --ease-spring:cubic-bezier(.32,0,.15,1);
 }
+/* ── الوضع الفاتح: نفس التوكنات الدلالية بقيم مختلفة — لا كود جديد لأي مكوّن ── */
+body.light-theme{
+  --green:#00B368;--gold:#E90052;--dark:#F7F3FB;--card:#FFFFFF;
+  --card2:#F1E7F6;--border:#E3D3EE;--text:#2B0A42;--muted:#7C5C93;
+  --red:#E0234E;--purple:#37003C;--cyan:#00A8B4;
+  --el-1:0 1px 4px rgba(55,0,60,.08);
+  --el-2:0 4px 14px rgba(55,0,60,.12);
+  --el-3:0 8px 22px rgba(55,0,60,.14), 0 0 0 1px rgba(233,0,82,.05);
+  --el-4:0 16px 42px rgba(55,0,60,.18), 0 0 28px rgba(233,0,82,.06);
+}
+body.light-theme header{background:linear-gradient(135deg,#37003C 0%,#4A0057 50%,#5C0068 100%)}
+body.light-theme .theme-toggle{background:var(--card2)}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Cairo',sans-serif;background:var(--dark);color:var(--text);min-height:100vh}
+body{font-family:'Cairo',sans-serif;background:var(--dark);color:var(--text);min-height:100vh;transition:background var(--dur-slow) var(--ease-standard),color var(--dur-slow) var(--ease-standard)}
 /* حركة ضغط دقيقة لكل عنصر تفاعلي — micro-interaction موحّدة للتطبيق كله */
 button,.tab-btn,.filter-btn,.f-btn,.f-cap-btn,.fpos-tab,.lb-badge-ico,.team-clickable{transition:transform var(--dur-fast) var(--ease-standard),opacity var(--dur-fast) var(--ease-standard),background var(--dur-base) var(--ease-standard)}
 button:active,.filter-btn:active,.f-btn:active,.tab-btn:active{transform:scale(.96)}
@@ -53,6 +65,8 @@ header{background:linear-gradient(135deg,#25002B 0%,#37003C 50%,#4A0057 100%);bo
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
 #admin-badge{font-size:.75rem;color:#c4b5fd;padding:4px 10px;background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.4);border-radius:20px;font-weight:700;display:none}
 .logout-btn{font-size:.75rem;padding:6px 12px;background:none;border:1px solid var(--border);border-radius:20px;color:var(--muted);font-family:'Cairo',sans-serif;cursor:pointer}
+.theme-toggle{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform var(--dur-base) var(--ease-spring),background var(--dur-base) var(--ease-standard)}
+.theme-toggle:hover{background:rgba(255,255,255,.16);transform:rotate(15deg)}
 .logout-btn:hover{border-color:var(--red);color:var(--red)}
 
 /* ── TABS ── */
@@ -452,6 +466,7 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
         <div class="logo-text"><h1>تحدي الدوري الإنجليزي</h1><p>مسابقة توقعات الدوري الإنجليزي الممتاز</p></div>
       </div>
       <div class="header-actions">
+        <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="تبديل الوضع الفاتح/الداكن">🌙</button>
         <span id="admin-badge">🛡️ مشرف</span>
         <div id="player-name-display"></div>
         <div id="live-badge"><span class="live-dot"></span> مباشر</div>
@@ -797,6 +812,26 @@ function loginAs(username){
   if(currentUser.isAdmin){ document.getElementById('admin-badge').style.display='block'; document.getElementById('admin-tab-btn').style.display='block'; }
   renderMatches(); renderLeaderboard();
 }
+
+// ════════════════════════════════════════════
+// THEME — الوضع الفاتح/الداكن (تفضيل محلي لكل جهاز)
+// ════════════════════════════════════════════
+function applyTheme(theme){
+  document.body.classList.toggle('light-theme', theme==='light');
+  const btn=document.getElementById('theme-toggle');
+  if(btn) btn.textContent = theme==='light' ? '☀️' : '🌙';
+}
+function toggleTheme(){
+  const isLight=document.body.classList.contains('light-theme');
+  const next=isLight?'dark':'light';
+  applyTheme(next);
+  try{ localStorage.setItem('wc26_theme', next); }catch(e){}
+}
+(function initTheme(){
+  let saved=null;
+  try{ saved=localStorage.getItem('wc26_theme'); }catch(e){}
+  applyTheme(saved==='light'?'light':'dark');
+})();
 
 function doLogout(){
   currentUser=null; sessClear();
