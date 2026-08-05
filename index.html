@@ -139,6 +139,8 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .fb-val{font-size:1.25rem;font-weight:900;color:var(--gold)}
 .fb-neg{color:#f87171}
 .fantasy-pos-tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto}
+.fantasy-search{width:100%;padding:10px 14px;margin-bottom:10px;background:var(--dark);border:1.5px solid var(--border);border-radius:20px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.8125rem;outline:none;transition:border-color var(--dur-base) var(--ease-standard),box-shadow var(--dur-base) var(--ease-standard)}
+.fantasy-search:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(233,0,82,.15)}
 .fpos-tab{flex:1;white-space:nowrap;padding:10px 8px;background:var(--card2);border:1px solid var(--border);border-radius:9px;color:var(--muted);font-family:'Cairo',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer}
 .fpos-tab span{display:block;font-size:.6875rem;margin-top:2px}
 .fpos-tab.active{background:linear-gradient(135deg,#7C3AED,#5B21B6);color:#fff;border-color:transparent}
@@ -926,6 +928,7 @@ function renderFantasyUI(){
     <div class="fantasy-pos-tabs">
       ${POS_ORDER.map(pos=>`<button class="fpos-tab ${w.posTab===pos?'active':''}" onclick="fSwitchTab('${pos}')">${POS_LABEL[pos]} <span>${counts[pos]}/${FANTASY_SQUAD_RULES[pos]}</span></button>`).join('')}
     </div>
+    <input class="fantasy-search" id="fantasy-search" placeholder="🔍 ابحث عن لاعب بالاسم..." value="${w.query||''}" oninput="fSearch(this.value)">
     <div class="fantasy-browse" id="fantasy-browse"></div>
     <div class="fantasy-squad-title">📋 فريقي (${w.squad.length}/15) <span style="font-size:.6875rem;color:var(--muted);font-weight:400">اختر 11 أساسيين + كابتن</span></div>
     <div id="fantasy-squad-list"></div>
@@ -938,6 +941,8 @@ function renderFantasyUI(){
 }
 
 function fSwitchTab(pos){ _fWorking.posTab=pos; renderFantasyUI(); }
+// البحث لا يعيد بناء الواجهة كاملة (يحافظ على تركيز الكتابة بالحقل) — فقط يعيد قائمة التصفح
+function fSearch(q){ _fWorking.query=q; renderFantasyBrowse(); }
 
 // شارة حالة اللاعب (مصاب/موقوف/مشكوك/احتياطي دوران)
 function fStatusBadge(p){
@@ -950,16 +955,19 @@ function fStatusBadge(p){
 
 function renderFantasyBrowse(){
   const w=_fWorking;
-  const pool=FANTASY_PLAYERS.filter(p=>p.pos===w.posTab).sort((a,b)=>b.price-a.price);
+  const q=(w.query||'').trim();
+  // أثناء البحث: تصفّح كل المراكز (المستخدم قد لا يتذكر مركز اللاعب بالضبط)
+  let pool = q ? FANTASY_PLAYERS.filter(p=>p.name.includes(q)||p.team.includes(q)) : FANTASY_PLAYERS.filter(p=>p.pos===w.posTab);
+  pool=pool.sort((a,b)=>b.price-a.price);
   const el=document.getElementById('fantasy-browse');
-  if(!pool.length){ el.innerHTML=`<div class="f-empty">لاعبو هذا المركز قيد الإضافة قريباً ⏳</div>`; return; }
+  if(!pool.length){ el.innerHTML=`<div class="f-empty">${q?'لا نتائج مطابقة لبحثك 🔍':'لاعبو هذا المركز قيد الإضافة قريباً ⏳'}</div>`; return; }
   el.innerHTML=pool.map(p=>{
     const inSquad=w.squad.includes(p.id);
     const clubCount=fantasyClubCount(w.squad,p.team);
     const posCount=w.squad.filter(id=>fPlayer(id)?.pos===p.pos).length;
     const canAdd = !inSquad && posCount<FANTASY_SQUAD_RULES[p.pos] && clubCount<FANTASY_MAX_PER_CLUB && (fantasySpent(w.squad)+p.price)<=FANTASY_BUDGET;
     return `<div class="f-player-row ${inSquad?'f-added':''}">
-      <div><div class="f-pname">${p.name} ${fStatusBadge(p)}</div><div class="f-pteam">${p.team}</div></div>
+      <div><div class="f-pname">${p.name} ${fStatusBadge(p)}</div><div class="f-pteam">${p.team}${q?` · ${POS_LABEL[p.pos]}`:''}</div></div>
       <div style="display:flex;align-items:center;gap:8px">
         <span class="f-price">£${p.price.toFixed(1)}م</span>
         ${inSquad?`<button class="f-btn f-remove" onclick="fRemovePlayer(${p.id})">✕ إزالة</button>`:`<button class="f-btn f-add" ${canAdd?'':'disabled'} onclick="fAddPlayer(${p.id})">+ إضافة</button>`}
@@ -1033,7 +1041,9 @@ function fToggleStarting(id){
 function fSetCaptain(id){ _fWorking.captain=id; if(_fWorking.vice===id)_fWorking.vice=null; renderFantasyUI(); }
 function fSetVice(id){ _fWorking.vice=id; if(_fWorking.captain===id)_fWorking.captain=null; renderFantasyUI(); }
 
+let _fSaving=false;
 async function submitFantasyTeam(){
+  if(_fSaving) return;
   const w=_fWorking;
   if(w.squad.length!==15){ toast(`⚠️ يجب اختيار 15 لاعباً بالضبط (${w.squad.length}/15 حالياً)`); return; }
   if(!fantasySquadValid(w.squad)){ toast('⚠️ تحقق من توزيع المراكز: 2 حراس، 5 مدافعين، 5 وسط، 3 مهاجمين'); return; }
@@ -1045,9 +1055,14 @@ async function submitFantasyTeam(){
     if(xiCounts[pos]<min||xiCounts[pos]>max){ toast(`⚠️ عدد ${POS_LABEL[pos]} بالتشكيلة الأساسية غير صحيح`); return; }
   }
   if(!w.captain){ toast('⚠️ اختر الكابتن (C) من التشكيلة الأساسية'); return; }
+  const btn=document.querySelector('.fantasy-save-btn');
+  _fSaving=true;
+  if(btn){ btn.disabled=true; btn.textContent='جارٍ الحفظ... ⏳'; }
   const ok=await saveMyFantasyTeam(w.squad,w.starting,w.captain,w.vice);
+  _fSaving=false;
   if(ok){ toast('✅ تم حفظ فريقك بنجاح'); renderLeaderboard(); }
   else toast('⚠️ تعذّر الحفظ');
+  if(btn){ btn.disabled=false; btn.textContent='💾 حفظ فريقي'; }
 }
 
 
@@ -1224,19 +1239,24 @@ function buildTourneyCard(){
   return details;
 }
 
+let _tSaving=false;
 async function saveTourney(){
+  if(_tSaving) return;
   const u=currentUser.username;
   const champion=document.getElementById('t-champion').value;
   const runnerup=document.getElementById('t-runnerup').value;
-  const f2=document.getElementById('t-final2').value;
   const topscorer=document.getElementById('t-scorer').value.trim();
   if(!champion||!runnerup||!topscorer){ toast('⚠️ أكمل جميع التوقعات الثلاثة'); return; }
   if(champion===runnerup){ toast('⚠️ اختر فريقين مختلفين للبطل والوصيف'); return; }
   if(!confirm('⚠️ تأكيد التوقعات؟ لا يمكن تعديلها بعد الحفظ!')) return;
+  const btn=document.querySelector('.tourney-save');
+  _tSaving=true;
+  if(btn){ btn.disabled=true; btn.textContent='جارٍ الحفظ... ⏳'; }
   DB.tourneyPreds[u]={champion, runnerup, topscorer, locked:true, at:Date.now()};
   const ok=await saveTourneyPred(u);
+  _tSaving=false;
   if(ok){ toast('🏆 تم حفظ وإقفال توقعات الموسم'); renderMatches(); renderLeaderboard(); }
-  else { toast('⚠️ تعذّر الحفظ'); delete DB.tourneyPreds[u]; }
+  else { toast('⚠️ تعذّر الحفظ'); delete DB.tourneyPreds[u]; if(btn){ btn.disabled=false; btn.textContent='🔒 حفظ وإقفال توقعاتي'; } }
 }
 
 function renderMatches(){
@@ -1330,7 +1350,7 @@ function buildCard(m){
         <div class="score-input-wrap"><button onclick="adj('${m.id}','h',-1)">−</button><input class="score-num" type="number" id="h_${m.id}" value="${ph}" min="0" max="20" oninput="clamp(this)"><button onclick="adj('${m.id}','h',1)">+</button></div>
         <span style="font-size:.6875rem;color:var(--muted)">${m.home}</span>
       </div>
-      <button class="save-pred-btn" onclick="savePred('${m.id}')">حفظ التوقع ✓</button>
+      <button class="save-pred-btn" onclick="savePred('${m.id}',event)">حفظ التوقع ✓</button>
     </div>`;
   } else if(done){
     // show MY prediction with points
@@ -1378,7 +1398,9 @@ function buildCard(m){
 function adj(id,side,d){ const i=document.getElementById(side+'_'+id); if(!i)return; i.value=Math.max(0,Math.min(20,(+i.value||0)+d)); }
 function clamp(i){ const v=+i.value; if(isNaN(v)||v<0)i.value=0; else if(v>20)i.value=20; }
 
-async function savePred(id){
+async function savePred(id,ev){
+  const btn = ev?.target?.closest('button');
+  if(btn){ if(btn.disabled) return; btn.disabled=true; btn.dataset.orig=btn.textContent; btn.textContent='جارٍ الحفظ... ⏳'; }
   const h=Math.max(0,+document.getElementById('h_'+id)?.value||0);
   const a=Math.max(0,+document.getElementById('a_'+id)?.value||0);
   const u=currentUser.username;
@@ -1390,6 +1412,7 @@ async function savePred(id){
     toast(`تم حفظ توقعك: ${m?.home} ${h}-${a} ${m?.away} ✓`);
   } else {
     toast('⚠️ تعذّر الحفظ — تحقق من قواعد Firebase');
+    if(btn){ btn.disabled=false; btn.textContent=btn.dataset.orig; }
   }
   document.getElementById('card-'+id)?.replaceWith(buildCard(m));
   renderLeaderboard();
