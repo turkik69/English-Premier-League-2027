@@ -244,15 +244,18 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;box-shadow:var(--el-1);animation:fadeInUp var(--dur-slow) var(--ease-out) backwards}
 .stat-num{font-size:2rem;font-weight:900;color:var(--gold);line-height:1}
 .stat-label{font-size:.75rem;color:var(--muted);margin-top:6px}
-.lb-table{width:100%;border-collapse:collapse}
-.lb-table th{background:var(--card2);padding:12px 14px;text-align:right;font-size:.75rem;color:var(--muted);font-weight:700;border-bottom:2px solid var(--border)}
-.lb-table td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:.875rem}
-.lb-table tr.clickable{cursor:pointer;transition:background .15s}
-.lb-table tr.clickable:hover td{background:rgba(201,168,76,.04)}
-.rank-cell{font-weight:900;text-align:center;width:48px}
-.rank-1{color:#FFD700}.rank-2{color:#C0C0C0}.rank-3{color:#CD7F32}
-.pts-cell{font-weight:900;font-size:1rem;color:var(--gold);text-align:center}
-.me-row td{background:rgba(201,168,76,.05)}
+.lb-list{display:flex;flex-direction:column;gap:8px}
+.lb-row{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:10px 14px;cursor:pointer;box-shadow:var(--el-1);transition:transform var(--dur-base) var(--ease-standard),box-shadow var(--dur-base) var(--ease-standard),border-color var(--dur-base) var(--ease-standard);animation:fadeInUp var(--dur-slow) var(--ease-out) backwards}
+.lb-row:hover{transform:translateY(-2px);box-shadow:var(--el-2);border-color:rgba(233,0,82,.3)}
+.lb-row:active{transform:scale(.98)}
+.lb-rank{flex-shrink:0;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.9375rem;background:var(--card2);color:var(--muted)}
+.lb-rank.rank-1{background:linear-gradient(135deg,#FFD700,#B8860B);color:#2B0A00;font-size:1.25rem;box-shadow:0 0 14px rgba(255,215,0,.4)}
+.lb-rank.rank-2{background:linear-gradient(135deg,#E8E8E8,#A0A0A0);color:#2B2B2B;font-size:1.125rem}
+.lb-rank.rank-3{background:linear-gradient(135deg,#CD7F32,#8B5A2B);color:#fff;font-size:1.125rem}
+.lb-info{flex:1;min-width:0}
+.lb-name{font-weight:700;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.lb-pts{flex-shrink:0;font-weight:900;font-size:1.125rem;color:var(--gold);min-width:36px;text-align:center}
+.lb-row.me-row{background:rgba(233,0,82,.06);border-color:rgba(233,0,82,.35)}
 .lb-hint{font-size:.75rem;color:var(--muted);padding:8px 12px;background:rgba(122,143,174,.05);border:1px solid var(--border);border-radius:8px;margin-bottom:12px}
 .player-meta{font-size:.6875rem;color:var(--muted);margin-top:2px}
 .tap-hint{font-size:.6875rem;color:var(--muted);margin-right:auto}
@@ -272,7 +275,7 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .last-bubble{position:relative;background:#fff;color:#0A1628;font-size:.6875rem;font-weight:900;padding:4px 8px;border-radius:10px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.3);animation:pop .4s ease-out}
 .last-bubble::after{content:'';position:absolute;left:-4px;top:50%;transform:translateY(-50%);border-width:4px 4px 4px 0;border-style:solid;border-color:transparent #fff transparent transparent}
 @keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
-.last-row td{background:rgba(224,52,52,.04)}
+.lb-row.last-row{background:rgba(255,59,92,.06);border-color:rgba(255,59,92,.25)}
 
 
 #profile-badges-bar{padding:0 20px 6px}
@@ -329,8 +332,8 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .drawer-handle{width:38px;height:4px;background:var(--border);border-radius:2px;margin:14px auto 0}
 .drawer-hdr{padding:20px 24px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
 .drawer-hdr h2{font-size:1rem;font-weight:900;color:var(--gold)}
-.drawer-close{background:none;border:1px solid var(--border);border-radius:7px;color:var(--muted);padding:6px 14px;font-family:'Cairo',sans-serif;cursor:pointer;font-size:.8125rem}
-.drawer-close:hover{border-color:var(--red);color:var(--red)}
+.drawer-close{background:var(--card2);border:1px solid var(--border);border-radius:20px;color:var(--muted);padding:6px 14px;font-family:'Cairo',sans-serif;cursor:pointer;font-size:.8125rem;transition:background var(--dur-base) var(--ease-standard),color var(--dur-base) var(--ease-standard)}
+.drawer-close:hover{background:rgba(255,59,92,.12);border-color:rgba(255,59,92,.3);color:#ff6b85}
 .drawer-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 20px}
 .d-stat{background:var(--dark);border:1px solid var(--border);border-radius:9px;padding:10px;text-align:center}
 .d-stat .n{font-size:1.5rem;font-weight:900;color:var(--gold);line-height:1}
@@ -1421,17 +1424,17 @@ function renderLeaderboard(){
     const lastHTML = isLast
       ? `<span class="last-place"><span class="last-bubble">تراك مسخرة ياولد</span><span class="last-emoji">🤡</span></span>`
       : '';
-    return `<tr class="clickable${isMe?' me-row':''}${isLast?' last-row':''}" onclick="openProfile('${p.u}')">
-      <td class="rank-cell ${rc}">${ri}</td>
-      <td>
+    return `<div class="lb-row ${rc}${isMe?' me-row':''}${isLast?' last-row':''}" onclick="openProfile('${p.u}')" style="animation-delay:${Math.min(i*30,300)}ms">
+      <div class="lb-rank ${rc}">${ri}</div>
+      <div class="lb-info">
         ${badgesHTML}
-        <div style="font-weight:${isMe?'900':'600'};color:${isMe?'var(--gold)':'var(--text)'};display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+        <div class="lb-name" style="color:${isMe?'var(--gold)':'var(--text)'}">
           <span>${isMe?'⭐ ':''}${p.name}${isMe?' (أنت)':''}</span>${streakHTML}${lastHTML}
         </div>
         <div class="player-meta">${done} توقع محسوب · اضغط للتفاصيل ›</div>
-      </td>
-      <td class="pts-cell">${p.pts}</td>
-    </tr>`;
+      </div>
+      <div class="lb-pts">${p.pts}</div>
+    </div>`;
   }).join('');
 
   const compareBtn = (!currentUser?.isAdmin && players.length>1)
@@ -1440,7 +1443,7 @@ function renderLeaderboard(){
   document.getElementById('lb-container').innerHTML=`
     <div class="lb-hint">🔒 توقعات كل مشارك مخفية حتى انتهاء المباراة · اضغط على أي اسم لرؤية سجله ومسار احتساب نقاطه 📊</div>
     ${compareBtn}
-    <table class="lb-table"><thead><tr><th style="text-align:center;width:52px">المركز</th><th>المتسابق</th><th style="text-align:center;width:70px">النقاط</th></tr></thead><tbody>${rows}</tbody></table>`;
+    <div class="lb-list">${rows}</div>`;
 }
 
 // ════════════════════════════════════════════
