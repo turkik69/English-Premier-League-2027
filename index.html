@@ -546,7 +546,8 @@ main{max-width:1100px;margin:0 auto;padding:24px 16px}
         </div>
         <div class="admin-sec">
           <div class="admin-sec-title">⚠️ منطقة الخطر</div>
-          <button class="btn-danger" onclick="confirmReset()">🗑️ مسح جميع التوقعات</button>
+          <div style="font-size:.75rem;color:var(--muted);margin-bottom:10px;line-height:1.6">🧹 تنظيف بقايا كأس العالم: يمسح توقعات المباريات القديمة، النتائج القديمة، وتوقعات بطل/وصيف/هداف الموسم المقفلة (كانت أسماء منتخبات كأس العالم) — ويعيد ترتيب المشاركين للصفر. <b style="color:#4ade80">لن يمسّ هذا حسابات المشاركين ولا فرق الفانتزي إطلاقاً.</b></div>
+          <button class="btn-danger" onclick="confirmReset()" style="width:100%">🧹 تنظيف بيانات كأس العالم القديمة بالكامل</button>
         </div>
       </div>
     </div>
@@ -1892,7 +1893,20 @@ async function adminDeletePlayer(username){
   renderAdmin(); renderMatches(); renderLeaderboard();
 }
 
-async function confirmReset(){ if(!confirm('⚠️ مسح جميع التوقعات؟ لا يمكن التراجع!'))return; DB.predictions={}; await savePreds(); toast('تم المسح'); renderAdmin(); renderMatches(); renderLeaderboard(); }
+async function confirmReset(){
+  if(!confirm('⚠️ سيُمسح نهائياً:\n• كل توقعات المباريات القديمة\n• كل النتائج القديمة\n• توقعات بطل/وصيف/هداف الموسم المقفلة (كأس العالم)\n• ترتيب ونقاط المشاركين (تعود للصفر)\n\nلن يُمسّ: حسابات المشاركين، ولا فرق الفانتزي.\n\nهل أنتِ متأكدة؟ لا يمكن التراجع!')) return;
+  if(!confirm('تأكيد أخير: هذا المسح نهائي ولا رجعة فيه. متابعة؟')) return;
+  DB.predictions={}; DB.results={}; DB.tourneyPreds={}; DB.tourneyResults=null; DB.bracket={}; DB.goldenMatch=null;
+  await Promise.all([
+    savePreds(),
+    saveResults(),
+    fbPut('tourneyPreds', {}),
+    fbPut('tourneyResults', null),
+    fbPut('bracket', {}),
+    fbPut('goldenMatch', null),
+  ]);
+  toast('✅ تم تنظيف كل بيانات كأس العالم القديمة'); renderAdmin(); renderMatches(); renderLeaderboard();
+}
 
 // ════════════════════════════════════════════
 // LIVE SCORES — Auto fetch via Anthropic API
@@ -1945,6 +1959,52 @@ const FANTASY_PLAYERS = [
   {id:31,name:'كونسا',team:'أستون فيلا',pos:'DEF',price:4.5,status:'ok'},
   {id:32,name:'كاش',team:'أستون فيلا',pos:'DEF',price:4.5,status:'ok'},
   {id:33,name:'مينغز',team:'أستون فيلا',pos:'DEF',price:4.5,status:'ok'},
+  // ── ليفربول ──
+  {id:40,name:'أليسون',team:'ليفربول',pos:'GKP',price:5.5,status:'ok'},
+  {id:41,name:'مامارداشفيلي',team:'ليفربول',pos:'GKP',price:5.0,status:'ok',rotation:true},
+  {id:42,name:'فان دايك',team:'ليفربول',pos:'DEF',price:6.5,status:'ok'},
+  {id:43,name:'فريمبونغ',team:'ليفربول',pos:'DEF',price:5.5,status:'ok'},
+  {id:44,name:'كيركيز',team:'ليفربول',pos:'DEF',price:5.5,status:'ok'},
+  {id:45,name:'برادلي',team:'ليفربول',pos:'DEF',price:5.0,status:'ok',rotation:true},
+  {id:46,name:'غوميز',team:'ليفربول',pos:'DEF',price:5.0,status:'ok',rotation:true},
+  {id:47,name:'تسيميكاس',team:'ليفربول',pos:'DEF',price:5.0,status:'ok',rotation:true},
+  {id:48,name:'ليوني',team:'ليفربول',pos:'DEF',price:4.0,status:'ok',rotation:true},
+  {id:49,name:'فيرتز',team:'ليفربول',pos:'MID',price:7.5,status:'ok'},
+  {id:50,name:'غاكبو',team:'ليفربول',pos:'MID',price:7.0,status:'ok'},
+  {id:51,name:'سوبوسلاي',team:'ليفربول',pos:'MID',price:7.0,status:'ok'},
+  {id:52,name:'غرافينبرخ',team:'ليفربول',pos:'MID',price:6.0,status:'ok'},
+  {id:53,name:'كييزا',team:'ليفربول',pos:'MID',price:5.5,status:'ok',rotation:true},
+  {id:54,name:'إليوت',team:'ليفربول',pos:'MID',price:5.5,status:'ok',rotation:true},
+  {id:55,name:'جونز',team:'ليفربول',pos:'MID',price:5.5,status:'ok',rotation:true},
+  {id:56,name:'ماك أليستر',team:'ليفربول',pos:'MID',price:5.5,status:'ok'},
+  {id:57,name:'إندو',team:'ليفربول',pos:'MID',price:5.0,status:'ok',rotation:true},
+  {id:58,name:'إيكيتيكي',team:'ليفربول',pos:'FWD',price:7.5,status:'ok'},
+  {id:59,name:'إيزاك',team:'ليفربول',pos:'FWD',price:9.0,status:'ok'},
+  // ── مانشستر سيتي ──
+  {id:60,name:'بيتينيلي',team:'مانشستر سيتي',pos:'GKP',price:4.5,status:'ok',rotation:true},
+  {id:61,name:'دوناروما',team:'مانشستر سيتي',pos:'GKP',price:5.5,status:'ok'},
+  {id:62,name:'ترافورد',team:'مانشستر سيتي',pos:'GKP',price:5.0,status:'ok',rotation:true},
+  {id:63,name:'أيت نوري',team:'مانشستر سيتي',pos:'DEF',price:5.5,status:'ok'},
+  {id:64,name:'دياز',team:'مانشستر سيتي',pos:'DEF',price:5.5,status:'ok'},
+  {id:65,name:'غيهي',team:'مانشستر سيتي',pos:'DEF',price:6.0,status:'ok'},
+  {id:66,name:'غفارديول',team:'مانشستر سيتي',pos:'DEF',price:5.5,status:'ok'},
+  {id:67,name:'خوسانوف',team:'مانشستر سيتي',pos:'DEF',price:5.5,status:'ok'},
+  {id:68,name:'لويس',team:'مانشستر سيتي',pos:'DEF',price:4.5,status:'ok',rotation:true},
+  {id:69,name:'ريس',team:'مانشستر سيتي',pos:'DEF',price:4.5,status:'ok',rotation:true},
+  {id:70,name:'سيمينيو',team:'مانشستر سيتي',pos:'MID',price:8.5,status:'ok'},
+  {id:71,name:'فودين',team:'مانشستر سيتي',pos:'MID',price:7.0,status:'ok'},
+  {id:72,name:'شيركي',team:'مانشستر سيتي',pos:'MID',price:7.5,status:'ok'},
+  {id:73,name:'دوكو',team:'مانشستر سيتي',pos:'MID',price:7.5,status:'ok'},
+  {id:74,name:'رودري',team:'مانشستر سيتي',pos:'MID',price:6.5,status:'ok'},
+  {id:75,name:'سافينيو',team:'مانشستر سيتي',pos:'MID',price:6.5,status:'ok'},
+  {id:76,name:'رايندرز',team:'مانشستر سيتي',pos:'MID',price:6.0,status:'ok'},
+  {id:77,name:'نيكو',team:'مانشستر سيتي',pos:'MID',price:5.5,status:'ok'},
+  {id:78,name:'كوفاتشيتش',team:'مانشستر سيتي',pos:'MID',price:5.5,status:'ok',rotation:true},
+  {id:79,name:'إتشيفيري',team:'مانشستر سيتي',pos:'MID',price:5.0,status:'ok',rotation:true},
+  {id:80,name:'فيليبس',team:'مانشستر سيتي',pos:'MID',price:5.0,status:'ok',rotation:true},
+  {id:81,name:'أندرسون',team:'مانشستر سيتي',pos:'MID',price:6.5,status:'ok'},
+  {id:82,name:'مرموش',team:'مانشستر سيتي',pos:'FWD',price:7.0,status:'ok'},
+  {id:83,name:'هالاند',team:'مانشستر سيتي',pos:'FWD',price:15.5,status:'ok'},
 ];
 
 // ════════════════════════════════════════════
