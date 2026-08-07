@@ -60,6 +60,13 @@ body.light-theme {
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', 'IBM Plex Sans Arabic', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+#loadingOverlay{position:fixed;inset:0;background:var(--dark-bg);z-index:999;padding-top:calc(24px + var(--sat));overflow:hidden}
+.skel-wrap{max-width:600px;margin:0 auto;padding:16px 20px}
+.skel{background:linear-gradient(90deg,var(--card-bg2) 25%,var(--border-color) 50%,var(--card-bg2) 75%);background-size:200% 100%;animation:skelShine 1.4s ease-in-out infinite;border-radius:12px}
+@keyframes skelShine{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel-title{height:22px;width:55%;margin-bottom:20px}
+.skel-card{height:100px;margin-bottom:12px;border-radius:14px}
 html, body { height: 100%; overscroll-behavior-y: none; background: var(--dark-bg); color: var(--text-main); }
 body { display: flex; flex-direction: column; min-height: 100vh; padding-bottom: calc(68px + var(--sab)); }
 
@@ -206,8 +213,9 @@ body { display: flex; flex-direction: column; min-height: 100vh; padding-bottom:
 .chip-btn {
   background: var(--card-bg); border: 1.5px solid var(--border-color);
   border-radius: 12px; padding: 10px 4px; text-align: center; cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
+.chip-btn:active { transform: scale(0.95); }
 .chip-btn.active { background: linear-gradient(135deg, var(--fpl-pink), var(--fpl-purple)); border-color: var(--fpl-pink); color: #FFF; }
 
 /* Transfer Summary Header */
@@ -254,13 +262,16 @@ body { display: flex; flex-direction: column; min-height: 100vh; padding-bottom:
 .btn-secondary {
   width: 100%; padding: 11px; background: rgba(255,255,255,0.08); border: 1px solid var(--border-color);
   color: var(--text-main); border-radius: 12px; font-weight: 800; font-size: 0.85rem; cursor: pointer; margin-top: 8px;
+  transition: transform 0.15s, background 0.2s;
 }
+.btn-secondary:active { transform: scale(0.97); background: rgba(255,255,255,0.14); }
 
 /* Leaderboard & Podium */
 .podium-wrap { display: flex; justify-content: center; align-items: flex-end; gap: 10px; margin: 16px 0 24px; }
 .podium-card {
   background: var(--card-bg); border: 1.5px solid var(--border-color); border-radius: 16px;
   padding: 12px 8px; text-align: center; flex: 1; max-width: 110px; display: flex; flex-direction: column; align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3); animation: cardFadeIn 0.4s ease-out backwards;
 }
 .podium-card.first { order: 2; border-color: var(--fpl-yellow); box-shadow: 0 0 18px rgba(255,215,0,0.3); transform: translateY(-10px); }
 .podium-card.second { order: 1; border-color: #C0C0C0; }
@@ -268,10 +279,14 @@ body { display: flex; flex-direction: column; min-height: 100vh; padding-bottom:
 .podium-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--fpl-purple-light); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 6px; }
 
 /* Leaderboard List */
+@keyframes cardFadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .lb-item {
   background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px;
   padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25); transition: transform 0.2s, box-shadow 0.2s;
+  animation: cardFadeIn 0.35s ease-out backwards;
 }
+.lb-item:active { transform: scale(0.98); }
 .lb-item.me { border-color: var(--fpl-green); background: rgba(0,255,135,0.06); }
 .lb-rank { width: 30px; font-size: 0.95rem; font-weight: 900; color: var(--fpl-yellow); }
 .lb-user { flex: 1; margin: 0 8px; }
@@ -283,7 +298,10 @@ body { display: flex; flex-direction: column; min-height: 100vh; padding-bottom:
 .fixture-card {
   background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px;
   padding: 12px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25); transition: transform 0.2s, box-shadow 0.2s;
+  animation: cardFadeIn 0.35s ease-out backwards;
 }
+.fixture-card:active { transform: scale(0.98); box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
 .team-box { display: flex; align-items: center; gap: 8px; flex: 1; }
 .team-box.away { justify-content: flex-end; }
 
@@ -304,6 +322,15 @@ body { display: flex; flex-direction: column; min-height: 100vh; padding-bottom:
 </style>
 </head>
 <body>
+
+<div id="loadingOverlay">
+  <div class="skel-wrap">
+    <div class="skel skel-title"></div>
+    <div class="skel skel-card"></div>
+    <div class="skel skel-card"></div>
+    <div class="skel skel-card"></div>
+  </div>
+</div>
 
 <!-- App Header -->
 <header class="app-header">
@@ -689,6 +716,8 @@ window.addEventListener('DOMContentLoaded', async () => {
   setupGWSelector();
   await loadDatabase();
   checkSession();
+  const ov=document.getElementById('loadingOverlay');
+  if(ov) ov.style.display='none';
 });
 
 async function loadDatabase(){
