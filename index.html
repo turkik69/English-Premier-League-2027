@@ -578,6 +578,14 @@ body { display: flex; flex-direction: column; min-height: 100vh; padding-bottom:
 // DATABASE & PERSISTENCE
 // ════════════════════════════════════════════
 const FB_URL = 'https://world-cup-2026-d3091-default-rtdb.europe-west1.firebasedatabase.app';
+// قواعد الفانتزي: الميزانية وحدود المراكز والنادي الواحد
+const TEAM_BUDGET = 100.0;
+const SQUAD_LIMITS = { GKP:2, DEF:5, MID:5, FWD:3 };
+const MAX_PER_CLUB = 3;
+function teamAllIds(team){ return [...team.starting, ...team.bench]; }
+function teamSpent(team){ return teamAllIds(team).reduce((s,id)=>{ const p=PLAYERS_DB.find(x=>x.id===id); return s+(p?p.price:0); },0); }
+function teamPosCount(team,pos){ return teamAllIds(team).filter(id=>PLAYERS_DB.find(x=>x.id===id)?.pos===pos).length; }
+function teamClubCount(team,club){ return teamAllIds(team).filter(id=>PLAYERS_DB.find(x=>x.id===id)?.club===club).length; }
 
 let DB = {
   users: {},
@@ -928,6 +936,7 @@ function openPlayerModal(playerId){
   if(!isVice) actionsHTML += `<button class="btn-secondary" onclick="setViceCaptain(${p.id})">🆅 تعيين نائب كابتن</button>`;
   
   actionsHTML += `<button class="btn-secondary" style="color:var(--fpl-pink);" onclick="startSwapPlayer(${p.id})">🔁 تبديل مع لاعب آخر بالملعب</button>`;
+  actionsHTML += `<button class="btn-secondary" style="color:#FF4757;" onclick="sellPlayer(${p.id})">💸 بيع اللاعب (£${p.price}M)</button>`;
 
   document.getElementById('modalActionBtns').innerHTML = actionsHTML;
   document.getElementById('playerModal').classList.add('active');
@@ -1016,6 +1025,13 @@ function renderTransfersMarket(){
   const search = document.getElementById('playerSearchInp').value.trim().toLowerCase();
   const posFilter = document.getElementById('posFilterSelect').value;
   const listEl = document.getElementById('marketList');
+  const team = DB.fantasyTeams[currentUser.id];
+
+  // شريط الميزانية الحقيقي أعلى السوق
+  const spent = teamSpent(team);
+  const remain = (TEAM_BUDGET - spent).toFixed(1);
+  const bankEl = document.getElementById('bankVal');
+  if(bankEl) bankEl.textContent = `£${remain}M`;
 
   let filtered = PLAYERS_DB.filter(p => {
     const matchName = p.name.toLowerCase().includes(search) || p.club.toLowerCase().includes(search);
@@ -1023,38 +1039,76 @@ function renderTransfersMarket(){
     return matchName && matchPos;
   });
 
+  // تصنيف حسب المركز: من المهاجمين إلى الحراس
+  const POS_ORDER = ['FWD','MID','DEF','GKP'];
+  const POS_LABEL = {FWD:'⚽ مهاجمون', MID:'⚙️ لاعبو وسط', DEF:'🛡️ مدافعون', GKP:'🧤 حراس مرمى'};
+
   listEl.innerHTML = '';
-  filtered.forEach(p => {
-    listEl.innerHTML += `
-      <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:14px; padding:12px 14px; margin-bottom:8px; display:flex; align-items:center; justify-content:space-between;">
-        <div>
-          <div style="font-weight:800; font-size:0.92rem;">${p.name} <span style="font-size:0.75rem; color:var(--text-muted);">(${p.club})</span></div>
-          <div style="font-size:0.75rem; color:var(--fpl-green); font-weight:800; margin-top:2px;">${p.pos} | £${p.price}M | ${p.points} نقطة</div>
+  POS_ORDER.forEach(pos=>{
+    const group = filtered.filter(p=>p.pos===pos);
+    if(!group.length) return;
+    listEl.innerHTML += `<div style="font-size:0.8rem;font-weight:900;color:var(--fpl-yellow);margin:14px 0 8px;padding-right:2px;">${POS_LABEL[pos]} (${group.length})</div>`;
+    group.forEach(p => {
+      const owned = team.starting.includes(p.id) || team.bench.includes(p.id);
+      listEl.innerHTML += `
+        <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:14px; padding:12px 14px; margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 2px 8px rgba(0,0,0,0.25);">
+          <div>
+            <div style="font-weight:800; font-size:0.92rem;">${p.name} <span style="font-size:0.75rem; color:var(--text-muted);">(${p.club})</span></div>
+            <div style="font-size:0.75rem; color:var(--fpl-green); font-weight:800; margin-top:2px;">${p.pos} | £${p.price}M | ${p.points} نقطة</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="fdr-badge" style="background:var(--fdr-${p.fdr})">${p.match}</span>
+            <button class="btn-primary" style="padding:6px 14px; font-size:0.78rem; width:auto; ${owned?'opacity:.5':''}" ${owned?'disabled':''} onclick="buyPlayer(${p.id})">${owned?'✓ لديك':'شراء'}</button>
+          </div>
         </div>
-        <div style="display:flex; align-items:center; gap:8px;">
-          <span class="fdr-badge" style="background:var(--fdr-${p.fdr})">${p.match}</span>
-          <button class="btn-primary" style="padding:6px 14px; font-size:0.78rem; width:auto;" onclick="buyPlayer(${p.id})">شراء</button>
-        </div>
-      </div>
-    `;
+      `;
+    });
   });
 }
 
 function buyPlayer(playerId){
   const team = DB.fantasyTeams[currentUser.id];
   const p = PLAYERS_DB.find(x => x.id === playerId);
-  
+  if(!p) return;
+
   if(team.starting.includes(playerId) || team.bench.includes(playerId)){
     showToast("اللاعب موجود بالفعل في تشكيلتك!");
     return;
   }
-  
-  if(team.bench.length < 4){
-    team.bench.push(playerId);
-    saveAndRefresh(`تمت إضافة ${p.name} إلى تشكيلتك! ✅`);
-  } else {
-    showToast("تنبيه: مقاعد الاحتياط والتشكيلة مكتملة!");
+  if(teamAllIds(team).length >= 15){
+    showToast(`⚠️ فريقك مكتمل (15/15) — بيعي لاعباً أولاً من مركز ${p.pos} لإفساح مكان`);
+    return;
   }
+  if(teamPosCount(team, p.pos) >= SQUAD_LIMITS[p.pos]){
+    showToast(`⚠️ اكتمل عدد ${p.pos} بفريقك (${SQUAD_LIMITS[p.pos]} كحد أقصى)`);
+    return;
+  }
+  if(teamClubCount(team, p.club) >= MAX_PER_CLUB){
+    showToast(`⚠️ الحد الأقصى 3 لاعبين من ${p.club}`);
+    return;
+  }
+  const remain = TEAM_BUDGET - teamSpent(team);
+  if(p.price > remain){
+    showToast(`⚠️ الميزانية لا تكفي — متبقٍ £${remain.toFixed(1)}M فقط`);
+    return;
+  }
+
+  team.bench.push(playerId);
+  saveAndRefresh(`تمت إضافة ${p.name} إلى تشكيلتك! ✅`);
+}
+
+function sellPlayer(playerId){
+  const team = DB.fantasyTeams[currentUser.id];
+  const p = PLAYERS_DB.find(x => x.id === playerId);
+  if(!p) return;
+  if(!confirm(`بيع ${p.name} مقابل £${p.price}M؟`)) return;
+
+  team.starting = team.starting.filter(id => id !== playerId);
+  team.bench = team.bench.filter(id => id !== playerId);
+  if(team.captain === playerId) team.captain = null;
+  if(team.vice === playerId) team.vice = null;
+  closeModal('playerModal');
+  saveAndRefresh(`تم بيع ${p.name} — عاد £${p.price}M للميزانية 💰`);
 }
 
 // ════════════════════════════════════════════
