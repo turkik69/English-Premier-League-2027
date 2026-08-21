@@ -2,1310 +2,958 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>فانتزي العزبة – الدوري الإنجليزي الممتاز 2026-27</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#37003C">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="فانتزي العزبة">
-<link rel="apple-touch-icon" href="icon-192.png">
-
-<!-- خطوط عربية حديثة وعصرية -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>متتبّع فانتازي الدوري الإنجليزي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/8.0.4/babel.min.js" crossorigin></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap');
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; background:#EEF2F7; }
+  #root {
+    --navy-900:#0B2038; --navy-700:#16345A; --navy-500:#2E5D91;
+    --gold-500:#C9963E; --gold-700:#8A651F; --gold-100:#F5E6C8;
+    --bg:#EEF2F7; --surface:#FFFFFF; --ink:#142438; --muted:#64748B; --border:#DCE3EC;
+    font-family:'Cairo',sans-serif; background:var(--bg); color:var(--ink);
+    min-height:100vh; padding-bottom:32px; font-size:14px; line-height:1.6;
+  }
+  #root button, #root input, #root select { font-family:'Cairo',sans-serif; }
+  .app-root { max-width:480px; margin:0 auto; }
 
-:root {
-  /* ── الألوان الرسمية للفانتزي العالمية ── */
-  --fpl-purple: #37003C;
-  --fpl-purple-dark: #200023;
-  --fpl-purple-light: #52005A;
-  --fpl-green: #00FF87;
-  --fpl-green-dark: #00B359;
-  --fpl-pink: #E90052;
-  --fpl-cyan: #04F5FF;
-  --fpl-yellow: #FFD700;
-  
-  --dark-bg: #120216;
-  --card-bg: #1F0525;
-  --card-bg2: #2B0A33;
-  --border-color: #4A1957;
-  --text-main: #FFFFFF;
-  --text-muted: #B392C2;
+  .topbar { background:var(--navy-900); color:#fff; padding:12px 14px 0; position:sticky; top:0; z-index:20; border-radius:0 0 18px 18px; box-shadow:0 6px 18px rgba(11,32,56,0.25); }
+  .topbar-row { display:flex; align-items:center; justify-content:space-between; }
+  .topbar-brand { display:flex; align-items:center; gap:6px; font-weight:700; font-size:14px; color:var(--gold-100); }
+  .countdown { display:flex; align-items:center; gap:5px; background:rgba(255,255,255,0.1); padding:4px 9px; border-radius:20px; font-size:12px; font-weight:700; font-variant-numeric:tabular-nums; }
+  .countdown-urgent { background:#B3423A; animation:pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.75;} }
+  .topbar-stats { margin-top:8px; gap:8px; justify-content:flex-start; }
+  .stat-chip { display:flex; align-items:center; gap:5px; font-size:11px; color:#CBD8EA; background:rgba(255,255,255,0.06); padding:4px 8px; border-radius:8px; }
+  .stat-chip-action { border:none; cursor:pointer; background:var(--gold-500); color:#3A2A05; font-weight:700; margin-inline-start:auto; }
+  .tabbar { display:flex; margin-top:10px; gap:2px; }
+  .tab-btn { flex:1; background:none; border:none; color:#9FB2CC; padding:9px 4px; font-size:12.5px; font-weight:600; cursor:pointer; border-bottom:2px solid transparent; }
+  .tab-btn-active { color:#fff; border-bottom:2px solid var(--gold-500); }
 
-  /* FDR Ratings */
-  --fdr-1: #007A33;
-  --fdr-2: #00FF87;
-  --fdr-3: #E7E7E7;
-  --fdr-4: #FF1751;
-  --fdr-5: #80001C;
+  .content { padding:14px; }
 
-  /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
-  --shadow-md: 0 6px 18px rgba(0,0,0,0.4);
-  --shadow-lg: 0 12px 32px rgba(0,0,0,0.6), 0 0 16px rgba(0,255,135,0.15);
-  
-  --sab: env(safe-area-inset-bottom, 0px);
-  --sat: env(safe-area-inset-top, 0px);
-}
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:12px; margin-bottom:12px; }
+  .section-heading { font-weight:700; font-size:13px; color:var(--navy-700); margin:16px 2px 8px; }
+  .section-heading:first-child { margin-top:0; }
+  .muted-text { color:var(--muted); font-size:12px; }
 
-body.light-theme {
-  --dark-bg: #F4EFF7;
-  --card-bg: #FFFFFF;
-  --card-bg2: #F8F1FA;
-  --border-color: #E2CEEB;
-  --text-main: #240027;
-  --text-muted: #725080;
-  --fpl-purple: #37003C;
-}
+  .notice-card { display:flex; gap:8px; align-items:flex-start; background:var(--gold-100); border-color:#E8D6A6; color:#5C4415; font-size:12px; }
 
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', 'IBM Plex Sans Arabic', sans-serif; -webkit-tap-highlight-color: transparent; }
+  .formation-badge { display:inline-block; background:var(--navy-700); color:#fff; font-size:12px; font-weight:700; padding:4px 12px; border-radius:20px; margin-bottom:10px; }
 
-#loadingOverlay{position:fixed;inset:0;background:var(--dark-bg);z-index:999;padding-top:calc(24px + var(--sat));overflow:hidden}
-.skel-wrap{max-width:600px;margin:0 auto;padding:16px 20px}
-.skel{background:linear-gradient(90deg,var(--card-bg2) 25%,var(--border-color) 50%,var(--card-bg2) 75%);background-size:200% 100%;animation:skelShine 1.4s ease-in-out infinite;border-radius:12px}
-@keyframes skelShine{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.skel-title{height:22px;width:55%;margin-bottom:20px}
-.skel-card{height:100px;margin-bottom:12px;border-radius:14px}
-html, body { height: 100%; overscroll-behavior-y: none; background: var(--dark-bg); color: var(--text-main); }
-body { display: flex; flex-direction: column; min-height: 100vh; padding-bottom: calc(68px + var(--sab)); }
+  .alert-box { display:flex; gap:8px; background:#FBEAEA; border:1px solid #F0C7C4; color:#8C2E27; padding:10px 12px; border-radius:12px; font-size:12.5px; margin-bottom:12px; }
+  .alert-box > div > div { margin-bottom:2px; }
 
-/* ── App Header ── */
-.app-header {
-  background: linear-gradient(135deg, var(--fpl-purple-dark) 0%, var(--fpl-purple) 100%);
-  border-bottom: 2px solid var(--fpl-green);
-  position: sticky; top: 0; z-index: 120;
-  padding-top: var(--sat);
-  box-shadow: var(--shadow-md);
-}
-.header-top {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 16px; max-width: 1100px; margin: 0 auto;
-}
-.brand-area { display: flex; align-items: center; gap: 10px; }
-.brand-logo {
-  width: 40px; height: 40px; border-radius: 12px;
-  background: var(--fpl-pink); display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem; box-shadow: 0 0 14px rgba(233, 0, 82, 0.6);
-}
-.brand-title h1 { font-size: 1.2rem; font-weight: 900; color: #FFF; line-height: 1.1; }
-.brand-title p { font-size: 0.72rem; color: var(--fpl-green); font-weight: 700; }
+  .pitch-wrap { border-radius:18px; overflow:hidden; box-shadow:0 10px 26px rgba(11,32,56,0.22); margin-bottom:10px; }
+  .pitch { position:relative; background:repeating-linear-gradient(180deg,#2F7A4F 0,#2F7A4F 42px,#357F55 42px,#357F55 84px); padding:20px 8px; display:flex; flex-direction:column; justify-content:space-between; gap:14px; min-height:400px; }
+  .pitch-circle { position:absolute; width:84px; height:84px; border:2px solid rgba(255,255,255,0.4); border-radius:50%; top:50%; left:50%; transform:translate(-50%,-50%); }
+  .pitch-halfway { position:absolute; top:50%; left:6%; right:6%; border-top:2px solid rgba(255,255,255,0.4); }
+  .pitch-row { display:flex; justify-content:space-evenly; gap:6px; flex-wrap:wrap; position:relative; z-index:1; }
 
-.header-user-info { display: flex; align-items: center; gap: 8px; }
-.user-chip {
-  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
-  padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 800; color: var(--fpl-yellow);
-}
-.theme-btn, .icon-action-btn {
-  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
-  width: 36px; height: 36px; border-radius: 50%; color: #FFF;
-  display: flex; align-items: center; justify-content: center; cursor: pointer;
-  transition: transform 0.2s, background 0.2s; font-size: 0.9rem;
-}
-.theme-btn:active, .icon-action-btn:active { transform: scale(0.9); }
+  .player-chip { position:relative; display:flex; flex-direction:column; align-items:center; gap:1px; background:#fff; border:none; border-radius:11px; padding:6px 7px; min-width:58px; box-shadow:0 3px 7px rgba(0,0,0,0.28); cursor:pointer; }
+  .player-chip-sm { min-width:50px; opacity:0.96; }
+  .chip-pos-dot { width:6px; height:6px; border-radius:50%; margin-bottom:1px; }
+  .chip-pos-GK { background:#B7791F; }
+  .chip-pos-DEF { background:#2E5D91; }
+  .chip-pos-MID { background:#2F7A4F; }
+  .chip-pos-FWD { background:#B3423A; }
+  .player-chip-name { font-size:10.5px; font-weight:700; color:var(--ink); white-space:nowrap; max-width:70px; overflow:hidden; text-overflow:ellipsis; }
+  .player-chip-club { font-size:9px; color:var(--muted); }
+  .player-chip-price { font-size:9px; color:var(--gold-700); font-weight:700; }
+  .armband { position:absolute; top:-7px; inset-inline-start:-7px; width:17px; height:17px; border-radius:50%; background:var(--gold-500); color:#3A2A05; font-size:9.5px; font-weight:800; display:flex; align-items:center; justify-content:center; box-shadow:0 1px 4px rgba(0,0,0,0.35); }
+  .armband-v { background:#CBD5E1; color:#1F2937; }
 
-/* ── Gameweek Status Bar ── */
-.gw-bar {
-  background: var(--fpl-purple-dark); border-bottom: 1px solid var(--border-color);
-  padding: 8px 16px; display: flex; align-items: center; justify-content: space-between;
-  font-size: 0.8rem; font-weight: 700;
-}
-.gw-selector { display: flex; align-items: center; gap: 8px; color: var(--fpl-green); }
-.gw-selector select {
-  background: rgba(0,255,135,0.15); border: 1px solid var(--fpl-green); color: var(--fpl-green);
-  border-radius: 8px; padding: 2px 8px; font-weight: 800; outline: none; cursor: pointer;
-}
-.deadline-timer { color: var(--fpl-pink); font-size: 0.75rem; font-weight: 800; display: flex; align-items: center; gap: 4px; }
+  .bench-label { font-size:11.5px; font-weight:700; color:var(--muted); margin:2px 4px 6px; }
+  .bench-row { display:flex; gap:8px; flex-wrap:wrap; background:#E4E9F0; border-radius:14px; padding:10px; }
 
-/* ── Main Scroll Area ── */
-.main-content { flex: 1; max-width: 1100px; width: 100%; margin: 0 auto; padding: 14px; overflow-y: auto; }
-.tab-pane { display: none; }
-.tab-pane.active { display: block; animation: fadeIn 0.25s ease-out; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  .empty-state { display:flex; flex-direction:column; align-items:center; text-align:center; gap:6px; padding:36px 20px; color:var(--muted); }
+  .empty-title { font-weight:700; color:var(--ink); font-size:14px; margin:2px 0 0; }
+  .empty-body { font-size:12.5px; max-width:280px; }
 
-/* ── Bottom Mobile Navigation Bar ── */
-.bottom-nav {
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
-  background: linear-gradient(180deg, var(--fpl-purple) 0%, var(--fpl-purple-dark) 100%);
-  border-top: 1.5px solid var(--border-color);
-  display: flex; justify-content: space-around; align-items: center;
-  padding: 6px 4px calc(6px + var(--sab));
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
-}
-.nav-item {
-  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  background: none; border: none; color: var(--text-muted); padding: 4px 0;
-  cursor: pointer; transition: color 0.2s, transform 0.15s; position: relative;
-}
-.nav-item svg { width: 22px; height: 22px; stroke-width: 2.2; fill: none; stroke: currentColor; transition: transform 0.2s; }
-.nav-item span { font-size: 0.72rem; font-weight: 800; margin-top: 3px; }
-.nav-item.active { color: var(--fpl-green); }
-.nav-item.active svg { transform: translateY(-2px); stroke: var(--fpl-green); }
+  .budget-row { display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px; }
+  .budget-bar-track { height:8px; background:#E4E9F0; border-radius:6px; overflow:hidden; }
+  .budget-bar-fill { height:100%; background:var(--navy-500); border-radius:6px; transition:width .3s ease; }
+  .budget-positions { display:flex; flex-wrap:wrap; gap:8px; margin-top:9px; }
+  .pos-count { font-size:11px; color:var(--muted); background:#F1F4F8; padding:3px 8px; border-radius:8px; }
 
-/* ── Pitch Container & Visuals ── */
-.pitch-container {
-  background: linear-gradient(180deg, #024823 0%, #002D15 100%);
-  border: 2px solid rgba(255,255,255,0.25); border-radius: 20px;
-  position: relative; padding: 16px 8px 12px; overflow: hidden;
-  box-shadow: var(--shadow-lg); min-height: 520px;
-  display: flex; flex-direction: column; justify-content: space-between;
-}
-.pitch-container::before {
-  content: ''; position: absolute; inset: 0;
-  background: repeating-linear-gradient(0deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 40px, transparent 40px, transparent 80px);
-  pointer-events: none;
-}
-.pitch-halfway { position: absolute; top: 50%; left: 10px; right: 10px; height: 2px; background: rgba(255,255,255,0.3); }
-.pitch-circle { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 84px; height: 84px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; }
-.pitch-box-top { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 58%; height: 62px; border: 2px solid rgba(255,255,255,0.3); border-top: none; }
-.pitch-box-bottom { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 58%; height: 62px; border: 2px solid rgba(255,255,255,0.3); border-bottom: none; }
+  .section-toggle { width:100%; display:flex; justify-content:space-between; align-items:center; background:none; border:none; font-weight:700; font-size:13px; color:var(--navy-700); padding:2px 0; cursor:pointer; }
+  .add-form { display:flex; flex-direction:column; gap:8px; margin-top:10px; }
+  .add-form-row { display:flex; gap:8px; }
+  .input { border:1px solid var(--border); border-radius:9px; padding:9px 11px; font-size:13px; background:#FBFCFE; flex:1; color:var(--ink); }
+  .btn { display:flex; align-items:center; justify-content:center; gap:6px; border:none; border-radius:10px; padding:10px; font-size:13px; font-weight:700; cursor:pointer; }
+  .btn-primary { background:var(--navy-700); color:#fff; }
+  .suggestions { margin-top:12px; }
+  .suggestions-label { margin-bottom:6px; }
+  .suggestion-chips { display:flex; flex-wrap:wrap; gap:6px; }
+  .suggestion-chip { background:#F1F4F8; border:1px solid var(--border); border-radius:8px; padding:6px 9px; font-size:11.5px; color:var(--navy-700); cursor:pointer; font-weight:600; }
 
-.pitch-row { display: flex; justify-content: space-around; align-items: center; position: relative; z-index: 2; margin: 4px 0; }
+  .squad-group { margin-bottom:10px; }
+  .squad-group-title { font-size:11.5px; font-weight:700; color:var(--muted); margin:0 2px 6px; }
+  .squad-row { display:flex; justify-content:space-between; align-items:center; background:var(--surface); border:1px solid var(--border); border-radius:11px; padding:9px 11px; margin-bottom:6px; }
+  .squad-row-main { display:flex; flex-direction:column; gap:1px; }
+  .squad-row-name { font-weight:700; font-size:13px; }
+  .squad-row-actions { display:flex; gap:5px; align-items:center; }
+  .mini-btn { border:1px solid var(--border); background:#fff; color:var(--muted); font-size:11px; font-weight:700; border-radius:8px; padding:5px 8px; cursor:pointer; }
+  .mini-btn-active { background:var(--navy-700); color:#fff; border-color:var(--navy-700); }
+  .mini-btn-gold.mini-btn-active { background:var(--gold-500); border-color:var(--gold-500); color:#3A2A05; }
+  .mini-btn-danger { color:#B3423A; }
+  .mini-btn:disabled { opacity:0.4; cursor:not-allowed; }
 
-/* ── Player Card / Jersey on Pitch ── */
-.player-card {
-  display: flex; flex-direction: column; align-items: center; width: 70px;
-  cursor: pointer; transition: transform 0.15s, filter 0.2s; position: relative; user-select: none;
-}
-.player-card:active { transform: scale(0.92); }
-.player-card.swap-active {
-  animation: pulseGlow 1s infinite alternate;
-}
-@keyframes pulseGlow {
-  0% { transform: scale(1); filter: drop-shadow(0 0 6px var(--fpl-yellow)); }
-  100% { transform: scale(1.08); filter: drop-shadow(0 0 14px var(--fpl-green)); }
-}
+  .fixture-row { display:flex; justify-content:space-between; align-items:center; padding:8px 2px; border-bottom:1px solid var(--border); }
+  .fixture-row:last-child { border-bottom:none; }
+  .fixture-teams { display:flex; align-items:center; gap:6px; flex-wrap:wrap; font-size:12px; }
+  .fixture-team { padding:3px 8px; border-radius:7px; font-weight:700; }
+  .fixture-time { font-size:10.5px; white-space:nowrap; }
 
-.jersey-wrap { position: relative; width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; }
-.jersey-svg { width: 100%; height: 100%; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5)); }
+  .captain-row { display:flex; gap:10px; padding:9px 2px; border-bottom:1px solid var(--border); }
+  .captain-row:last-child { border-bottom:none; }
+  .captain-rank { width:20px; height:20px; flex-shrink:0; background:var(--gold-100); color:var(--gold-700); font-size:11px; font-weight:800; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .captain-name-row { display:flex; gap:6px; align-items:baseline; font-size:13px; }
+  .captain-note { font-size:11.5px; color:var(--muted); margin:3px 0 0; }
 
-.captain-badge {
-  position: absolute; top: -4px; left: -2px; width: 20px; height: 20px;
-  background: var(--fpl-yellow); color: #000; font-size: 0.7rem; font-weight: 900;
-  border-radius: 50%; border: 1.5px solid #FFF; display: flex; align-items: center; justify-content: center;
-  box-shadow: var(--shadow-sm);
-}
-.captain-badge.vice { background: #A0A0A0; color: #FFF; }
+  .rules-list { margin-top:10px; }
+  .rule-item { display:flex; gap:7px; align-items:flex-start; font-size:12px; color:var(--ink); margin-bottom:8px; }
+  .rule-item svg { flex-shrink:0; margin-top:2px; color:var(--navy-500); }
 
-.player-info-pill {
-  background: var(--fpl-purple-dark); border: 1px solid rgba(255,255,255,0.22);
-  border-radius: 8px; width: 100%; text-align: center; padding: 2px 2px;
-  margin-top: 2px; box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-}
-.player-name { font-size: 0.68rem; font-weight: 800; color: #FFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.player-subtext { font-size: 0.6rem; font-weight: 800; color: var(--fpl-green); }
+  .history-row { display:flex; align-items:center; gap:8px; padding:7px 2px; }
+  .history-gw { width:28px; font-size:11.5px; font-weight:700; color:var(--muted); }
+  .history-bar-track { flex:1; height:14px; background:#F1F4F8; border-radius:7px; overflow:hidden; }
+  .history-bar-fill { height:100%; background:var(--navy-500); border-radius:7px; }
+  .history-pts { font-weight:800; font-size:13px; width:28px; text-align:center; }
+  .history-rank { width:44px; }
 
-/* ── Bench Section ── */
-.bench-section {
-  background: rgba(18, 2, 22, 0.88); border-top: 2px solid rgba(255,255,255,0.2);
-  border-radius: 0 0 18px 18px; margin: 10px -8px -12px; padding: 10px 6px 8px;
-}
-.bench-header { font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-align: center; margin-bottom: 6px; }
-.bench-row { display: flex; justify-content: space-around; }
+  .footer-actions { display:flex; justify-content:center; padding:18px 14px 4px; }
+  .reset-btn { display:flex; align-items:center; gap:5px; background:none; border:none; color:var(--muted); font-size:11.5px; cursor:pointer; }
+  .reset-confirm { display:flex; gap:8px; align-items:center; }
+  .reset-confirm button { font-size:11.5px; padding:5px 10px; border-radius:7px; border:1px solid var(--border); background:#fff; cursor:pointer; }
 
-/* FDR Badge Styles */
-.fdr-badge {
-  display: inline-block; padding: 2px 6px; border-radius: 6px; font-size: 0.65rem; font-weight: 800; color: #FFF;
-}
-
-/* FPL Chips Bar */
-.chips-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px; }
-.chip-btn {
-  background: var(--card-bg); border: 1.5px solid var(--border-color);
-  border-radius: 12px; padding: 10px 4px; text-align: center; cursor: pointer;
-  transition: all 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-.chip-btn:active { transform: scale(0.95); }
-.chip-btn.active { background: linear-gradient(135deg, var(--fpl-pink), var(--fpl-purple)); border-color: var(--fpl-pink); color: #FFF; }
-
-/* Transfer Summary Header */
-.transfer-header {
-  background: var(--card-bg); border: 1px solid var(--border-color);
-  border-radius: 14px; padding: 12px 16px; margin-bottom: 14px;
-  display: flex; justify-content: space-between; align-items: center;
-}
-.stat-box { text-align: center; }
-.stat-box .val { font-size: 1.3rem; font-weight: 900; color: var(--fpl-green); }
-.stat-box .lbl { font-size: 0.72rem; color: var(--text-muted); font-weight: 800; }
-
-/* Modals & Drawers */
-.modal-overlay {
-  position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(6px); display: none; align-items: flex-end; justify-content: center;
-}
-.modal-overlay.active { display: flex; }
-.bottom-sheet {
-  background: var(--card-bg); border-top: 2.5px solid var(--fpl-pink);
-  border-radius: 22px 22px 0 0; width: 100%; max-width: 600px;
-  max-height: 85vh; overflow-y: auto; padding: 20px 16px calc(20px + var(--sab));
-  animation: slideUp 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-/* Login Modal Center Overlay */
-.center-modal {
-  align-items: center !important; padding: 16px !important;
-}
-.center-card {
-  background: var(--card-bg); border: 2px solid var(--fpl-purple-light);
-  border-radius: 24px; width: 100%; max-width: 420px; padding: 28px 20px;
-  box-shadow: var(--shadow-lg); text-align: center; position: relative;
-}
-
-/* Buttons */
-.btn-primary {
-  width: 100%; padding: 13px; background: linear-gradient(135deg, var(--fpl-green-dark), var(--fpl-green));
-  color: #000; border: none; border-radius: 12px; font-weight: 900; font-size: 0.95rem;
-  cursor: pointer; box-shadow: 0 4px 14px rgba(0,255,135,0.3); transition: transform 0.15s;
-}
-.btn-primary:active { transform: scale(0.97); }
-.btn-secondary {
-  width: 100%; padding: 11px; background: rgba(255,255,255,0.08); border: 1px solid var(--border-color);
-  color: var(--text-main); border-radius: 12px; font-weight: 800; font-size: 0.85rem; cursor: pointer; margin-top: 8px;
-  transition: transform 0.15s, background 0.2s;
-}
-.btn-secondary:active { transform: scale(0.97); background: rgba(255,255,255,0.14); }
-
-/* Leaderboard & Podium */
-.podium-wrap { display: flex; justify-content: center; align-items: flex-end; gap: 10px; margin: 16px 0 24px; }
-.podium-card {
-  background: var(--card-bg); border: 1.5px solid var(--border-color); border-radius: 16px;
-  padding: 12px 8px; text-align: center; flex: 1; max-width: 110px; display: flex; flex-direction: column; align-items: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3); animation: cardFadeIn 0.4s ease-out backwards;
-}
-.podium-card.first { order: 2; border-color: var(--fpl-yellow); box-shadow: 0 0 18px rgba(255,215,0,0.3); transform: translateY(-10px); }
-.podium-card.second { order: 1; border-color: #C0C0C0; }
-.podium-card.third { order: 3; border-color: #CD7F32; }
-.podium-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--fpl-purple-light); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 6px; }
-
-/* Leaderboard List */
-@keyframes cardFadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.lb-item {
-  background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px;
-  padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25); transition: transform 0.2s, box-shadow 0.2s;
-  animation: cardFadeIn 0.35s ease-out backwards;
-}
-.lb-item:active { transform: scale(0.98); }
-.lb-item.me { border-color: var(--fpl-green); background: rgba(0,255,135,0.06); }
-.lb-rank { width: 30px; font-size: 0.95rem; font-weight: 900; color: var(--fpl-yellow); }
-.lb-user { flex: 1; margin: 0 8px; }
-.lb-user-name { font-size: 0.9rem; font-weight: 800; }
-.lb-team-name { font-size: 0.74rem; color: var(--text-muted); }
-.lb-points { font-size: 1.15rem; font-weight: 900; color: var(--fpl-green); }
-
-/* Match Cards in Fixtures */
-.fixture-card {
-  background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px;
-  padding: 12px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25); transition: transform 0.2s, box-shadow 0.2s;
-  animation: cardFadeIn 0.35s ease-out backwards;
-}
-.fixture-card:active { transform: scale(0.98); box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
-.team-box { display: flex; align-items: center; gap: 8px; flex: 1; }
-.team-box.away { justify-content: flex-end; }
-
-/* Toast Notification */
-#toast {
-  position: fixed; top: 75px; left: 50%; transform: translateX(-50%) translateY(-20px);
-  background: var(--fpl-pink); color: #FFF; font-weight: 800; font-size: 0.85rem;
-  padding: 10px 22px; border-radius: 20px; box-shadow: var(--shadow-lg);
-  opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 400;
-}
-#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-.fpl-input, .fpl-select {
-  width: 100%; padding: 11px 13px; background: var(--dark-bg); border: 1px solid var(--border-color);
-  border-radius: 10px; color: var(--text-main); font-size: 0.88rem; font-weight: 700; outline: none; margin-bottom: 10px;
-}
-.fpl-input:focus, .fpl-select:focus { border-color: var(--fpl-green); }
+  .boot-msg { display:flex; align-items:center; justify-content:center; height:100vh; color:#64748B; font-family:'Cairo',sans-serif; font-size:13px; }
 </style>
 </head>
 <body>
+<div id="root"><div class="boot-msg">...جارِ التحميل</div></div>
 
-<div id="loadingOverlay">
-  <div class="skel-wrap">
-    <div class="skel skel-title"></div>
-    <div class="skel skel-card"></div>
-    <div class="skel skel-card"></div>
-    <div class="skel skel-card"></div>
-  </div>
-</div>
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useMemo, useCallback } = React;
 
-<!-- App Header -->
-<header class="app-header">
-  <div class="header-top">
-    <div class="brand-area">
-      <div class="brand-logo">⚽</div>
-      <div class="brand-title">
-        <h1>فانتزي العزبة</h1>
-        <p>Premier League 2026/27</p>
-      </div>
-    </div>
-    <div class="header-user-info">
-      <button class="theme-btn" onclick="toggleTheme()" id="themeToggleBtn">☀️</button>
-      <div id="userBadge" class="user-chip">زائر</div>
-      <button class="icon-action-btn" onclick="doLogout()" title="تسجيل الخروج">🚪</button>
-    </div>
-  </div>
+/* ============================================================================
+   أيقونات SVG بسيطة (بديل عن مكتبة خارجية حتى يعمل الملف بشكل مستقل)
+   ============================================================================ */
+function Icon({ children, size = 16, style, ...rest }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+         style={{ flexShrink: 0, ...style }} {...rest}>
+      {children}
+    </svg>
+  );
+}
+const TrophyIcon = (p) => <Icon {...p}><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H5a1 1 0 0 0 0 4c.4 0 .8-.1 1-.3M17 5h2a1 1 0 0 1 0 4c-.4 0-.8-.1-1-.3"/></Icon>;
+const ClockIcon = (p) => <Icon {...p}><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></Icon>;
+const WalletIcon = (p) => <Icon {...p}><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="17" cy="14" r="1"/></Icon>;
+const UsersIcon = (p) => <Icon {...p}><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14c2.3.3 4 2.2 4.5 5.5"/></Icon>;
+const XIcon = (p) => <Icon {...p}><path d="M6 6l12 12"/><path d="M18 6L6 18"/></Icon>;
+const PlusIcon = (p) => <Icon {...p}><path d="M12 5v14"/><path d="M5 12h14"/></Icon>;
+const RotateCcwIcon = (p) => <Icon {...p}><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></Icon>;
+const AlertTriangleIcon = (p) => <Icon {...p}><path d="M12 3L2 20h20L12 3z"/><path d="M12 10v4"/><path d="M12 17h.01"/></Icon>;
+const CheckIcon = (p) => <Icon {...p}><path d="M4 12l5 5L20 6"/></Icon>;
+const ChevronUpIcon = (p) => <Icon {...p}><path d="M6 15l6-6 6 6"/></Icon>;
+const ChevronDownIcon = (p) => <Icon {...p}><path d="M6 9l6 6 6-6"/></Icon>;
+const InfoIcon = (p) => <Icon {...p}><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></Icon>;
+const SparklesIcon = (p) => <Icon {...p}><path d="M12 3l1.5 5L18 9.5l-4.5 1.5L12 16l-1.5-5L6 9.5 10.5 8 12 3z"/><path d="M5 17l.7 2.3L8 20l-2.3.7L5 23l-.7-2.3L2 20l2.3-.7L5 17z"/></Icon>;
+const ExternalLinkIcon = (p) => <Icon {...p}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></Icon>;
 
-  <!-- Gameweek Live Bar -->
-  <div class="gw-bar">
-    <div class="gw-selector">
-      <span>الجولة:</span>
-      <select id="gwSelect" onchange="changeGameweek(this.value)">
-        <!-- Dynamic GW Options -->
-      </select>
-    </div>
-    <div class="deadline-timer" id="deadlineBox">
-      <span>⏱️ الموعد النهائي: السبت 14:00</span>
-    </div>
-  </div>
-</header>
+/* ============================================================================
+   ثوابت البيانات — Fantasy Premier League 2026/27
+   البيانات محدّثة اعتباراً من ٢١ أغسطس ٢٠٢٦ (بداية الموسم). يجب تحديث قسم
+   "الجولة الحالية" يدوياً قبل كل جولة جديدة (اطلبي من Claude تحديثها).
+   ============================================================================ */
 
-<!-- Main Scrollable Views -->
-<main class="main-content">
-
-  <!-- 1. TAB: PICK TEAM (الملعب والتشكيلة) -->
-  <div id="tab-pickteam" class="tab-pane active">
-    
-    <!-- Chips Bar -->
-    <div class="chips-grid">
-      <div class="chip-btn" id="chip-tc" onclick="toggleChip('tc')">
-        <span style="font-size:0.78rem; font-weight:900; display:block;">3x كابتن</span>
-        <span style="font-size:0.62rem; color:var(--text-muted);" id="st-tc">متاح</span>
-      </div>
-      <div class="chip-btn" id="chip-bb" onclick="toggleChip('bb')">
-        <span style="font-size:0.78rem; font-weight:900; display:block;">بنش بوست</span>
-        <span style="font-size:0.62rem; color:var(--text-muted);" id="st-bb">متاح</span>
-      </div>
-      <div class="chip-btn" id="chip-fh" onclick="toggleChip('fh')">
-        <span style="font-size:0.78rem; font-weight:900; display:block;">فري هيت</span>
-        <span style="font-size:0.62rem; color:var(--text-muted);" id="st-fh">متاح</span>
-      </div>
-      <div class="chip-btn" id="chip-wc" onclick="toggleChip('wc')">
-        <span style="font-size:0.78rem; font-weight:900; display:block;">وايلد كارد</span>
-        <span style="font-size:0.62rem; color:var(--text-muted);" id="st-wc">متاح</span>
-      </div>
-    </div>
-
-    <!-- Pitch Engine -->
-    <div class="pitch-container" id="pitchEngine">
-      <div class="pitch-box-top"></div>
-      <div class="pitch-halfway"></div>
-      <div class="pitch-circle"></div>
-
-      <!-- Formation Rows -->
-      <div class="pitch-row" id="row-GKP"></div>
-      <div class="pitch-row" id="row-DEF"></div>
-      <div class="pitch-row" id="row-MID"></div>
-      <div class="pitch-row" id="row-FWD"></div>
-
-      <div class="pitch-box-bottom"></div>
-
-      <!-- Substitutes Bench -->
-      <div class="bench-section">
-        <div class="bench-header">مقاعد الاحتياط (أولوية التبديل التلقائي)</div>
-        <div class="bench-row" id="row-BENCH"></div>
-      </div>
-    </div>
-
-    <div style="margin-top: 14px;">
-      <button class="btn-primary" onclick="saveTeamChanges()">💾 حفظ التشكيلة والكابتن</button>
-    </div>
-  </div>
-
-  <!-- 2. TAB: TRANSFERS (سوق الانتقالات) -->
-  <div id="tab-transfers" class="tab-pane">
-    <div class="transfer-header">
-      <div class="stat-box">
-        <div class="val" id="freeTransfersVal">1</div>
-        <div class="lbl">انتقال مجاني</div>
-      </div>
-      <div class="stat-box">
-        <div class="val" id="bankVal">£0.5M</div>
-        <div class="lbl">في البنك</div>
-      </div>
-      <div class="stat-box">
-        <div class="val" id="costVal">0</div>
-        <div class="lbl">خصم نقاط</div>
-      </div>
-    </div>
-
-    <!-- Market Search & Filter -->
-    <div style="display: flex; gap: 8px;">
-      <input type="text" class="fpl-input" id="playerSearchInp" placeholder="ابحث باسم اللاعب..." oninput="renderTransfersMarket()">
-      <select class="fpl-select" id="posFilterSelect" onchange="renderTransfersMarket()" style="width: 120px;">
-        <option value="ALL">الكل</option>
-        <option value="GKP">حارس</option>
-        <option value="DEF">دفاع</option>
-        <option value="MID">وسط</option>
-        <option value="FWD">هجوم</option>
-      </select>
-    </div>
-
-    <div id="marketList"></div>
-  </div>
-
-  <!-- 3. TAB: FIXTURES & PREDICTOR (المباريات والتوقعات) -->
-  <div id="tab-fixtures" class="tab-pane">
-    <div style="margin-bottom: 12px; font-weight: 800; font-size: 0.95rem; color: var(--fpl-green);">
-      📅 مباريات الجولة الحالية + FDR
-    </div>
-    <div id="fixturesList"></div>
-
-    <!-- Season Predictor Card -->
-    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 16px; margin-top: 20px;">
-      <div style="font-weight: 900; color: var(--fpl-yellow); margin-bottom: 8px;">🏆 توقعات بطل وهداف الموسم</div>
-      <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5;">توقّع بطل الدوري والوصيف والهداف لتكتسب 20 نقطة إضافية بنهاية الموسم!</div>
-      <input type="text" id="predChampInp" class="fpl-input" placeholder="اسم بطل الدوري (مثال: أرسنال)">
-      <input type="text" id="predRunnerInp" class="fpl-input" placeholder="اسم الوصيف (مثال: مانشستر سيتي)">
-      <input type="text" id="predScorerInp" class="fpl-input" placeholder="اسم هداف الدوري (مثال: هالاند)">
-      <button class="btn-primary" onclick="saveSeasonPredictor()">حفظ التوقعات</button>
-    </div>
-  </div>
-
-  <!-- 4. TAB: LEADERBOARD (جدول الترتيب والقمة) -->
-  <div id="tab-leagues" class="tab-pane">
-    <!-- Podium Top 3 -->
-    <div class="podium-wrap" id="podiumArea">
-      <!-- Dynamic Podium -->
-    </div>
-
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-      <span style="font-weight: 900; font-size: 0.95rem;">سلم ترتيب دوري العزبة 🏆</span>
-      <button class="btn-secondary" onclick="openH2HModal()" style="width: auto; padding: 6px 14px; margin:0;">⚔️ مواجهة H2H</button>
-    </div>
-
-    <div id="leaderboardList"></div>
-  </div>
-
-  <!-- 5. TAB: ADMIN PANEL (لوحة التحكم) -->
-  <div id="tab-admin" class="tab-pane">
-    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 18px;">
-      <h3 style="color: var(--fpl-green); margin-bottom: 12px;">🛡️ لوحة إدخال نتائج الفانتزي</h3>
-      <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">رقم الجولة:</label>
-      <input type="number" id="adminGwInp" class="fpl-input" value="1">
-      
-      <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">بيانات نقاط اللاعبين للجولة (JSON):</label>
-      <textarea id="adminPointsJson" class="fpl-input" style="height: 100px; font-family: monospace;" placeholder='{"1": 8, "4": 12, "11": 15}'></textarea>
-      
-      <button class="btn-primary" onclick="adminSubmitGwPoints()">📥 حفظ واستيراد نقاط الجولة</button>
-      
-      <div style="margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 14px;">
-        <button class="btn-secondary" style="color: var(--fpl-pink); border-color: var(--fpl-pink);" onclick="showResetConfirmModal()">⚠️ مسح وإعادة ضبط البيانات</button>
-      </div>
-    </div>
-  </div>
-
-</main>
-
-<!-- Bottom Mobile Navigation Bar -->
-<nav class="bottom-nav">
-  <button class="nav-item active" onclick="switchTab('pickteam', this)">
-    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-    <span>تشكيلتي</span>
-  </button>
-  <button class="nav-item" onclick="switchTab('transfers', this)">
-    <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
-    <span>الانتقالات</span>
-  </button>
-  <button class="nav-item" onclick="switchTab('fixtures', this)">
-    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-    <span>المباريات</span>
-  </button>
-  <button class="nav-item" onclick="switchTab('leagues', this)">
-    <svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg>
-    <span>الدوري</span>
-  </button>
-  <button class="nav-item" id="adminNavBtn" style="display:none;" onclick="switchTab('admin', this)">
-    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-    <span>الإدارة</span>
-  </button>
-</nav>
-
-<!-- Auth / Login Modal Overlay -->
-<div class="modal-overlay center-modal active" id="authModal">
-  <div class="center-card">
-    <div style="font-size:2.8rem; margin-bottom:8px;">⚽</div>
-    <h2 style="font-weight:900; font-size:1.35rem; color:var(--text-main); margin-bottom:4px;">فانتزي العزبة 2026/27</h2>
-    <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:20px;">أدخل اسمك للانضمام الفوري والمنافسة!</p>
-    
-    <input type="text" id="loginFirstName" class="fpl-input" placeholder="الاسم الأول (مثال: محمد)">
-    <input type="text" id="loginTribeName" class="fpl-input" placeholder="القبيلة / العائلة (مثال: العنزي)">
-    
-    <button class="btn-primary" onclick="submitLoginModal()" style="margin-top:6px;">دخول التطبيق 🚀</button>
-  </div>
-</div>
-
-<!-- Player Actions Modal -->
-<div class="modal-overlay" id="playerModal" onclick="closeModalOnOverlay(event, 'playerModal')">
-  <div class="bottom-sheet">
-    <div id="modalPlayerHeader" style="display:flex; align-items:center; justify-content:space-between; margin-bottom: 12px;"></div>
-    <div id="modalPlayerStats" style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5;"></div>
-    
-    <div style="display: flex; flex-direction: column; gap: 8px;" id="modalActionBtns">
-      <!-- Actions injected via JS -->
-    </div>
-  </div>
-</div>
-
-<!-- H2H Comparison Modal -->
-<div class="modal-overlay" id="h2hModal" onclick="closeModalOnOverlay(event, 'h2hModal')">
-  <div class="bottom-sheet">
-    <h3 style="color: var(--fpl-green); margin-bottom: 12px;">⚔️ مقارنة وجهاً لوجه</h3>
-    <label style="font-size:0.78rem; color:var(--text-muted)">اختر منافساً لمقارنة تشكيلتك به:</label>
-    <select id="h2hOpponentSelect" class="fpl-select" onchange="renderH2HComparison()"></select>
-    <div id="h2hResultBox" style="margin-top:14px;"></div>
-  </div>
-</div>
-
-<!-- Admin Confirmation Modal -->
-<div class="modal-overlay center-modal" id="resetConfirmModal">
-  <div class="center-card">
-    <h3 style="color:var(--fpl-pink); margin-bottom:10px;">⚠️ تأكيد الضبط</h3>
-    <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:16px;">هل أنت متأكد من مسح البيانات وإعادة الضبط؟</p>
-    <button class="btn-primary" style="background:var(--fpl-pink); color:#FFF;" onclick="adminConfirmReset()">نعم، إعادة ضبط</button>
-    <button class="btn-secondary" onclick="closeModal('resetConfirmModal')">إلغاء</button>
-  </div>
-</div>
-
-<!-- Toast Box -->
-<div id="toast">إشعار التطبيق</div>
-
-<script>
-// ════════════════════════════════════════════
-// DATABASE & PERSISTENCE
-// ════════════════════════════════════════════
-const FB_URL = 'https://world-cup-2026-d3091-default-rtdb.europe-west1.firebasedatabase.app';
-// قواعد الفانتزي: الميزانية وحدود المراكز والنادي الواحد
-const TEAM_BUDGET = 100.0;
-const SQUAD_LIMITS = { GKP:2, DEF:5, MID:5, FWD:3 };
+const BUDGET_CAP = 100.0;
+const SQUAD_RULES = { GK: 2, DEF: 5, MID: 5, FWD: 3 };
 const MAX_PER_CLUB = 3;
-function teamAllIds(team){ return [...team.starting, ...team.bench]; }
-function teamSpent(team){ return teamAllIds(team).reduce((s,id)=>{ const p=PLAYERS_DB.find(x=>x.id===id); return s+(p?p.price:0); },0); }
-function teamPosCount(team,pos){ return teamAllIds(team).filter(id=>PLAYERS_DB.find(x=>x.id===id)?.pos===pos).length; }
-function teamClubCount(team,club){ return teamAllIds(team).filter(id=>PLAYERS_DB.find(x=>x.id===id)?.club===club).length; }
+const POSITION_LABELS = { GK: 'حارس مرمى', DEF: 'مدافع', MID: 'وسط', FWD: 'مهاجم' };
+const POSITION_SHORT = { GK: 'ح.م', DEF: 'مد', MID: 'وس', FWD: 'مه' };
+const POSITION_ORDER = ['GK', 'DEF', 'MID', 'FWD'];
 
-let DB = {
-  users: {},
-  fantasyTeams: {},
-  fantasyGwPoints: {},
-  seasonPredictors: {},
-  currentGw: 1
+const CURRENT_GW = 1;
+const GW1_DEADLINE_UTC = '2026-08-21T17:30:00Z';
+
+const SEASON_INFO = {
+  span: '٢١ أغسطس ٢٠٢٦ — ٣٠ مايو ٢٠٢٧',
+  points: [
+    'الميزانية: ١٠٠.٠ مليون جنيه إسترليني لقائمة من ١٥ لاعباً (حارسان، ٥ مدافعين، ٥ لاعبي وسط، ٣ مهاجمين)، بحد أقصى ٣ لاعبين من نفس النادي.',
+    'التشكيلة الأساسية: ١١ لاعباً — حارس واحد، ٣ إلى ٥ مدافعين، ٢ إلى ٥ لاعبي وسط، ١ إلى ٣ مهاجمين.',
+    'يمكن تجميع حتى ٥ تبديلات مجانية دون استخدامها.',
+    'شريحتان من كل نوع هذا الموسم (ويلد كارد، فري هيت، الكابتن الثلاثي، بنش بوست) — الشريحة الأولى من كل نوع يجب استخدامها قبل موعد الجولة ١٩ (٢ يناير ٢٠٢٧)، وإلا تُلغى.',
+    'جديد هذا الموسم: تحديث مباشر للنقاط والترتيب أثناء المباريات، ونقاط بونص إضافية تظهر بعد ٢٠ دقيقة من كل مباراة، ونظام بونص معدّل يخدم الحراس والمدافعين الجانبيين والمهاجمين بشكل أفضل. نتيجة الجولة تصبح نهائية الساعة ٩:٠٠ صباحاً بتوقيت بريطانيا في اليوم التالي لآخر مباراة.',
+  ],
 };
 
-let currentUser = null;
-let activeGameweek = 1;
-let swapSourcePlayerId = null;
-
-// Official Premier League Clubs & Jersey Schemes
-const CLUB_COLORS = {
-  'أرسنال': { main: '#EF0107', sleeves: '#FFFFFF' },
-  'مانشستر سيتي': { main: '#6CABDD', sleeves: '#FFFFFF' },
-  'ليفربول': { main: '#C8102E', sleeves: '#C8102E' },
-  'مانشستر يونايتد': { main: '#DA020E', sleeves: '#000000' },
-  'تشيلسي': { main: '#034694', sleeves: '#034694' },
-  'توتنهام': { main: '#FFFFFF', sleeves: '#132257' },
-  'أستون فيلا': { main: '#95BFE5', sleeves: '#670E36' },
-  'نيوكاسل': { main: '#241F20', sleeves: '#FFFFFF' }
-};
-
-// Comprehensive Players Database (35 Premier League Stars)
-const PLAYERS_DB = [
-  // Arsenal
-  { id: 1, name: 'رايا', club: 'أرسنال', pos: 'GKP', price: 5.5, fdr: 2, points: 0, match: 'COV (H)' },
-  { id: 2, name: 'ساليبا', club: 'أرسنال', pos: 'DEF', price: 6.0, fdr: 2, points: 0, match: 'COV (H)' },
-  { id: 3, name: 'غابرييل', club: 'أرسنال', pos: 'DEF', price: 6.0, fdr: 2, points: 0, match: 'COV (H)' },
-  { id: 4, name: 'بوكايو ساكا', club: 'أرسنال', pos: 'MID', price: 10.0, fdr: 2, points: 0, match: 'COV (H)' },
-  { id: 5, name: 'أوديغارد', club: 'أرسنال', pos: 'MID', price: 8.5, fdr: 2, points: 0, match: 'COV (H)' },
-  { id: 6, name: 'جيوكيريس', club: 'أرسنال', pos: 'FWD', price: 8.0, fdr: 2, points: 0, match: 'COV (H)' },
-
-  // Man City
-  { id: 7, name: 'دوناروما', club: 'مانشستر سيتي', pos: 'GKP', price: 5.5, fdr: 1, points: 0, match: 'BOU (H)' },
-  { id: 8, name: 'غفارديول', club: 'مانشستر سيتي', pos: 'DEF', price: 6.0, fdr: 1, points: 0, match: 'BOU (H)' },
-  { id: 9, name: 'فيل فودين', club: 'مانشستر سيتي', pos: 'MID', price: 9.5, fdr: 1, points: 0, match: 'BOU (H)' },
-  { id: 10, name: 'رودري', club: 'مانشستر سيتي', pos: 'MID', price: 6.5, fdr: 1, points: 0, match: 'BOU (H)' },
-  { id: 11, name: 'إرلينغ هالاند', club: 'مانشستر سيتي', pos: 'FWD', price: 15.0, fdr: 1, points: 0, match: 'BOU (H)' },
-  { id: 12, name: 'مرموش', club: 'مانشستر سيتي', pos: 'FWD', price: 7.0, fdr: 1, points: 0, match: 'BOU (H)' },
-
-  // Liverpool
-  { id: 13, name: 'أليسون', club: 'ليفربول', pos: 'GKP', price: 5.5, fdr: 4, points: 0, match: 'NEW (A)' },
-  { id: 14, name: 'فان دايك', club: 'ليفربول', pos: 'DEF', price: 6.5, fdr: 4, points: 0, match: 'NEW (A)' },
-  { id: 15, name: 'محمد صلاح', club: 'ليفربول', pos: 'MID', price: 12.5, fdr: 4, points: 0, match: 'NEW (A)' },
-  { id: 16, name: 'فيرتز', club: 'ليفربول', pos: 'MID', price: 8.5, fdr: 4, points: 0, match: 'NEW (A)' },
-  { id: 17, name: 'إيزاك', club: 'ليفربول', pos: 'FWD', price: 9.0, fdr: 4, points: 0, match: 'NEW (A)' },
-
-  // Chelsea
-  { id: 18, name: 'كول بالمر', club: 'تشيلسي', pos: 'MID', price: 10.5, fdr: 3, points: 0, match: 'FUL (A)' },
-  { id: 19, name: 'ريس جيمس', club: 'تشيلسي', pos: 'DEF', price: 5.5, fdr: 3, points: 0, match: 'FUL (A)' },
-  { id: 20, name: 'كايسيدو', club: 'تشيلسي', pos: 'MID', price: 5.5, fdr: 3, points: 0, match: 'FUL (A)' },
-  { id: 21, name: 'جاكسون', club: 'تشيلسي', pos: 'FWD', price: 6.5, fdr: 3, points: 0, match: 'FUL (A)' },
-
-  // Man Utd
-  { id: 22, name: 'أونانا', club: 'مانشستر يونايتد', pos: 'GKP', price: 5.0, fdr: 2, points: 0, match: 'HUL (A)' },
-  { id: 23, name: 'برونو فرنانديز', club: 'مانشستر يونايتد', pos: 'MID', price: 8.5, fdr: 2, points: 0, match: 'HUL (A)' },
-  { id: 24, name: 'مبيومو', club: 'مانشستر يونايتد', pos: 'MID', price: 8.0, fdr: 2, points: 0, match: 'HUL (A)' },
-  { id: 25, name: 'كونها', club: 'مانشستر يونايتد', pos: 'FWD', price: 8.0, fdr: 2, points: 0, match: 'HUL (A)' },
-
-  // Tottenham
-  { id: 26, name: 'فيكاريو', club: 'توتنهام', pos: 'GKP', price: 5.0, fdr: 3, points: 0, match: 'BRE (A)' },
-  { id: 27, name: 'روميرو', club: 'توتنهام', pos: 'DEF', price: 5.0, fdr: 3, points: 0, match: 'BRE (A)' },
-  { id: 28, name: 'ماديسون', club: 'توتنهام', pos: 'MID', price: 6.5, fdr: 3, points: 0, match: 'BRE (A)' },
-  { id: 29, name: 'سولانكي', club: 'توتنهام', pos: 'FWD', price: 6.0, fdr: 3, points: 0, match: 'BRE (A)' },
-
-  // Aston Villa & Newcastle
-  { id: 30, name: 'إيميليانو مارتينيز', club: 'أستون فيلا', pos: 'GKP', price: 5.0, fdr: 3, points: 0, match: 'BHA (A)' },
-  { id: 31, name: 'روجرز', club: 'أستون فيلا', pos: 'MID', price: 7.5, fdr: 3, points: 0, match: 'BHA (A)' },
-  { id: 32, name: 'واتكينز', club: 'أستون فيلا', pos: 'FWD', price: 8.5, fdr: 3, points: 0, match: 'BHA (A)' },
-  { id: 33, name: 'غيمارايش', club: 'نيوكاسل', pos: 'MID', price: 7.0, fdr: 4, points: 0, match: 'LIV (H)' },
-
-  // ── توسعة أرسنال ──
-  { id: 34, name: 'تيمبر', club: 'أرسنال', pos: 'DEF', price: 6.5, fdr: 2, points: 0, match: 'COV (H)' },
-  { id: 35, name: 'كالافيوري', club: 'أرسنال', pos: 'DEF', price: 5.5, fdr: 2, points: 0, match: 'COV (H)' },
-  { id: 36, name: 'زوبيمندي', club: 'أرسنال', pos: 'MID', price: 5.5, fdr: 2, points: 0, match: 'COV (H)' },
-  { id: 37, name: 'مادويكي', club: 'أرسنال', pos: 'MID', price: 6.5, fdr: 2, points: 0, match: 'COV (H)' },
-  { id: 38, name: 'هافرتز', club: 'أرسنال', pos: 'FWD', price: 7.5, fdr: 2, points: 0, match: 'COV (H)' },
-  // ── توسعة مانشستر سيتي ──
-  { id: 39, name: 'أيت نوري', club: 'مانشستر سيتي', pos: 'DEF', price: 5.5, fdr: 1, points: 0, match: 'BOU (H)' },
-  { id: 40, name: 'خوسانوف', club: 'مانشستر سيتي', pos: 'DEF', price: 5.5, fdr: 1, points: 0, match: 'BOU (H)' },
-  { id: 41, name: 'سيمينيو', club: 'مانشستر سيتي', pos: 'MID', price: 8.5, fdr: 1, points: 0, match: 'BOU (H)' },
-  { id: 42, name: 'دوكو', club: 'مانشستر سيتي', pos: 'MID', price: 7.5, fdr: 1, points: 0, match: 'BOU (H)' },
-  // ── توسعة ليفربول ──
-  { id: 43, name: 'فان دايك', club: 'ليفربول', pos: 'DEF', price: 6.5, fdr: 4, points: 0, match: 'NEW (A)' },
-  { id: 44, name: 'فريمبونغ', club: 'ليفربول', pos: 'DEF', price: 5.5, fdr: 4, points: 0, match: 'NEW (A)' },
-  { id: 45, name: 'سوبوسلاي', club: 'ليفربول', pos: 'MID', price: 7.0, fdr: 4, points: 0, match: 'NEW (A)' },
-  { id: 46, name: 'غاكبو', club: 'ليفربول', pos: 'MID', price: 7.0, fdr: 4, points: 0, match: 'NEW (A)' },
-  { id: 47, name: 'إيكيتيكي', club: 'ليفربول', pos: 'FWD', price: 7.5, fdr: 4, points: 0, match: 'NEW (A)' },
-  // ── توسعة تشيلسي ──
-  { id: 48, name: 'إنزو فرنانديز', club: 'تشيلسي', pos: 'MID', price: 7.0, fdr: 3, points: 0, match: 'FUL (A)' },
-  { id: 49, name: 'إستيفاو', club: 'تشيلسي', pos: 'MID', price: 6.5, fdr: 3, points: 0, match: 'FUL (A)' },
-  { id: 50, name: 'كولويل', club: 'تشيلسي', pos: 'DEF', price: 5.0, fdr: 3, points: 0, match: 'FUL (A)' },
-  { id: 51, name: 'جواو بيدرو', club: 'تشيلسي', pos: 'FWD', price: 7.5, fdr: 3, points: 0, match: 'FUL (A)' },
-  // ── توسعة مانشستر يونايتد ──
-  { id: 52, name: 'دي ليخت', club: 'مانشستر يونايتد', pos: 'DEF', price: 5.5, fdr: 2, points: 0, match: 'HUL (A)' },
-  { id: 53, name: 'يورو', club: 'مانشستر يونايتد', pos: 'DEF', price: 5.5, fdr: 2, points: 0, match: 'HUL (A)' },
-  { id: 54, name: 'ماونت', club: 'مانشستر يونايتد', pos: 'MID', price: 6.0, fdr: 2, points: 0, match: 'HUL (A)' },
-  { id: 55, name: 'زيركزي', club: 'مانشستر يونايتد', pos: 'FWD', price: 6.5, fdr: 2, points: 0, match: 'HUL (A)' },
-  // ── توسعة توتنهام ──
-  { id: 56, name: 'فان دي فين', club: 'توتنهام', pos: 'DEF', price: 5.0, fdr: 3, points: 0, match: 'BRE (A)' },
-  { id: 57, name: 'بورو', club: 'توتنهام', pos: 'DEF', price: 5.5, fdr: 3, points: 0, match: 'BRE (A)' },
-  { id: 58, name: 'كودوس', club: 'توتنهام', pos: 'MID', price: 6.5, fdr: 3, points: 0, match: 'BRE (A)' },
-  { id: 59, name: 'ريتشارليسون', club: 'توتنهام', pos: 'FWD', price: 6.0, fdr: 3, points: 0, match: 'BRE (A)' },
-  // ── توسعة أستون فيلا ──
-  { id: 60, name: 'كونسا', club: 'أستون فيلا', pos: 'DEF', price: 4.5, fdr: 3, points: 0, match: 'BHA (A)' },
-  { id: 61, name: 'كاش', club: 'أستون فيلا', pos: 'DEF', price: 4.5, fdr: 3, points: 0, match: 'BHA (A)' },
-  // ── توسعة نيوكاسل ──
-  { id: 62, name: 'بوب', club: 'نيوكاسل', pos: 'GKP', price: 5.0, fdr: 4, points: 0, match: 'LIV (H)' },
-  { id: 63, name: 'لويس هول', club: 'نيوكاسل', pos: 'DEF', price: 5.0, fdr: 4, points: 0, match: 'LIV (H)' },
-  { id: 64, name: 'أوسولا', club: 'نيوكاسل', pos: 'FWD', price: 6.0, fdr: 4, points: 0, match: 'LIV (H)' },
-  { id: 65, name: 'وولتيماده', club: 'نيوكاسل', pos: 'FWD', price: 6.0, fdr: 4, points: 0, match: 'LIV (H)' }
+const SEED_PLAYERS = [
+  { id: 'raya', name: 'Raya', club: 'Arsenal', clubCode: 'ARS', pos: 'GK', price: 6.0 },
+  { id: 'kinsky', name: 'Kinský', club: 'Tottenham', clubCode: 'TOT', pos: 'GK', price: 4.5 },
+  { id: 'verbruggen', name: 'Verbruggen', club: 'Brighton', clubCode: 'BRI', pos: 'GK', price: 4.5 },
+  { id: 'lammens', name: 'Lammens', club: 'Man Utd', clubCode: 'MUN', pos: 'GK', price: 5.0 },
+  { id: 'gabriel', name: 'Gabriel', club: 'Arsenal', clubCode: 'ARS', pos: 'DEF', price: 8.0 },
+  { id: 'shaw', name: 'Shaw', club: 'Man Utd', clubCode: 'MUN', pos: 'DEF', price: 4.5 },
+  { id: 'aina', name: 'Ola Aina', club: 'Nottm Forest', clubCode: 'NFO', pos: 'DEF', price: 4.5 },
+  { id: 'hume', name: 'Trai Hume', club: 'Sunderland', clubCode: 'SUN', pos: 'DEF', price: 4.5 },
+  { id: 'bruno', name: 'Bruno Fernandes', club: 'Man Utd', clubCode: 'MUN', pos: 'MID', price: 12.0 },
+  { id: 'palmer', name: 'Cole Palmer', club: 'Chelsea', clubCode: 'CFC', pos: 'MID', price: 9.5 },
+  { id: 'saka', name: 'Saka', club: 'Arsenal', clubCode: 'ARS', pos: 'MID', price: 9.5 },
+  { id: 'foden', name: 'Foden', club: 'Man City', clubCode: 'MCI', pos: 'MID', price: 7.0 },
+  { id: 'haaland', name: 'Haaland', club: 'Man City', clubCode: 'MCI', pos: 'FWD', price: 15.5 },
+  { id: 'isak', name: 'Isak', club: 'Liverpool', clubCode: 'LFC', pos: 'FWD', price: 9.0 },
+  { id: 'thiago', name: 'Igor Thiago', club: 'Brentford', clubCode: 'BRE', pos: 'FWD', price: 8.0 },
+  { id: 'ekitike', name: 'Ekitike', club: 'Liverpool', clubCode: 'LFC', pos: 'FWD', price: 7.5 },
 ];
 
-// Helper Fetch Functions
-async function fbGet(path){
+const GW1_FIXTURES = [
+  { home: 'ARS', away: 'COV', homeName: 'Arsenal', awayName: 'Coventry City', kickoff: '2026-08-21T19:00:00Z', homeDiff: 'easy', awayDiff: 'hard' },
+  { home: 'HUL', away: 'MUN', homeName: 'Hull City', awayName: 'Man United', kickoff: '2026-08-22T11:30:00Z', homeDiff: 'hard', awayDiff: 'easy' },
+  { home: 'EVE', away: 'CRY', homeName: 'Everton', awayName: 'Crystal Palace', kickoff: '2026-08-22T14:00:00Z', homeDiff: 'medium', awayDiff: 'medium' },
+  { home: 'IPS', away: 'SUN', homeName: 'Ipswich Town', awayName: 'Sunderland', kickoff: '2026-08-22T14:00:00Z', homeDiff: 'medium', awayDiff: 'medium' },
+  { home: 'NFO', away: 'LEE', homeName: 'Nottingham Forest', awayName: 'Leeds United', kickoff: '2026-08-22T14:00:00Z', homeDiff: 'medium', awayDiff: 'medium' },
+  { home: 'BRE', away: 'TOT', homeName: 'Brentford', awayName: 'Tottenham', kickoff: '2026-08-22T16:30:00Z', homeDiff: 'medium', awayDiff: 'medium' },
+  { home: 'BRI', away: 'AVL', homeName: 'Brighton', awayName: 'Aston Villa', kickoff: '2026-08-23T13:00:00Z', homeDiff: 'medium', awayDiff: 'medium' },
+  { home: 'MCI', away: 'BOU', homeName: 'Man City', awayName: 'Bournemouth', kickoff: '2026-08-23T13:00:00Z', homeDiff: 'easy', awayDiff: 'hard' },
+  { home: 'NEW', away: 'LFC', homeName: 'Newcastle', awayName: 'Liverpool', kickoff: '2026-08-23T15:30:00Z', homeDiff: 'hard', awayDiff: 'medium' },
+  { home: 'FUL', away: 'CFC', homeName: 'Fulham', awayName: 'Chelsea', kickoff: '2026-08-24T19:00:00Z', homeDiff: 'hard', awayDiff: 'medium' },
+];
+
+const CAPTAIN_TIPS = [
+  { rank: 1, name: 'Erling Haaland', club: 'Man City', price: '15.5', note: 'مباراة أرضية مواتية أمام بورنموث. الخيار الأكثر شعبية هذا الأسبوع، وصاحب أفضل انطلاقات موسمية في آخر ٤ مواسم.' },
+  { rank: 2, name: 'Bruno Fernandes', club: 'Man Utd', price: '12.0', note: 'ضيف على هال سيتي المرتقاة حديثاً. أعلى توقع نقاط لهذا الأسبوع بين كل اللاعبين، وأصبح مسؤولاً عن ضربات الجزاء والركنيات هذا الموسم.' },
+  { rank: 3, name: 'Bryan Mbeumo', club: 'Man Utd', price: null, note: 'يشارك بروين فرنانديز نفس المباراة المواتية أمام هال سيتي.' },
+  { rank: 4, name: 'Bukayo Saka', club: 'Arsenal', price: '9.5', note: 'مباراة أرضية أمام كوفنتري. خيار مختلف عن الحشود، لكن هناك مخاوف من التعب بعد مشاركته الطويلة في كأس العالم.' },
+  { rank: 5, name: 'Antoine Semenyo', club: 'Man City', price: null, note: 'يواجه فريقه السابق بورنموث بعد انتقاله، في فورمة قوية.' },
+];
+
+const DIFF_META = {
+  easy: { label: 'مباراة سهلة', color: '#2F7A4F', bg: '#E6F3EA' },
+  medium: { label: 'مباراة متوسطة', color: '#B7791F', bg: '#FBF0DC' },
+  hard: { label: 'مباراة صعبة', color: '#B3423A', bg: '#F8E6E4' },
+};
+
+/* ============================================================================
+   دوال مساعدة
+   ============================================================================ */
+
+function fmtMoney(v) {
+  return `£${v.toFixed(1)}م`;
+}
+
+function useCountdown(deadlineIso) {
+  const target = useMemo(() => new Date(deadlineIso).getTime(), [deadlineIso]);
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, []);
+  const diff = target - now;
+  const past = diff <= 0;
+  const abs = Math.abs(diff);
+  return {
+    past,
+    days: Math.floor(abs / 86400000),
+    hours: Math.floor((abs % 86400000) / 3600000),
+    mins: Math.floor((abs % 3600000) / 60000),
+    secs: Math.floor((abs % 60000) / 1000),
+  };
+}
+
+function localKickoff(iso) {
   try {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 2500); // 2.5s timeout for fast fallback
-    const r = await fetch(`${FB_URL}/${path}.json`, { signal: controller.signal });
-    clearTimeout(timer);
-    return r.ok ? await r.json() : null;
-  } catch(e) { return null; }
-}
-async function fbPatch(path, val){
-  try { await fetch(`${FB_URL}/${path}.json`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify(val) }); return true; }
-  catch(e) { return false; }
-}
-
-// ════════════════════════════════════════════
-// BOOT & AUTHENTICATION
-// ════════════════════════════════════════════
-window.addEventListener('DOMContentLoaded', async () => {
-  setupGWSelector();
-  await loadDatabase();
-  checkSession();
-  const ov=document.getElementById('loadingOverlay');
-  if(ov) ov.style.display='none';
-});
-
-async function loadDatabase(){
-  const [u, ft, fgw, sp] = await Promise.all([
-    fbGet('users'), fbGet('fantasyTeams'), fbGet('fantasyGwPoints'), fbGet('seasonPredictors')
-  ]);
-  if(u) DB.users = u;
-  if(ft) DB.fantasyTeams = ft;
-  if(fgw) DB.fantasyGwPoints = fgw;
-  if(sp) DB.seasonPredictors = sp;
-}
-
-function checkSession(){
-  const savedUser = localStorage.getItem('fpl_azba_user');
-  if(savedUser && DB.users[savedUser]) {
-    currentUser = DB.users[savedUser];
-    loginSuccess();
-  } else {
-    document.getElementById('authModal').classList.add('active');
+    return new Date(iso).toLocaleString('ar', {
+      weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
+    });
+  } catch {
+    return iso;
   }
 }
 
-function submitLoginModal(){
-  const first = document.getElementById('loginFirstName').value.trim();
-  const tribe = document.getElementById('loginTribeName').value.trim();
-
-  if(!first || !tribe) {
-    showToast("يرجى إدخال اسمك الأول والقبيلة كاملين!");
-    return;
-  }
-
-  const userId = (first + '_' + tribe).toLowerCase().replace(/\s+/g, '_').replace(/[^\u0600-\u06FFa-z0-9_]/g, '');
-  const isAdmin = (userId.includes('admin') || userId.includes('turki69'));
-
-  const userObj = { id: userId, name: `${first} ${tribe}`, isAdmin };
-  DB.users[userId] = userObj;
-  fbPatch(`users/${userId}`, userObj);
-
-  localStorage.setItem('fpl_azba_user', userId);
-  currentUser = userObj;
-  
-  document.getElementById('authModal').classList.remove('active');
-  loginSuccess();
-}
-
-function loginSuccess(){
-  document.getElementById('userBadge').textContent = currentUser.name;
-  if(currentUser.isAdmin) {
-    document.getElementById('adminNavBtn').style.display = 'flex';
-  }
-  
-  if(!DB.fantasyTeams[currentUser.id]) {
-    DB.fantasyTeams[currentUser.id] = {
-      starting: [1, 2, 3, 8, 4, 9, 15, 18, 11, 17, 6],
-      bench: [7, 14, 5, 21],
-      captain: 11,
-      vice: 15,
-      chips: { tc: false, bb: false, fh: false, wc: false }
-    };
-    fbPatch(`fantasyTeams/${currentUser.id}`, DB.fantasyTeams[currentUser.id]);
-  }
-  
-  renderAllViews();
-}
-
-function doLogout(){
-  localStorage.removeItem('fpl_azba_user');
-  location.reload();
-}
-
-function setupGWSelector(){
-  const sel = document.getElementById('gwSelect');
-  sel.innerHTML = '';
-  for(let i=1; i<=38; i++){
-    sel.innerHTML += `<option value="${i}">GW ${i}</option>`;
-  }
-  sel.value = activeGameweek;
-}
-
-function changeGameweek(gw){
-  activeGameweek = parseInt(gw);
-  renderAllViews();
-}
-
-// ════════════════════════════════════════════
-// RENDER VIEWS
-// ════════════════════════════════════════════
-function renderAllViews(){
-  renderPitch();
-  renderTransfersMarket();
-  renderFixtures();
-  renderLeaderboard();
-}
-
-function switchTab(tabId, btnEl){
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-  
-  document.getElementById(`tab-${tabId}`).classList.add('active');
-  btnEl.classList.add('active');
-}
-
-// ════════════════════════════════════════════
-// 1. PITCH & PICK TEAM ENGINE
-// ════════════════════════════════════════════
-function renderPitch(){
-  const team = DB.fantasyTeams[currentUser?.id];
-  if(!team) return;
-
-  const rowGKP = document.getElementById('row-GKP');
-  const rowDEF = document.getElementById('row-DEF');
-  const rowMID = document.getElementById('row-MID');
-  const rowFWD = document.getElementById('row-FWD');
-  const rowBENCH = document.getElementById('row-BENCH');
-
-  rowGKP.innerHTML = ''; rowDEF.innerHTML = ''; rowMID.innerHTML = ''; rowFWD.innerHTML = ''; rowBENCH.innerHTML = '';
-
-  team.starting.forEach(id => {
-    const p = PLAYERS_DB.find(x => x.id === id);
-    if(!p) return;
-    
-    const cardHTML = createPlayerCardHTML(p, team.captain === id, team.vice === id);
-    if(p.pos === 'GKP') rowGKP.innerHTML += cardHTML;
-    else if(p.pos === 'DEF') rowDEF.innerHTML += cardHTML;
-    else if(p.pos === 'MID') rowMID.innerHTML += cardHTML;
-    else if(p.pos === 'FWD') rowFWD.innerHTML += cardHTML;
+function validateSquad(squad) {
+  const errors = [];
+  const counts = { GK: 0, DEF: 0, MID: 0, FWD: 0 };
+  const clubCounts = {};
+  let spent = 0;
+  squad.forEach((p) => {
+    counts[p.pos] += 1;
+    spent += p.price;
+    clubCounts[p.clubCode] = (clubCounts[p.clubCode] || 0) + 1;
   });
-
-  team.bench.forEach((id, index) => {
-    const p = PLAYERS_DB.find(x => x.id === id);
-    if(!p) return;
-    rowBENCH.innerHTML += createPlayerCardHTML(p, false, false, true, index + 1);
-  });
-
-  updateChipsUI(team.chips || {});
-}
-
-function createPlayerCardHTML(p, isCap, isVice, isBench = false, benchOrder = 0){
-  const clubInfo = CLUB_COLORS[p.club] || { main: '#37003C', sleeves: '#00FF87' };
-  
-  const jerseySVG = `
-    <svg class="jersey-svg" viewBox="0 0 100 100">
-      <path d="M 30,20 L 70,20 L 85,35 L 75,50 L 70,42 L 70,85 L 30,85 L 30,42 L 25,50 L 15,35 Z" fill="${clubInfo.main}" stroke="#ffffff" stroke-width="2"/>
-      <path d="M 15,35 L 25,50 L 30,42 L 30,20 Z" fill="${clubInfo.sleeves}"/>
-      <path d="M 85,35 L 75,50 L 70,42 L 70,20 Z" fill="${clubInfo.sleeves}"/>
-    </svg>
-  `;
-
-  const capBadge = isCap ? `<div class="captain-badge">C</div>` : isVice ? `<div class="captain-badge vice">V</div>` : '';
-  const benchLabel = isBench ? `<span style="font-size:0.58rem; color:var(--fpl-yellow)">احتياط ${benchOrder}</span>` : '';
-  const isSwapActive = (swapSourcePlayerId === p.id) ? 'swap-active' : '';
-
-  const gwPts = DB.fantasyGwPoints[activeGameweek]?.[p.id] ?? p.points;
-
-  return `
-    <div class="player-card ${isSwapActive}" onclick="handlePlayerCardClick(${p.id})">
-      <div class="jersey-wrap">
-        ${jerseySVG}
-        ${capBadge}
-      </div>
-      <div class="player-info-pill">
-        <div class="player-name">${p.name}</div>
-        <div class="player-subtext">${gwPts} ن | ${p.match}</div>
-        ${benchLabel}
-      </div>
-    </div>
-  `;
-}
-
-function handlePlayerCardClick(playerId){
-  if(swapSourcePlayerId) {
-    if(swapSourcePlayerId === playerId) {
-      swapSourcePlayerId = null;
-      showToast("تم إلغاء التبديل");
-      renderPitch();
-      return;
+  POSITION_ORDER.forEach((pos) => {
+    if (counts[pos] > SQUAD_RULES[pos]) {
+      errors.push(`عدد ${POSITION_LABELS[pos]} تجاوز الحد المسموح (${SQUAD_RULES[pos]})`);
     }
-    executeSwap(swapSourcePlayerId, playerId);
-    swapSourcePlayerId = null;
-    return;
-  }
-  openPlayerModal(playerId);
-}
-
-function openPlayerModal(playerId){
-  const p = PLAYERS_DB.find(x => x.id === playerId);
-  if(!p) return;
-
-  const team = DB.fantasyTeams[currentUser.id];
-  const isCap = team.captain === playerId;
-  const isVice = team.vice === playerId;
-
-  document.getElementById('modalPlayerHeader').innerHTML = `
-    <div>
-      <h3 style="color:var(--text-main); font-size:1.1rem; font-weight:900;">${p.name}</h3>
-      <span style="font-size:0.78rem; color:var(--text-muted);">${p.club} | ${p.pos}</span>
-    </div>
-    <div class="fdr-badge" style="background:var(--fdr-${p.fdr})">FDR ${p.fdr}</div>
-  `;
-
-  document.getElementById('modalPlayerStats').innerHTML = `
-    <div>السعر: <b>£${p.price}M</b> | إجمالي النقاط: <b>${p.points}</b></div>
-    <div>المباراة القادمة: <b>${p.match}</b></div>
-  `;
-
-  let actionsHTML = '';
-  if(!isCap) actionsHTML += `<button class="btn-primary" onclick="setCaptain(${p.id})">🅲 تعيين كابتن بالفريق</button>`;
-  if(!isVice) actionsHTML += `<button class="btn-secondary" onclick="setViceCaptain(${p.id})">🆅 تعيين نائب كابتن</button>`;
-  
-  actionsHTML += `<button class="btn-secondary" style="color:var(--fpl-pink);" onclick="startSwapPlayer(${p.id})">🔁 تبديل مع لاعب آخر بالملعب</button>`;
-  actionsHTML += `<button class="btn-secondary" style="color:#FF4757;" onclick="sellPlayer(${p.id})">💸 بيع اللاعب (£${p.price}M)</button>`;
-
-  document.getElementById('modalActionBtns').innerHTML = actionsHTML;
-  document.getElementById('playerModal').classList.add('active');
-}
-
-function setCaptain(id){
-  const team = DB.fantasyTeams[currentUser.id];
-  team.captain = id;
-  if(team.vice === id) team.vice = null;
-  saveAndRefresh("تم تعيين الكابتن بنجاح 👑");
-}
-
-function setViceCaptain(id){
-  const team = DB.fantasyTeams[currentUser.id];
-  team.vice = id;
-  if(team.captain === id) team.captain = null;
-  saveAndRefresh("تم تعيين نائب الكابتن 🥈");
-}
-
-function startSwapPlayer(id){
-  swapSourcePlayerId = id;
-  closeModal('playerModal');
-  renderPitch();
-  showToast("اختر لاعباً آخر للتبديل معه 🔁");
-}
-
-function executeSwap(id1, id2){
-  const team = DB.fantasyTeams[currentUser.id];
-  
-  const inStart1 = team.starting.indexOf(id1);
-  const inBench1 = team.bench.indexOf(id1);
-  
-  const inStart2 = team.starting.indexOf(id2);
-  const inBench2 = team.bench.indexOf(id2);
-
-  if(inStart1 !== -1 && inBench2 !== -1) {
-    team.starting[inStart1] = id2;
-    team.bench[inBench2] = id1;
-  } else if(inBench1 !== -1 && inStart2 !== -1) {
-    team.bench[inBench1] = id2;
-    team.starting[inStart2] = id1;
-  } else if(inStart1 !== -1 && inStart2 !== -1) {
-    team.starting[inStart1] = id2;
-    team.starting[inStart2] = id1;
-  } else if(inBench1 !== -1 && inBench2 !== -1) {
-    team.bench[inBench1] = id2;
-    team.bench[inBench2] = id1;
-  }
-
-  saveAndRefresh("تم التبديل بنجاح 🔁");
-}
-
-function toggleChip(chipKey){
-  const team = DB.fantasyTeams[currentUser.id];
-  if(!team.chips) team.chips = {};
-  
-  team.chips[chipKey] = !team.chips[chipKey];
-  saveAndRefresh(team.chips[chipKey] ? "تم تفعيل خاصية الخصم 🔥" : "تم إلغاء تفعيل الخاصية");
-}
-
-function updateChipsUI(chips){
-  const keys = ['tc', 'bb', 'fh', 'wc'];
-  keys.forEach(k => {
-    const active = !!chips[k];
-    document.getElementById(`st-${k}`).textContent = active ? 'مُفعّل 🔥' : 'متاح';
-    document.getElementById(`chip-${k}`).classList.toggle('active', active);
   });
-}
-
-function saveTeamChanges(){
-  fbPatch(`fantasyTeams/${currentUser.id}`, DB.fantasyTeams[currentUser.id]);
-  showToast("تم حفظ التشكيلة بنجاح 💾");
-}
-
-function saveAndRefresh(toastMsg){
-  fbPatch(`fantasyTeams/${currentUser.id}`, DB.fantasyTeams[currentUser.id]);
-  closeModal('playerModal');
-  renderPitch();
-  if(toastMsg) showToast(toastMsg);
-}
-
-// ════════════════════════════════════════════
-// 2. TRANSFERS MARKET HUB
-// ════════════════════════════════════════════
-function renderTransfersMarket(){
-  const search = document.getElementById('playerSearchInp').value.trim().toLowerCase();
-  const posFilter = document.getElementById('posFilterSelect').value;
-  const listEl = document.getElementById('marketList');
-  const team = DB.fantasyTeams[currentUser.id];
-
-  // شريط الميزانية الحقيقي أعلى السوق
-  const spent = teamSpent(team);
-  const remain = (TEAM_BUDGET - spent).toFixed(1);
-  const bankEl = document.getElementById('bankVal');
-  if(bankEl) bankEl.textContent = `£${remain}M`;
-
-  let filtered = PLAYERS_DB.filter(p => {
-    const matchName = p.name.toLowerCase().includes(search) || p.club.toLowerCase().includes(search);
-    const matchPos = (posFilter === 'ALL' || p.pos === posFilter);
-    return matchName && matchPos;
+  Object.entries(clubCounts).forEach(([club, n]) => {
+    if (n > MAX_PER_CLUB) errors.push(`لا يمكن ضم أكثر من ٣ لاعبين من نفس النادي (${club})`);
   });
+  if (spent > BUDGET_CAP) {
+    errors.push(`الميزانية تجاوزت الحد المسموح بمقدار ${(spent - BUDGET_CAP).toFixed(1)} مليون`);
+  }
+  return { errors, spent, remaining: BUDGET_CAP - spent, counts };
+}
 
-  // تصنيف حسب المركز: من المهاجمين إلى الحراس
-  const POS_ORDER = ['FWD','MID','DEF','GKP'];
-  const POS_LABEL = {FWD:'⚽ مهاجمون', MID:'⚙️ لاعبو وسط', DEF:'🛡️ مدافعون', GKP:'🧤 حراس مرمى'};
-
-  listEl.innerHTML = '';
-  POS_ORDER.forEach(pos=>{
-    const group = filtered.filter(p=>p.pos===pos);
-    if(!group.length) return;
-    listEl.innerHTML += `<div style="font-size:0.8rem;font-weight:900;color:var(--fpl-yellow);margin:14px 0 8px;padding-right:2px;">${POS_LABEL[pos]} (${group.length})</div>`;
-    group.forEach(p => {
-      const owned = team.starting.includes(p.id) || team.bench.includes(p.id);
-      listEl.innerHTML += `
-        <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:14px; padding:12px 14px; margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 2px 8px rgba(0,0,0,0.25);">
-          <div>
-            <div style="font-weight:800; font-size:0.92rem;">${p.name} <span style="font-size:0.75rem; color:var(--text-muted);">(${p.club})</span></div>
-            <div style="font-size:0.75rem; color:var(--fpl-green); font-weight:800; margin-top:2px;">${p.pos} | £${p.price}M | ${p.points} نقطة</div>
-          </div>
-          <div style="display:flex; align-items:center; gap:8px;">
-            <span class="fdr-badge" style="background:var(--fdr-${p.fdr})">${p.match}</span>
-            <button class="btn-primary" style="padding:6px 14px; font-size:0.78rem; width:auto; ${owned?'opacity:.5':''}" ${owned?'disabled':''} onclick="buyPlayer(${p.id})">${owned?'✓ لديك':'شراء'}</button>
-          </div>
-        </div>
-      `;
-    });
+function validateStartingXI(startingIds, squadById) {
+  const errors = [];
+  const counts = { GK: 0, DEF: 0, MID: 0, FWD: 0 };
+  startingIds.forEach((id) => {
+    const p = squadById[id];
+    if (p) counts[p.pos] += 1;
   });
-}
-
-function buyPlayer(playerId){
-  const team = DB.fantasyTeams[currentUser.id];
-  const p = PLAYERS_DB.find(x => x.id === playerId);
-  if(!p) return;
-
-  if(team.starting.includes(playerId) || team.bench.includes(playerId)){
-    showToast("اللاعب موجود بالفعل في تشكيلتك!");
-    return;
+  if (startingIds.length !== 11) {
+    errors.push(`التشكيلة الأساسية تحتاج ١١ لاعباً بالضبط (المختار حالياً: ${startingIds.length})`);
   }
-  if(teamAllIds(team).length >= 15){
-    showToast(`⚠️ فريقك مكتمل (15/15) — بيعي لاعباً أولاً من مركز ${p.pos} لإفساح مكان`);
-    return;
+  if (counts.GK !== 1) errors.push('اختاري حارس مرمى واحد فقط في التشكيلة الأساسية');
+  if (counts.DEF < 3) errors.push('يلزم ٣ مدافعين على الأقل في التشكيلة الأساسية');
+  if (counts.DEF > 5) errors.push('لا يمكن أكثر من ٥ مدافعين في التشكيلة الأساسية');
+  if (counts.MID > 5) errors.push('لا يمكن أكثر من ٥ لاعبي وسط في التشكيلة الأساسية');
+  if (counts.FWD < 1) errors.push('يلزم مهاجم واحد على الأقل في التشكيلة الأساسية');
+  if (counts.FWD > 3) errors.push('لا يمكن أكثر من ٣ مهاجمين في التشكيلة الأساسية');
+  return { errors, counts };
+}
+
+/* ============================================================================
+   التخزين — يعمل تلقائياً سواء داخل Claude (window.storage) أو كملف مستقل
+   (localStorage) بدون أي إعداد إضافي
+   ============================================================================ */
+
+const HAS_CLAUDE_STORAGE = typeof window !== 'undefined' && !!window.storage && typeof window.storage.get === 'function';
+const STATE_KEY = 'fpl:team-state';
+const HISTORY_KEY = 'fpl:points-history';
+
+async function storageGet(key) {
+  if (HAS_CLAUDE_STORAGE) {
+    try {
+      const r = await window.storage.get(key);
+      return r ? r.value : null;
+    } catch {
+      return null;
+    }
   }
-  if(teamPosCount(team, p.pos) >= SQUAD_LIMITS[p.pos]){
-    showToast(`⚠️ اكتمل عدد ${p.pos} بفريقك (${SQUAD_LIMITS[p.pos]} كحد أقصى)`);
-    return;
-  }
-  if(teamClubCount(team, p.club) >= MAX_PER_CLUB){
-    showToast(`⚠️ الحد الأقصى 3 لاعبين من ${p.club}`);
-    return;
-  }
-  const remain = TEAM_BUDGET - teamSpent(team);
-  if(p.price > remain){
-    showToast(`⚠️ الميزانية لا تكفي — متبقٍ £${remain.toFixed(1)}M فقط`);
-    return;
-  }
-
-  team.bench.push(playerId);
-  saveAndRefresh(`تمت إضافة ${p.name} إلى تشكيلتك! ✅`);
-}
-
-function sellPlayer(playerId){
-  const team = DB.fantasyTeams[currentUser.id];
-  const p = PLAYERS_DB.find(x => x.id === playerId);
-  if(!p) return;
-  if(!confirm(`بيع ${p.name} مقابل £${p.price}M؟`)) return;
-
-  team.starting = team.starting.filter(id => id !== playerId);
-  team.bench = team.bench.filter(id => id !== playerId);
-  if(team.captain === playerId) team.captain = null;
-  if(team.vice === playerId) team.vice = null;
-  closeModal('playerModal');
-  saveAndRefresh(`تم بيع ${p.name} — عاد £${p.price}M للميزانية 💰`);
-}
-
-// ════════════════════════════════════════════
-// 3. FIXTURES & SEASON PREDICTOR
-// ════════════════════════════════════════════
-function renderFixtures(){
-  const listEl = document.getElementById('fixturesList');
-  // الجولة 1 الحقيقية والمؤكدة (21-24 أغسطس 2026) — تقييم الصعوبة (fdr) تقدير عام بحسب قوة الفريق، وليس خوارزمية FPL الرسمية
-  const sampleFixtures = [
-    { home: 'أرسنال', away: 'كوفنتري سيتي', time: 'الجمعة 21 أغسطس 22:00', fdrH: 1, fdrA: 5 },
-    { home: 'هال سيتي', away: 'مانشستر يونايتد', time: 'السبت 22 أغسطس 14:30', fdrH: 4, fdrA: 1 },
-    { home: 'إيفرتون', away: 'كريستال بالاس', time: 'السبت 22 أغسطس 17:00', fdrH: 3, fdrA: 3 },
-    { home: 'إبسويتش تاون', away: 'سندرلاند', time: 'السبت 22 أغسطس 17:00', fdrH: 3, fdrA: 3 },
-    { home: 'نوتينغهام فورست', away: 'ليدز يونايتد', time: 'السبت 22 أغسطس 17:00', fdrH: 2, fdrA: 3 },
-    { home: 'برينتفورد', away: 'توتنهام', time: 'السبت 22 أغسطس 19:30', fdrH: 4, fdrA: 2 },
-    { home: 'برايتون', away: 'أستون فيلا', time: 'الأحد 23 أغسطس 16:00', fdrH: 3, fdrA: 3 },
-    { home: 'مانشستر سيتي', away: 'بورنموث', time: 'الأحد 23 أغسطس 16:00', fdrH: 1, fdrA: 5 },
-    { home: 'نيوكاسل', away: 'ليفربول', time: 'الأحد 23 أغسطس 18:30', fdrH: 4, fdrA: 3 },
-    { home: 'فولهام', away: 'تشيلسي', time: 'الاثنين 24 أغسطس 22:00', fdrH: 4, fdrA: 2 }
-  ];
-
-  listEl.innerHTML = '';
-  sampleFixtures.forEach(f => {
-    listEl.innerHTML += `
-      <div class="fixture-card">
-        <div class="team-box">
-          <span class="fdr-badge" style="background:var(--fdr-${f.fdrH})">${f.home}</span>
-        </div>
-        <div style="text-align:center; font-size:0.78rem; color:var(--fpl-yellow); font-weight:800;">
-          ${f.time}
-        </div>
-        <div class="team-box away">
-          <span class="fdr-badge" style="background:var(--fdr-${f.fdrA})">${f.away}</span>
-        </div>
-      </div>
-    `;
-  });
-}
-
-function saveSeasonPredictor(){
-  const champ = document.getElementById('predChampInp').value.trim();
-  const runner = document.getElementById('predRunnerInp').value.trim();
-  const scorer = document.getElementById('predScorerInp').value.trim();
-
-  if(!champ || !runner || !scorer){
-    showToast("يرجى تعبئة التوقعات الثلاثة أولاً!");
-    return;
-  }
-
-  const predObj = { champ, runner, scorer };
-  DB.seasonPredictors[currentUser.id] = predObj;
-  fbPatch(`seasonPredictors/${currentUser.id}`, predObj);
-  showToast("تم حفظ توقعات الموسم بنجاح 🏆");
-}
-
-// ════════════════════════════════════════════
-// 4. LEADERBOARD & H2H MODAL
-// ════════════════════════════════════════════
-function renderLeaderboard(){
-  const podiumEl = document.getElementById('podiumArea');
-  const listEl = document.getElementById('leaderboardList');
-
-  let rankedUsers = Object.values(DB.users).map(u => {
-    const team = DB.fantasyTeams[u.id] || { starting: [] };
-    let totalScore = 0;
-    
-    team.starting.forEach(pid => {
-      const p = PLAYERS_DB.find(x => x.id === pid);
-      if(p) {
-        const isCap = (team.captain === pid);
-        const mult = isCap ? (team.chips?.tc ? 3 : 2) : 1;
-        totalScore += (p.points * mult);
-      }
-    });
-
-    return { ...u, score: totalScore };
-  }).sort((a,b) => b.score - a.score);
-
-  podiumEl.innerHTML = '';
-  if(rankedUsers[0]) podiumEl.innerHTML += createPodiumCard(rankedUsers[0], 'first', '🥇');
-  if(rankedUsers[1]) podiumEl.innerHTML += createPodiumCard(rankedUsers[1], 'second', '🥈');
-  if(rankedUsers[2]) podiumEl.innerHTML += createPodiumCard(rankedUsers[2], 'third', '🥉');
-
-  listEl.innerHTML = '';
-  rankedUsers.forEach((u, index) => {
-    const isMe = (u.id === currentUser?.id);
-    const isLast = (index === rankedUsers.length - 1 && rankedUsers.length > 2);
-    const banterText = isLast ? `<span style="font-size:0.7rem; color:var(--fpl-pink); font-weight:900;">(تراك مسخرة ياولد 🤡)</span>` : '';
-
-    listEl.innerHTML += `
-      <div class="lb-item ${isMe ? 'me' : ''}">
-        <div class="lb-rank">#${index + 1}</div>
-        <div class="lb-user">
-          <div class="lb-user-name">${u.name} ${banterText}</div>
-          <div class="lb-team-name">فريق فانتزي العزبة</div>
-        </div>
-        <div class="lb-points">${u.score} ن</div>
-      </div>
-    `;
-  });
-}
-
-function createPodiumCard(u, posClass, badge){
-  return `
-    <div class="podium-card ${posClass}">
-      <div class="podium-avatar">${badge}</div>
-      <div style="font-size:0.78rem; font-weight:900; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%;">${u.name}</div>
-      <div style="font-size:0.9rem; font-weight:900; color:var(--fpl-green); margin-top:2px;">${u.score} ن</div>
-    </div>
-  `;
-}
-
-function openH2HModal(){
-  const sel = document.getElementById('h2hOpponentSelect');
-  sel.innerHTML = '';
-  
-  Object.values(DB.users).filter(u => u.id !== currentUser?.id).forEach(u => {
-    sel.innerHTML += `<option value="${u.id}">${u.name}</option>`;
-  });
-
-  renderH2HComparison();
-  document.getElementById('h2hModal').classList.add('active');
-}
-
-function renderH2HComparison(){
-  const oppId = document.getElementById('h2hOpponentSelect').value;
-  if(!oppId) return;
-
-  const myTeam = DB.fantasyTeams[currentUser.id] || { starting: [] };
-  const oppTeam = DB.fantasyTeams[oppId] || { starting: [] };
-
-  const myScore = myTeam.starting.reduce((s, id) => s + (PLAYERS_DB.find(x => x.id === id)?.points || 0), 0);
-  const oppScore = oppTeam.starting.reduce((s, id) => s + (PLAYERS_DB.find(x => x.id === id)?.points || 0), 0);
-
-  document.getElementById('h2hResultBox').innerHTML = `
-    <div style="display:flex; justify-content:space-around; align-items:center; background:var(--dark-bg); padding:16px; border-radius:14px; text-align:center;">
-      <div>
-        <div style="font-size:0.82rem; color:var(--text-muted); font-weight:700;">${currentUser.name}</div>
-        <div style="font-size:1.7rem; font-weight:900; color:var(--fpl-green);">${myScore}</div>
-      </div>
-      <div style="font-size:1.2rem; font-weight:900; color:var(--fpl-pink);">VS</div>
-      <div>
-        <div style="font-size:0.82rem; color:var(--text-muted); font-weight:700;">${DB.users[oppId]?.name}</div>
-        <div style="font-size:1.7rem; font-weight:900; color:var(--fpl-yellow);">${oppScore}</div>
-      </div>
-    </div>
-  `;
-}
-
-// ════════════════════════════════════════════
-// 5. ADMIN CONTROL PANEL
-// ════════════════════════════════════════════
-function adminSubmitGwPoints(){
-  const gw = document.getElementById('adminGwInp').value;
-  const rawJson = document.getElementById('adminPointsJson').value.trim();
-
   try {
-    const parsed = JSON.parse(rawJson);
-    DB.fantasyGwPoints[gw] = parsed;
-    fbPatch(`fantasyGwPoints/${gw}`, parsed);
-    showToast(`تم استيراد نقاط الجولة ${gw} بنجاح! ✅`);
-    renderAllViews();
-  } catch(e) {
-    showToast("خطأ في صياغة JSON!");
+    return window.localStorage.getItem(key);
+  } catch {
+    return null;
   }
 }
-
-function showResetConfirmModal(){
-  document.getElementById('resetConfirmModal').classList.add('active');
+async function storageSet(key, value) {
+  if (HAS_CLAUDE_STORAGE) {
+    try { await window.storage.set(key, value); } catch (e) { console.error('storage save failed', e); }
+    return;
+  }
+  try { window.localStorage.setItem(key, value); } catch (e) { console.error('storage save failed', e); }
 }
 
-function adminConfirmReset(){
-  closeModal('resetConfirmModal');
-  localStorage.removeItem('fpl_azba_user');
-  location.reload();
+async function loadTeamState() {
+  const raw = await storageGet(STATE_KEY);
+  try { return raw ? JSON.parse(raw) : null; } catch { return null; }
+}
+async function saveTeamState(state) {
+  await storageSet(STATE_KEY, JSON.stringify(state));
+}
+async function loadHistory() {
+  const raw = await storageGet(HISTORY_KEY);
+  try { return raw ? JSON.parse(raw) : []; } catch { return []; }
+}
+async function saveHistory(hist) {
+  await storageSet(HISTORY_KEY, JSON.stringify(hist));
 }
 
-// Helper Utilities
-function closeModal(modalId){
-  document.getElementById(modalId).classList.remove('active');
-}
-function closeModalOnOverlay(e, modalId){
-  if(e.target.id === modalId) closeModal(modalId);
+/* ============================================================================
+   مكوّنات فرعية
+   ============================================================================ */
+
+function TopBar({ gw, budgetInfo, squadCount, activeTab, setActiveTab }) {
+  const cd = useCountdown(GW1_DEADLINE_UTC);
+  const urgent = !cd.past && cd.days === 0 && cd.hours < 6;
+  const tabs = [
+    { id: 'pitch', label: 'الملعب' },
+    { id: 'squad', label: 'القائمة' },
+    { id: 'gw', label: 'الجولة' },
+    { id: 'history', label: 'السجل' },
+  ];
+  return (
+    <div className="topbar">
+      <div className="topbar-row">
+        <div className="topbar-brand">
+          <TrophyIcon size={18} />
+          <span>متتبّع الفانتازي — الجولة {gw}</span>
+        </div>
+        <div className={`countdown ${urgent ? 'countdown-urgent' : ''}`}>
+          <ClockIcon size={14} />
+          {cd.past ? (
+            <span>الموعد النهائي انتهى</span>
+          ) : (
+            <span>
+              {cd.days > 0 ? `${cd.days} يوم ` : ''}
+              {String(cd.hours).padStart(2, '0')}:{String(cd.mins).padStart(2, '0')}:{String(cd.secs).padStart(2, '0')}
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="topbar-row topbar-stats">
+        <div className="stat-chip">
+          <WalletIcon size={13} />
+          <span>المتبقي: {fmtMoney(budgetInfo.remaining)}</span>
+        </div>
+        <div className="stat-chip">
+          <UsersIcon size={13} />
+          <span>القائمة: {squadCount}/١٥</span>
+        </div>
+        <button
+          className="stat-chip stat-chip-action"
+          onClick={() => window.open('https://fantasy.premierleague.com/en/my-team', '_blank', 'noopener,noreferrer')}
+        >
+          <ExternalLinkIcon size={13} />
+          <span>افتح تطبيق الفانتازي</span>
+        </button>
+      </div>
+      <div className="tabbar">
+        {tabs.map((t) => (
+          <button
+            key={t.id}
+            onClick={() => setActiveTab(t.id)}
+            className={`tab-btn ${activeTab === t.id ? 'tab-btn-active' : ''}`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 }
 
-function showToast(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2800);
+function PlayerChip({ player, isCaptain, isVice, onClick, small }) {
+  return (
+    <button onClick={onClick} className={`player-chip ${small ? 'player-chip-sm' : ''}`}>
+      {isCaptain && <span className="armband armband-c">C</span>}
+      {isVice && !isCaptain && <span className="armband armband-v">V</span>}
+      <span className={`chip-pos-dot chip-pos-${player.pos}`} />
+      <span className="player-chip-name">{player.name}</span>
+      <span className="player-chip-club">{player.clubCode}</span>
+      <span className="player-chip-price">£{player.price.toFixed(1)}</span>
+    </button>
+  );
 }
 
-function toggleTheme(){
-  document.body.classList.toggle('light-theme');
-  const isLight = document.body.classList.contains('light-theme');
-  document.getElementById('themeToggleBtn').textContent = isLight ? '🌙' : '☀️';
+function PitchView({ squad, startingIds, benchIds, captainId, viceCaptainId, xiErrors }) {
+  const squadById = useMemo(() => Object.fromEntries(squad.map((p) => [p.id, p])), [squad]);
+  const rows = { FWD: [], MID: [], DEF: [], GK: [] };
+  startingIds.forEach((id) => {
+    const p = squadById[id];
+    if (p) rows[p.pos].push(p);
+  });
+  const bench = benchIds.map((id) => squadById[id]).filter(Boolean);
+  const formation = `${rows.DEF.length}-${rows.MID.length}-${rows.FWD.length}`;
+
+  if (squad.length === 0) {
+    return (
+      <div className="empty-state">
+        <SparklesIcon size={28} style={{ opacity: 0.9 }} />
+        <p className="empty-title">القائمة فارغة</p>
+        <p className="empty-body">
+          ابدئي بإضافة لاعبين من تبويب «القائمة» — إمّا من الاقتراحات السريعة أو يدوياً بأي لاعب تريدين متابعته.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div className="formation-badge">التشكيلة: {formation}</div>
+      {xiErrors.length > 0 && (
+        <div className="alert-box">
+          <AlertTriangleIcon size={15} />
+          <div>
+            {xiErrors.map((e, i) => (
+              <div key={i}>{e}</div>
+            ))}
+          </div>
+        </div>
+      )}
+      <div className="pitch-wrap">
+        <div className="pitch">
+          <div className="pitch-circle" />
+          <div className="pitch-halfway" />
+          {['FWD', 'MID', 'DEF', 'GK'].map((pos) => (
+            <div className="pitch-row" key={pos}>
+              {rows[pos].map((p) => (
+                <PlayerChip
+                  key={p.id}
+                  player={p}
+                  isCaptain={p.id === captainId}
+                  isVice={p.id === viceCaptainId}
+                  onClick={() => {}}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="bench-label">دكة الاحتياط</div>
+      <div className="bench-row">
+        {bench.map((p) => (
+          <PlayerChip key={p.id} player={p} isCaptain={false} isVice={false} onClick={() => {}} small />
+        ))}
+        {bench.length === 0 && <span className="muted-text">لا يوجد لاعبون على مقاعد البدلاء بعد</span>}
+      </div>
+    </div>
+  );
 }
+
+function AddPlayerForm({ onAdd, existingIds }) {
+  const [name, setName] = useState('');
+  const [club, setClub] = useState('');
+  const [pos, setPos] = useState('MID');
+  const [price, setPrice] = useState('');
+  const [open, setOpen] = useState(false);
+
+  const suggestions = SEED_PLAYERS.filter((p) => !existingIds.has(p.id));
+
+  const submit = (e) => {
+    e.preventDefault();
+    const priceNum = parseFloat(price);
+    if (!name.trim() || Number.isNaN(priceNum) || priceNum <= 0) return;
+    onAdd({
+      id: `custom-${Date.now()}`,
+      name: name.trim(),
+      club: club.trim() || '—',
+      clubCode: (club.trim() || '—').slice(0, 3).toUpperCase(),
+      pos,
+      price: priceNum,
+    });
+    setName('');
+    setClub('');
+    setPrice('');
+  };
+
+  return (
+    <div className="card">
+      <button className="section-toggle" onClick={() => setOpen((o) => !o)}>
+        <span>إضافة لاعب يدوياً</span>
+        {open ? <ChevronUpIcon size={16} /> : <ChevronDownIcon size={16} />}
+      </button>
+      {open && (
+        <form onSubmit={submit} className="add-form">
+          <input className="input" placeholder="اسم اللاعب" value={name} onChange={(e) => setName(e.target.value)} />
+          <input className="input" placeholder="النادي" value={club} onChange={(e) => setClub(e.target.value)} />
+          <div className="add-form-row">
+            <select className="input" value={pos} onChange={(e) => setPos(e.target.value)}>
+              {POSITION_ORDER.map((p) => (
+                <option key={p} value={p}>{POSITION_LABELS[p]}</option>
+              ))}
+            </select>
+            <input className="input" placeholder="السعر (مليون)" inputMode="decimal" value={price} onChange={(e) => setPrice(e.target.value)} />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            <PlusIcon size={15} /> إضافة إلى القائمة
+          </button>
+        </form>
+      )}
+      {suggestions.length > 0 && (
+        <div className="suggestions">
+          <p className="muted-text suggestions-label">اقتراحات سريعة (اضغطي للإضافة):</p>
+          <div className="suggestion-chips">
+            {suggestions.map((p) => (
+              <button
+                key={p.id}
+                className="suggestion-chip"
+                onClick={() => onAdd(p)}
+              >
+                {p.name} · {POSITION_SHORT[p.pos]} · £{p.price.toFixed(1)}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SquadTab({ squad, startingIds, captainId, viceCaptainId, onAdd, onRemove, onToggleStart, onSetCaptain, onSetVice, squadInfo }) {
+  const existingIds = useMemo(() => new Set(squad.map((p) => p.id)), [squad]);
+  return (
+    <div>
+      <div className="card budget-card">
+        <div className="budget-row">
+          <span>الميزانية المستخدمة</span>
+          <strong>{fmtMoney(squadInfo.spent)} / {fmtMoney(BUDGET_CAP)}</strong>
+        </div>
+        <div className="budget-bar-track">
+          <div
+            className="budget-bar-fill"
+            style={{ width: `${Math.min(100, (squadInfo.spent / BUDGET_CAP) * 100)}%`, background: squadInfo.spent > BUDGET_CAP ? '#B3423A' : undefined }}
+          />
+        </div>
+        <div className="budget-positions">
+          {POSITION_ORDER.map((pos) => (
+            <span key={pos} className="pos-count">
+              {POSITION_LABELS[pos]}: {squadInfo.counts[pos]}/{SQUAD_RULES[pos]}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {squadInfo.errors.length > 0 && (
+        <div className="alert-box">
+          <AlertTriangleIcon size={15} />
+          <div>
+            {squadInfo.errors.map((e, i) => (
+              <div key={i}>{e}</div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <AddPlayerForm onAdd={onAdd} existingIds={existingIds} />
+
+      {POSITION_ORDER.map((pos) => {
+        const players = squad.filter((p) => p.pos === pos);
+        if (players.length === 0) return null;
+        return (
+          <div key={pos} className="squad-group">
+            <p className="squad-group-title">{POSITION_LABELS[pos]}</p>
+            {players.map((p) => {
+              const starting = startingIds.includes(p.id);
+              return (
+                <div key={p.id} className="squad-row">
+                  <div className="squad-row-main">
+                    <span className="squad-row-name">{p.name}</span>
+                    <span className="muted-text">{p.club} · £{p.price.toFixed(1)}</span>
+                  </div>
+                  <div className="squad-row-actions">
+                    <button
+                      className={`mini-btn ${starting ? 'mini-btn-active' : ''}`}
+                      onClick={() => onToggleStart(p.id)}
+                      title={starting ? 'نقل لدكة الاحتياط' : 'إدراج في التشكيلة الأساسية'}
+                    >
+                      {starting ? 'أساسي' : 'احتياط'}
+                    </button>
+                    <button
+                      className={`mini-btn mini-btn-gold ${captainId === p.id ? 'mini-btn-active' : ''}`}
+                      disabled={!starting}
+                      onClick={() => onSetCaptain(p.id)}
+                    >
+                      C
+                    </button>
+                    <button
+                      className={`mini-btn ${viceCaptainId === p.id ? 'mini-btn-active' : ''}`}
+                      disabled={!starting}
+                      onClick={() => onSetVice(p.id)}
+                    >
+                      V
+                    </button>
+                    <button className="mini-btn mini-btn-danger" onClick={() => onRemove(p.id)}>
+                      <XIcon size={13} />
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        );
+      })}
+      {squad.length === 0 && (
+        <p className="muted-text" style={{ textAlign: 'center', padding: '20px 0' }}>
+          لم تُضيفي أي لاعبين بعد.
+        </p>
+      )}
+    </div>
+  );
+}
+
+function FixtureRow({ f }) {
+  const home = DIFF_META[f.homeDiff];
+  const away = DIFF_META[f.awayDiff];
+  return (
+    <div className="fixture-row">
+      <div className="fixture-teams">
+        <span className="fixture-team" style={{ background: home.bg, color: home.color }}>{f.homeName}</span>
+        <span className="muted-text">ضد</span>
+        <span className="fixture-team" style={{ background: away.bg, color: away.color }}>{f.awayName}</span>
+      </div>
+      <span className="muted-text fixture-time">{localKickoff(f.kickoff)}</span>
+    </div>
+  );
+}
+
+function GameweekTab() {
+  const [showRules, setShowRules] = useState(false);
+  return (
+    <div>
+      <div className="card notice-card">
+        <InfoIcon size={15} />
+        <span>بيانات هذه الجولة اعتباراً من ٢١ أغسطس ٢٠٢٦. قبل كل جولة جديدة، اطلبي مني تحديث هذا القسم بأحدث المباريات والتوصيات.</span>
+      </div>
+
+      <p className="section-heading">مباريات الجولة {CURRENT_GW}</p>
+      <div className="card">
+        {GW1_FIXTURES.map((f, i) => (
+          <FixtureRow key={i} f={f} />
+        ))}
+      </div>
+
+      <p className="section-heading">أفضل خيارات الكابتن</p>
+      <div className="card">
+        {CAPTAIN_TIPS.map((c) => (
+          <div key={c.rank} className="captain-row">
+            <span className="captain-rank">{c.rank}</span>
+            <div className="captain-info">
+              <div className="captain-name-row">
+                <strong>{c.name}</strong>
+                <span className="muted-text">{c.club}{c.price ? ` · £${c.price}` : ''}</span>
+              </div>
+              <p className="captain-note">{c.note}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="card">
+        <button className="section-toggle" onClick={() => setShowRules((o) => !o)}>
+          <span>قواعد الموسم ٢٠٢٦/٢٧</span>
+          {showRules ? <ChevronUpIcon size={16} /> : <ChevronDownIcon size={16} />}
+        </button>
+        {showRules && (
+          <div className="rules-list">
+            <p className="muted-text" style={{ marginBottom: 8 }}>المدة: {SEASON_INFO.span}</p>
+            {SEASON_INFO.points.map((pt, i) => (
+              <div key={i} className="rule-item">
+                <CheckIcon size={13} />
+                <span>{pt}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function HistoryTab({ history, onAdd, onRemove }) {
+  const [gw, setGw] = useState('');
+  const [pts, setPts] = useState('');
+  const [rank, setRank] = useState('');
+
+  const submit = (e) => {
+    e.preventDefault();
+    const gwNum = parseInt(gw, 10);
+    const ptsNum = parseInt(pts, 10);
+    if (!gwNum || Number.isNaN(ptsNum)) return;
+    onAdd({ gw: gwNum, pts: ptsNum, rank: rank.trim() || null });
+    setGw('');
+    setPts('');
+    setRank('');
+  };
+
+  const maxPts = Math.max(1, ...history.map((h) => h.pts));
+
+  return (
+    <div>
+      <div className="card">
+        <p className="section-toggle" style={{ cursor: 'default' }}>تسجيل نتيجة جولة</p>
+        <form onSubmit={submit} className="add-form">
+          <div className="add-form-row">
+            <input className="input" placeholder="رقم الجولة" inputMode="numeric" value={gw} onChange={(e) => setGw(e.target.value)} />
+            <input className="input" placeholder="النقاط" inputMode="numeric" value={pts} onChange={(e) => setPts(e.target.value)} />
+          </div>
+          <input className="input" placeholder="الترتيب العام (اختياري)" value={rank} onChange={(e) => setRank(e.target.value)} />
+          <button type="submit" className="btn btn-primary">
+            <PlusIcon size={15} /> حفظ النتيجة
+          </button>
+        </form>
+      </div>
+
+      {history.length === 0 ? (
+        <div className="empty-state">
+          <TrophyIcon size={26} style={{ opacity: 0.9 }} />
+          <p className="empty-title">لا يوجد سجل بعد</p>
+          <p className="empty-body">بعد انتهاء كل جولة، سجّلي نقاطك هنا لمتابعة أدائك عبر الموسم.</p>
+        </div>
+      ) : (
+        <div className="card">
+          {[...history].sort((a, b) => a.gw - b.gw).map((h, i) => (
+            <div key={i} className="history-row">
+              <span className="history-gw">ج{h.gw}</span>
+              <div className="history-bar-track">
+                <div className="history-bar-fill" style={{ width: `${(h.pts / maxPts) * 100}%` }} />
+              </div>
+              <span className="history-pts">{h.pts}</span>
+              {h.rank && <span className="muted-text history-rank">#{h.rank}</span>}
+              <button className="mini-btn mini-btn-danger" onClick={() => onRemove(i)}>
+                <XIcon size={12} />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ============================================================================
+   المكوّن الرئيسي
+   ============================================================================ */
+
+function FPLGameweekTracker() {
+  const [loaded, setLoaded] = useState(false);
+  const [squad, setSquad] = useState([]);
+  const [startingIds, setStartingIds] = useState([]);
+  const [captainId, setCaptainId] = useState(null);
+  const [viceCaptainId, setViceCaptainId] = useState(null);
+  const [history, setHistory] = useState([]);
+  const [activeTab, setActiveTab] = useState('pitch');
+  const [confirmReset, setConfirmReset] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const saved = await loadTeamState();
+      if (saved) {
+        setSquad(saved.squad || []);
+        setStartingIds(saved.startingIds || []);
+        setCaptainId(saved.captainId || null);
+        setViceCaptainId(saved.viceCaptainId || null);
+      }
+      const savedHistory = await loadHistory();
+      setHistory(savedHistory);
+      setLoaded(true);
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (!loaded) return;
+    saveTeamState({ squad, startingIds, captainId, viceCaptainId });
+  }, [loaded, squad, startingIds, captainId, viceCaptainId]);
+
+  useEffect(() => {
+    if (!loaded) return;
+    saveHistory(history);
+  }, [loaded, history]);
+
+  const squadById = useMemo(() => Object.fromEntries(squad.map((p) => [p.id, p])), [squad]);
+  const squadInfo = useMemo(() => validateSquad(squad), [squad]);
+  const xiValidation = useMemo(() => validateStartingXI(startingIds, squadById), [startingIds, squadById]);
+  const benchIds = useMemo(() => squad.map((p) => p.id).filter((id) => !startingIds.includes(id)), [squad, startingIds]);
+
+  const handleAdd = useCallback((player) => {
+    setSquad((s) => {
+      if (s.some((p) => p.id === player.id)) return s;
+      if (s.length >= 15) return s;
+      return [...s, player];
+    });
+  }, []);
+
+  const handleRemove = useCallback((id) => {
+    setSquad((s) => s.filter((p) => p.id !== id));
+    setStartingIds((ids) => ids.filter((i) => i !== id));
+    setCaptainId((c) => (c === id ? null : c));
+    setViceCaptainId((v) => (v === id ? null : v));
+  }, []);
+
+  const handleToggleStart = useCallback((id) => {
+    setStartingIds((ids) => {
+      if (ids.includes(id)) {
+        return ids.filter((i) => i !== id);
+      }
+      if (ids.length >= 11) return ids;
+      return [...ids, id];
+    });
+  }, []);
+
+  const handleSetCaptain = useCallback((id) => {
+    setCaptainId(id);
+    setViceCaptainId((v) => (v === id ? null : v));
+  }, []);
+
+  const handleSetVice = useCallback((id) => {
+    setViceCaptainId(id);
+    setCaptainId((c) => (c === id ? null : c));
+  }, []);
+
+  const handleAddHistory = useCallback((entry) => {
+    setHistory((h) => [...h.filter((e) => e.gw !== entry.gw), entry]);
+  }, []);
+  const handleRemoveHistory = useCallback((idx) => {
+    setHistory((h) => h.filter((_, i) => i !== idx));
+  }, []);
+
+  const doReset = () => {
+    setSquad([]);
+    setStartingIds([]);
+    setCaptainId(null);
+    setViceCaptainId(null);
+    setConfirmReset(false);
+  };
+
+  return (
+    <div dir="rtl" lang="ar" className="app-root">
+      <TopBar
+        gw={CURRENT_GW}
+        budgetInfo={squadInfo}
+        squadCount={squad.length}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
+
+      <div className="content">
+        {activeTab === 'pitch' && (
+          <PitchView
+            squad={squad}
+            startingIds={startingIds}
+            benchIds={benchIds}
+            captainId={captainId}
+            viceCaptainId={viceCaptainId}
+            xiErrors={squad.length > 0 ? xiValidation.errors : []}
+          />
+        )}
+        {activeTab === 'squad' && (
+          <SquadTab
+            squad={squad}
+            startingIds={startingIds}
+            captainId={captainId}
+            viceCaptainId={viceCaptainId}
+            onAdd={handleAdd}
+            onRemove={handleRemove}
+            onToggleStart={handleToggleStart}
+            onSetCaptain={handleSetCaptain}
+            onSetVice={handleSetVice}
+            squadInfo={squadInfo}
+          />
+        )}
+        {activeTab === 'gw' && <GameweekTab />}
+        {activeTab === 'history' && (
+          <HistoryTab history={history} onAdd={handleAddHistory} onRemove={handleRemoveHistory} />
+        )}
+      </div>
+
+      <div className="footer-actions">
+        {confirmReset ? (
+          <div className="reset-confirm">
+            <span className="muted-text">حذف كل البيانات المحفوظة؟</span>
+            <button onClick={doReset} style={{ color: '#B3423A', fontWeight: 700 }}>نعم، احذف</button>
+            <button onClick={() => setConfirmReset(false)}>إلغاء</button>
+          </div>
+        ) : (
+          <button className="reset-btn" onClick={() => setConfirmReset(true)}>
+            <RotateCcwIcon size={12} /> إعادة تعيين كل البيانات
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<FPLGameweekTracker />);
 </script>
 </body>
 </html>
