@@ -6,9 +6,6 @@
 <title>متتبّع فانتازي الدوري الإنجليزي</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/8.0.4/babel.min.js" crossorigin></script>
 <style>
   * { box-sizing: border-box; }
   html, body { margin:0; padding:0; background:#EEF2F7; }
@@ -16,10 +13,10 @@
     --navy-900:#0B2038; --navy-700:#16345A; --navy-500:#2E5D91;
     --gold-500:#C9963E; --gold-700:#8A651F; --gold-100:#F5E6C8;
     --bg:#EEF2F7; --surface:#FFFFFF; --ink:#142438; --muted:#64748B; --border:#DCE3EC;
-    font-family:'Cairo',sans-serif; background:var(--bg); color:var(--ink);
+    font-family:'Cairo',system-ui,sans-serif; background:var(--bg); color:var(--ink);
     min-height:100vh; padding-bottom:32px; font-size:14px; line-height:1.6;
   }
-  #root button, #root input, #root select { font-family:'Cairo',sans-serif; }
+  #root button, #root input, #root select { font-family:'Cairo',system-ui,sans-serif; }
   .app-root { max-width:480px; margin:0 auto; }
 
   .topbar { background:var(--navy-900); color:#fff; padding:12px 14px 0; position:sticky; top:0; z-index:20; border-radius:0 0 18px 18px; box-shadow:0 6px 18px rgba(11,32,56,0.25); }
@@ -131,49 +128,83 @@
   .reset-btn { display:flex; align-items:center; gap:5px; background:none; border:none; color:var(--muted); font-size:11.5px; cursor:pointer; }
   .reset-confirm { display:flex; gap:8px; align-items:center; }
   .reset-confirm button { font-size:11.5px; padding:5px 10px; border-radius:7px; border:1px solid var(--border); background:#fff; cursor:pointer; }
-
-  .boot-msg { display:flex; align-items:center; justify-content:center; height:100vh; color:#64748B; font-family:'Cairo',sans-serif; font-size:13px; }
 </style>
 </head>
 <body>
-<div id="root"><div class="boot-msg">...جارِ التحميل</div></div>
+<div id="root"></div>
 
-<script type="text/babel" data-presets="react">
-const { useState, useEffect, useMemo, useCallback } = React;
+<script>
+'use strict';
+/* لا سكربتات خارجية هنا سوى خط جوجل (اختياري وغير حرج) — كل المنطق
+   والعرض جافاسكربت عادي بدون أي مكتبة، حتى تعمل الصفحة حتى لو كانت
+   الشبكة تمنع تحميل نطاقات خارجية مثل CDN. */
 
 /* ============================================================================
-   أيقونات SVG بسيطة (بديل عن مكتبة خارجية حتى يعمل الملف بشكل مستقل)
+   أداة بناء عناصر DOM بسيطة
    ============================================================================ */
-function Icon({ children, size = 16, style, ...rest }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
-         strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-         style={sx({ flexShrink: 0, ...style })} {...rest}>
-      {children}
-    </svg>
-  );
+function h(tag, attrs) {
+  var el = document.createElement(tag);
+  attrs = attrs || {};
+  for (var k in attrs) {
+    var v = attrs[k];
+    if (v === null || v === undefined || v === false) continue;
+    if (k === 'class') el.className = v;
+    else if (k === 'style' && typeof v === 'object') { for (var sk in v) { if (v[sk] !== undefined) el.style[sk] = v[sk]; } }
+    else if (k.indexOf('on') === 0 && typeof v === 'function') el.addEventListener(k.slice(2).toLowerCase(), v);
+    else el.setAttribute(k, v);
+  }
+  for (var i = 2; i < arguments.length; i++) {
+    appendChild(el, arguments[i]);
+  }
+  return el;
 }
-const TrophyIcon = (p) => <Icon {...p}><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 5H5a1 1 0 0 0 0 4c.4 0 .8-.1 1-.3M17 5h2a1 1 0 0 1 0 4c-.4 0-.8-.1-1-.3"/></Icon>;
-const ClockIcon = (p) => <Icon {...p}><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></Icon>;
-const WalletIcon = (p) => <Icon {...p}><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="17" cy="14" r="1"/></Icon>;
-const UsersIcon = (p) => <Icon {...p}><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14c2.3.3 4 2.2 4.5 5.5"/></Icon>;
-const XIcon = (p) => <Icon {...p}><path d="M6 6l12 12"/><path d="M18 6L6 18"/></Icon>;
-const PlusIcon = (p) => <Icon {...p}><path d="M12 5v14"/><path d="M5 12h14"/></Icon>;
-const RotateCcwIcon = (p) => <Icon {...p}><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></Icon>;
-const AlertTriangleIcon = (p) => <Icon {...p}><path d="M12 3L2 20h20L12 3z"/><path d="M12 10v4"/><path d="M12 17h.01"/></Icon>;
-const CheckIcon = (p) => <Icon {...p}><path d="M4 12l5 5L20 6"/></Icon>;
-const ChevronUpIcon = (p) => <Icon {...p}><path d="M6 15l6-6 6 6"/></Icon>;
-const ChevronDownIcon = (p) => <Icon {...p}><path d="M6 9l6 6 6-6"/></Icon>;
-const InfoIcon = (p) => <Icon {...p}><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></Icon>;
-const SparklesIcon = (p) => <Icon {...p}><path d="M12 3l1.5 5L18 9.5l-4.5 1.5L12 16l-1.5-5L6 9.5 10.5 8 12 3z"/><path d="M5 17l.7 2.3L8 20l-2.3.7L5 23l-.7-2.3L2 20l2.3-.7L5 17z"/></Icon>;
-const ExternalLinkIcon = (p) => <Icon {...p}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></Icon>;
+function appendChild(el, c) {
+  if (c === null || c === undefined || c === false || c === '') return;
+  if (Array.isArray(c)) { for (var j = 0; j < c.length; j++) appendChild(el, c[j]); return; }
+  el.appendChild((typeof c === 'string' || typeof c === 'number') ? document.createTextNode(String(c)) : c);
+}
 
-
-/* أدوات صغيرة: تمنع ظهور { { أو } } متتاليتين في الملف، لأن بعض
-   المستضيفات (مثل GitHub Pages عبر Jekyll) تفسّر قوسين متتاليين كقالب Liquid
-   وتحذفه، فيتكسر الكود. sx/noop لا يغيّران أي سلوك، فقط يكسران التتابع. */
-const sx = (o) => o;
-const noop = () => {};
+/* ============================================================================
+   أيقونات SVG بسيطة (بدون أي مكتبة خارجية)
+   ============================================================================ */
+var SVG_NS = 'http://www.w3.org/2000/svg';
+var ICON_PATHS = {
+  trophy: [['path', {d:'M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4z'}], ['path', {d:'M7 5H5a1 1 0 0 0 0 4c.4 0 .8-.1 1-.3M17 5h2a1 1 0 0 1 0 4c-.4 0-.8-.1-1-.3'}]],
+  clock: [['circle', {cx:12,cy:12,r:9}], ['path', {d:'M12 7v5l3 2'}]],
+  wallet: [['rect', {x:3,y:6,width:18,height:13,rx:2}], ['path', {d:'M3 10h18'}], ['circle', {cx:17,cy:14,r:1}]],
+  users: [['circle', {cx:9,cy:8,r:3}], ['path', {d:'M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6'}], ['circle', {cx:17,cy:9,r:2.5}], ['path', {d:'M15.5 14c2.3.3 4 2.2 4.5 5.5'}]],
+  x: [['path', {d:'M6 6l12 12'}], ['path', {d:'M18 6L6 18'}]],
+  plus: [['path', {d:'M12 5v14'}], ['path', {d:'M5 12h14'}]],
+  rotateCcw: [['path', {d:'M3 12a9 9 0 1 0 3-6.7'}], ['path', {d:'M3 4v5h5'}]],
+  alertTriangle: [['path', {d:'M12 3L2 20h20L12 3z'}], ['path', {d:'M12 10v4'}], ['path', {d:'M12 17h.01'}]],
+  check: [['path', {d:'M4 12l5 5L20 6'}]],
+  chevronUp: [['path', {d:'M6 15l6-6 6 6'}]],
+  chevronDown: [['path', {d:'M6 9l6 6 6-6'}]],
+  info: [['circle', {cx:12,cy:12,r:9}], ['path', {d:'M12 11v5'}], ['path', {d:'M12 8h.01'}]],
+  sparkles: [['path', {d:'M12 3l1.5 5L18 9.5l-4.5 1.5L12 16l-1.5-5L6 9.5 10.5 8 12 3z'}], ['path', {d:'M5 17l.7 2.3L8 20l-2.3.7L5 23l-.7-2.3L2 20l2.3-.7L5 17z'}]],
+  externalLink: [['path', {d:'M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'}], ['path', {d:'M15 3h6v6'}], ['path', {d:'M10 14L21 3'}]]
+};
+function icon(name, size) {
+  size = size || 16;
+  var svg = document.createElementNS(SVG_NS, 'svg');
+  svg.setAttribute('width', size);
+  svg.setAttribute('height', size);
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor');
+  svg.setAttribute('stroke-width', '2');
+  svg.setAttribute('stroke-linecap', 'round');
+  svg.setAttribute('stroke-linejoin', 'round');
+  svg.style.flexShrink = '0';
+  var defs = ICON_PATHS[name] || [];
+  for (var i = 0; i < defs.length; i++) {
+    var p = document.createElementNS(SVG_NS, defs[i][0]);
+    var a = defs[i][1];
+    for (var k in a) p.setAttribute(k, a[k]);
+    svg.appendChild(p);
+  }
+  return svg;
+}
 
 /* ============================================================================
    ثوابت البيانات — Fantasy Premier League 2026/27
@@ -181,28 +212,28 @@ const noop = () => {};
    "الجولة الحالية" يدوياً قبل كل جولة جديدة (اطلبي من Claude تحديثها).
    ============================================================================ */
 
-const BUDGET_CAP = 100.0;
-const SQUAD_RULES = { GK: 2, DEF: 5, MID: 5, FWD: 3 };
-const MAX_PER_CLUB = 3;
-const POSITION_LABELS = { GK: 'حارس مرمى', DEF: 'مدافع', MID: 'وسط', FWD: 'مهاجم' };
-const POSITION_SHORT = { GK: 'ح.م', DEF: 'مد', MID: 'وس', FWD: 'مه' };
-const POSITION_ORDER = ['GK', 'DEF', 'MID', 'FWD'];
+var BUDGET_CAP = 100.0;
+var SQUAD_RULES = { GK: 2, DEF: 5, MID: 5, FWD: 3 };
+var MAX_PER_CLUB = 3;
+var POSITION_LABELS = { GK: 'حارس مرمى', DEF: 'مدافع', MID: 'وسط', FWD: 'مهاجم' };
+var POSITION_SHORT = { GK: 'ح.م', DEF: 'مد', MID: 'وس', FWD: 'مه' };
+var POSITION_ORDER = ['GK', 'DEF', 'MID', 'FWD'];
 
-const CURRENT_GW = 1;
-const GW1_DEADLINE_UTC = '2026-08-21T17:30:00Z';
+var CURRENT_GW = 1;
+var GW1_DEADLINE_UTC = '2026-08-21T17:30:00Z';
 
-const SEASON_INFO = {
+var SEASON_INFO = {
   span: '٢١ أغسطس ٢٠٢٦ — ٣٠ مايو ٢٠٢٧',
   points: [
     'الميزانية: ١٠٠.٠ مليون جنيه إسترليني لقائمة من ١٥ لاعباً (حارسان، ٥ مدافعين، ٥ لاعبي وسط، ٣ مهاجمين)، بحد أقصى ٣ لاعبين من نفس النادي.',
     'التشكيلة الأساسية: ١١ لاعباً — حارس واحد، ٣ إلى ٥ مدافعين، ٢ إلى ٥ لاعبي وسط، ١ إلى ٣ مهاجمين.',
     'يمكن تجميع حتى ٥ تبديلات مجانية دون استخدامها.',
     'شريحتان من كل نوع هذا الموسم (ويلد كارد، فري هيت، الكابتن الثلاثي، بنش بوست) — الشريحة الأولى من كل نوع يجب استخدامها قبل موعد الجولة ١٩ (٢ يناير ٢٠٢٧)، وإلا تُلغى.',
-    'جديد هذا الموسم: تحديث مباشر للنقاط والترتيب أثناء المباريات، ونقاط بونص إضافية تظهر بعد ٢٠ دقيقة من كل مباراة، ونظام بونص معدّل يخدم الحراس والمدافعين الجانبيين والمهاجمين بشكل أفضل. نتيجة الجولة تصبح نهائية الساعة ٩:٠٠ صباحاً بتوقيت بريطانيا في اليوم التالي لآخر مباراة.',
-  ],
+    'جديد هذا الموسم: تحديث مباشر للنقاط والترتيب أثناء المباريات، ونقاط بونص إضافية تظهر بعد ٢٠ دقيقة من كل مباراة، ونظام بونص معدّل يخدم الحراس والمدافعين الجانبيين والمهاجمين بشكل أفضل. نتيجة الجولة تصبح نهائية الساعة ٩:٠٠ صباحاً بتوقيت بريطانيا في اليوم التالي لآخر مباراة.'
+  ]
 };
 
-const SEED_PLAYERS = [
+var SEED_PLAYERS = [
   { id: 'raya', name: 'Raya', club: 'Arsenal', clubCode: 'ARS', pos: 'GK', price: 6.0 },
   { id: 'kinsky', name: 'Kinský', club: 'Tottenham', clubCode: 'TOT', pos: 'GK', price: 4.5 },
   { id: 'verbruggen', name: 'Verbruggen', club: 'Brighton', clubCode: 'BRI', pos: 'GK', price: 4.5 },
@@ -218,10 +249,10 @@ const SEED_PLAYERS = [
   { id: 'haaland', name: 'Haaland', club: 'Man City', clubCode: 'MCI', pos: 'FWD', price: 15.5 },
   { id: 'isak', name: 'Isak', club: 'Liverpool', clubCode: 'LFC', pos: 'FWD', price: 9.0 },
   { id: 'thiago', name: 'Igor Thiago', club: 'Brentford', clubCode: 'BRE', pos: 'FWD', price: 8.0 },
-  { id: 'ekitike', name: 'Ekitike', club: 'Liverpool', clubCode: 'LFC', pos: 'FWD', price: 7.5 },
+  { id: 'ekitike', name: 'Ekitike', club: 'Liverpool', clubCode: 'LFC', pos: 'FWD', price: 7.5 }
 ];
 
-const GW1_FIXTURES = [
+var GW1_FIXTURES = [
   { home: 'ARS', away: 'COV', homeName: 'Arsenal', awayName: 'Coventry City', kickoff: '2026-08-21T19:00:00Z', homeDiff: 'easy', awayDiff: 'hard' },
   { home: 'HUL', away: 'MUN', homeName: 'Hull City', awayName: 'Man United', kickoff: '2026-08-22T11:30:00Z', homeDiff: 'hard', awayDiff: 'easy' },
   { home: 'EVE', away: 'CRY', homeName: 'Everton', awayName: 'Crystal Palace', kickoff: '2026-08-22T14:00:00Z', homeDiff: 'medium', awayDiff: 'medium' },
@@ -231,736 +262,495 @@ const GW1_FIXTURES = [
   { home: 'BRI', away: 'AVL', homeName: 'Brighton', awayName: 'Aston Villa', kickoff: '2026-08-23T13:00:00Z', homeDiff: 'medium', awayDiff: 'medium' },
   { home: 'MCI', away: 'BOU', homeName: 'Man City', awayName: 'Bournemouth', kickoff: '2026-08-23T13:00:00Z', homeDiff: 'easy', awayDiff: 'hard' },
   { home: 'NEW', away: 'LFC', homeName: 'Newcastle', awayName: 'Liverpool', kickoff: '2026-08-23T15:30:00Z', homeDiff: 'hard', awayDiff: 'medium' },
-  { home: 'FUL', away: 'CFC', homeName: 'Fulham', awayName: 'Chelsea', kickoff: '2026-08-24T19:00:00Z', homeDiff: 'hard', awayDiff: 'medium' },
+  { home: 'FUL', away: 'CFC', homeName: 'Fulham', awayName: 'Chelsea', kickoff: '2026-08-24T19:00:00Z', homeDiff: 'hard', awayDiff: 'medium' }
 ];
 
-const CAPTAIN_TIPS = [
+var CAPTAIN_TIPS = [
   { rank: 1, name: 'Erling Haaland', club: 'Man City', price: '15.5', note: 'مباراة أرضية مواتية أمام بورنموث. الخيار الأكثر شعبية هذا الأسبوع، وصاحب أفضل انطلاقات موسمية في آخر ٤ مواسم.' },
   { rank: 2, name: 'Bruno Fernandes', club: 'Man Utd', price: '12.0', note: 'ضيف على هال سيتي المرتقاة حديثاً. أعلى توقع نقاط لهذا الأسبوع بين كل اللاعبين، وأصبح مسؤولاً عن ضربات الجزاء والركنيات هذا الموسم.' },
   { rank: 3, name: 'Bryan Mbeumo', club: 'Man Utd', price: null, note: 'يشارك بروين فرنانديز نفس المباراة المواتية أمام هال سيتي.' },
   { rank: 4, name: 'Bukayo Saka', club: 'Arsenal', price: '9.5', note: 'مباراة أرضية أمام كوفنتري. خيار مختلف عن الحشود، لكن هناك مخاوف من التعب بعد مشاركته الطويلة في كأس العالم.' },
-  { rank: 5, name: 'Antoine Semenyo', club: 'Man City', price: null, note: 'يواجه فريقه السابق بورنموث بعد انتقاله، في فورمة قوية.' },
+  { rank: 5, name: 'Antoine Semenyo', club: 'Man City', price: null, note: 'يواجه فريقه السابق بورنموث بعد انتقاله، في فورمة قوية.' }
 ];
 
-const DIFF_META = {
+var DIFF_META = {
   easy: { label: 'مباراة سهلة', color: '#2F7A4F', bg: '#E6F3EA' },
   medium: { label: 'مباراة متوسطة', color: '#B7791F', bg: '#FBF0DC' },
-  hard: { label: 'مباراة صعبة', color: '#B3423A', bg: '#F8E6E4' },
+  hard: { label: 'مباراة صعبة', color: '#B3423A', bg: '#F8E6E4' }
 };
 
 /* ============================================================================
    دوال مساعدة
    ============================================================================ */
 
-function fmtMoney(v) {
-  return `£${v.toFixed(1)}م`;
-}
+function fmtMoney(v) { return '£' + v.toFixed(1) + 'م'; }
 
-function useCountdown(deadlineIso) {
-  const target = useMemo(() => new Date(deadlineIso).getTime(), [deadlineIso]);
-  const [now, setNow] = useState(() => Date.now());
-  useEffect(() => {
-    const t = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(t);
-  }, []);
-  const diff = target - now;
-  const past = diff <= 0;
-  const abs = Math.abs(diff);
+function computeCountdown() {
+  var target = new Date(GW1_DEADLINE_UTC).getTime();
+  var diff = target - Date.now();
+  var past = diff <= 0;
+  var abs = Math.abs(diff);
   return {
-    past,
+    past: past,
     days: Math.floor(abs / 86400000),
     hours: Math.floor((abs % 86400000) / 3600000),
     mins: Math.floor((abs % 3600000) / 60000),
-    secs: Math.floor((abs % 60000) / 1000),
+    secs: Math.floor((abs % 60000) / 1000)
   };
+}
+function countdownText(cd) {
+  if (cd.past) return 'الموعد النهائي انتهى';
+  return (cd.days > 0 ? cd.days + ' يوم ' : '') +
+    String(cd.hours).padStart(2, '0') + ':' + String(cd.mins).padStart(2, '0') + ':' + String(cd.secs).padStart(2, '0');
 }
 
 function localKickoff(iso) {
   try {
-    return new Date(iso).toLocaleString('ar', {
-      weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
-    });
-  } catch {
+    return new Date(iso).toLocaleString('ar', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+  } catch (e) {
     return iso;
   }
 }
 
 function validateSquad(squad) {
-  const errors = [];
-  const counts = { GK: 0, DEF: 0, MID: 0, FWD: 0 };
-  const clubCounts = {};
-  let spent = 0;
-  squad.forEach((p) => {
+  var errors = [];
+  var counts = { GK: 0, DEF: 0, MID: 0, FWD: 0 };
+  var clubCounts = {};
+  var spent = 0;
+  squad.forEach(function (p) {
     counts[p.pos] += 1;
     spent += p.price;
     clubCounts[p.clubCode] = (clubCounts[p.clubCode] || 0) + 1;
   });
-  POSITION_ORDER.forEach((pos) => {
-    if (counts[pos] > SQUAD_RULES[pos]) {
-      errors.push(`عدد ${POSITION_LABELS[pos]} تجاوز الحد المسموح (${SQUAD_RULES[pos]})`);
-    }
+  POSITION_ORDER.forEach(function (pos) {
+    if (counts[pos] > SQUAD_RULES[pos]) errors.push('عدد ' + POSITION_LABELS[pos] + ' تجاوز الحد المسموح (' + SQUAD_RULES[pos] + ')');
   });
-  Object.entries(clubCounts).forEach(([club, n]) => {
-    if (n > MAX_PER_CLUB) errors.push(`لا يمكن ضم أكثر من ٣ لاعبين من نفس النادي (${club})`);
+  Object.keys(clubCounts).forEach(function (club) {
+    if (clubCounts[club] > MAX_PER_CLUB) errors.push('لا يمكن ضم أكثر من ٣ لاعبين من نفس النادي (' + club + ')');
   });
-  if (spent > BUDGET_CAP) {
-    errors.push(`الميزانية تجاوزت الحد المسموح بمقدار ${(spent - BUDGET_CAP).toFixed(1)} مليون`);
-  }
-  return { errors, spent, remaining: BUDGET_CAP - spent, counts };
+  if (spent > BUDGET_CAP) errors.push('الميزانية تجاوزت الحد المسموح بمقدار ' + (spent - BUDGET_CAP).toFixed(1) + ' مليون');
+  return { errors: errors, spent: spent, remaining: BUDGET_CAP - spent, counts: counts };
 }
 
 function validateStartingXI(startingIds, squadById) {
-  const errors = [];
-  const counts = { GK: 0, DEF: 0, MID: 0, FWD: 0 };
-  startingIds.forEach((id) => {
-    const p = squadById[id];
-    if (p) counts[p.pos] += 1;
-  });
-  if (startingIds.length !== 11) {
-    errors.push(`التشكيلة الأساسية تحتاج ١١ لاعباً بالضبط (المختار حالياً: ${startingIds.length})`);
-  }
+  var errors = [];
+  var counts = { GK: 0, DEF: 0, MID: 0, FWD: 0 };
+  startingIds.forEach(function (id) { var p = squadById[id]; if (p) counts[p.pos] += 1; });
+  if (startingIds.length !== 11) errors.push('التشكيلة الأساسية تحتاج ١١ لاعباً بالضبط (المختار حالياً: ' + startingIds.length + ')');
   if (counts.GK !== 1) errors.push('اختاري حارس مرمى واحد فقط في التشكيلة الأساسية');
   if (counts.DEF < 3) errors.push('يلزم ٣ مدافعين على الأقل في التشكيلة الأساسية');
   if (counts.DEF > 5) errors.push('لا يمكن أكثر من ٥ مدافعين في التشكيلة الأساسية');
   if (counts.MID > 5) errors.push('لا يمكن أكثر من ٥ لاعبي وسط في التشكيلة الأساسية');
   if (counts.FWD < 1) errors.push('يلزم مهاجم واحد على الأقل في التشكيلة الأساسية');
   if (counts.FWD > 3) errors.push('لا يمكن أكثر من ٣ مهاجمين في التشكيلة الأساسية');
-  return { errors, counts };
+  return { errors: errors, counts: counts };
 }
 
 /* ============================================================================
-   التخزين — يعمل تلقائياً سواء داخل Claude (window.storage) أو كملف مستقل
-   (localStorage) بدون أي إعداد إضافي
+   التخزين — window.storage إن وُجد (داخل Claude)، وإلا localStorage تلقائياً
    ============================================================================ */
 
-const HAS_CLAUDE_STORAGE = typeof window !== 'undefined' && !!window.storage && typeof window.storage.get === 'function';
-const STATE_KEY = 'fpl:team-state';
-const HISTORY_KEY = 'fpl:points-history';
+var HAS_CLAUDE_STORAGE = (typeof window !== 'undefined') && !!window.storage && typeof window.storage.get === 'function';
+var STATE_KEY = 'fpl:team-state';
+var HISTORY_KEY = 'fpl:points-history';
 
-async function storageGet(key) {
+function storageGet(key) {
   if (HAS_CLAUDE_STORAGE) {
-    try {
-      const r = await window.storage.get(key);
-      return r ? r.value : null;
-    } catch {
-      return null;
-    }
+    return window.storage.get(key).then(function (r) { return r ? r.value : null; }).catch(function () { return null; });
   }
-  try {
-    return window.localStorage.getItem(key);
-  } catch {
-    return null;
-  }
+  try { return Promise.resolve(window.localStorage.getItem(key)); } catch (e) { return Promise.resolve(null); }
 }
-async function storageSet(key, value) {
+function storageSet(key, value) {
   if (HAS_CLAUDE_STORAGE) {
-    try { await window.storage.set(key, value); } catch (e) { console.error('storage save failed', e); }
-    return;
+    return window.storage.set(key, value).catch(function (e) { console.error('storage save failed', e); });
   }
   try { window.localStorage.setItem(key, value); } catch (e) { console.error('storage save failed', e); }
+  return Promise.resolve();
 }
+function loadTeamState() {
+  return storageGet(STATE_KEY).then(function (raw) { try { return raw ? JSON.parse(raw) : null; } catch (e) { return null; } });
+}
+function saveTeamState(state) { return storageSet(STATE_KEY, JSON.stringify(state)); }
+function loadHistory() {
+  return storageGet(HISTORY_KEY).then(function (raw) { try { return raw ? JSON.parse(raw) : []; } catch (e) { return []; } });
+}
+function saveHistory(hist) { return storageSet(HISTORY_KEY, JSON.stringify(hist)); }
 
-async function loadTeamState() {
-  const raw = await storageGet(STATE_KEY);
-  try { return raw ? JSON.parse(raw) : null; } catch { return null; }
-}
-async function saveTeamState(state) {
-  await storageSet(STATE_KEY, JSON.stringify(state));
-}
-async function loadHistory() {
-  const raw = await storageGet(HISTORY_KEY);
-  try { return raw ? JSON.parse(raw) : []; } catch { return []; }
-}
-async function saveHistory(hist) {
-  await storageSet(HISTORY_KEY, JSON.stringify(hist));
+/* ============================================================================
+   الحالة (State)
+   ============================================================================ */
+
+var state = {
+  loaded: false,
+  squad: [],
+  startingIds: [],
+  captainId: null,
+  viceCaptainId: null,
+  history: [],
+  activeTab: 'pitch',
+  confirmReset: false,
+  addFormOpen: false,
+  rulesOpen: false
+};
+
+function setState(patch) {
+  for (var k in patch) state[k] = patch[k];
+  render();
+  if (state.loaded) {
+    saveTeamState({ squad: state.squad, startingIds: state.startingIds, captainId: state.captainId, viceCaptainId: state.viceCaptainId });
+    saveHistory(state.history);
+  }
 }
 
 /* ============================================================================
-   مكوّنات فرعية
+   أفعال (Actions)
    ============================================================================ */
 
-function TopBar({ gw, budgetInfo, squadCount, activeTab, setActiveTab }) {
-  const cd = useCountdown(GW1_DEADLINE_UTC);
-  const urgent = !cd.past && cd.days === 0 && cd.hours < 6;
-  const tabs = [
-    { id: 'pitch', label: 'الملعب' },
-    { id: 'squad', label: 'القائمة' },
-    { id: 'gw', label: 'الجولة' },
-    { id: 'history', label: 'السجل' },
-  ];
-  return (
-    <div className="topbar">
-      <div className="topbar-row">
-        <div className="topbar-brand">
-          <TrophyIcon size={18} />
-          <span>متتبّع الفانتازي — الجولة {gw}</span>
-        </div>
-        <div className={`countdown ${urgent ? 'countdown-urgent' : ''}`}>
-          <ClockIcon size={14} />
-          {cd.past ? (
-            <span>الموعد النهائي انتهى</span>
-          ) : (
-            <span>
-              {cd.days > 0 ? `${cd.days} يوم ` : ''}
-              {String(cd.hours).padStart(2, '0')}:{String(cd.mins).padStart(2, '0')}:{String(cd.secs).padStart(2, '0')}
-            </span>
-          )}
-        </div>
-      </div>
-      <div className="topbar-row topbar-stats">
-        <div className="stat-chip">
-          <WalletIcon size={13} />
-          <span>المتبقي: {fmtMoney(budgetInfo.remaining)}</span>
-        </div>
-        <div className="stat-chip">
-          <UsersIcon size={13} />
-          <span>القائمة: {squadCount}/١٥</span>
-        </div>
-        <button
-          className="stat-chip stat-chip-action"
-          onClick={() => window.open('https://fantasy.premierleague.com/en/my-team', '_blank', 'noopener,noreferrer')}
-        >
-          <ExternalLinkIcon size={13} />
-          <span>افتح تطبيق الفانتازي</span>
-        </button>
-      </div>
-      <div className="tabbar">
-        {tabs.map((t) => (
-          <button
-            key={t.id}
-            onClick={() => setActiveTab(t.id)}
-            className={`tab-btn ${activeTab === t.id ? 'tab-btn-active' : ''}`}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
+function addPlayer(player) {
+  if (state.squad.some(function (p) { return p.id === player.id; })) return;
+  if (state.squad.length >= 15) return;
+  setState({ squad: state.squad.concat([player]) });
 }
-
-function PlayerChip({ player, isCaptain, isVice, onClick, small }) {
-  return (
-    <button onClick={onClick} className={`player-chip ${small ? 'player-chip-sm' : ''}`}>
-      {isCaptain && <span className="armband armband-c">C</span>}
-      {isVice && !isCaptain && <span className="armband armband-v">V</span>}
-      <span className={`chip-pos-dot chip-pos-${player.pos}`} />
-      <span className="player-chip-name">{player.name}</span>
-      <span className="player-chip-club">{player.clubCode}</span>
-      <span className="player-chip-price">£{player.price.toFixed(1)}</span>
-    </button>
-  );
-}
-
-function PitchView({ squad, startingIds, benchIds, captainId, viceCaptainId, xiErrors }) {
-  const squadById = useMemo(() => Object.fromEntries(squad.map((p) => [p.id, p])), [squad]);
-  const rows = { FWD: [], MID: [], DEF: [], GK: [] };
-  startingIds.forEach((id) => {
-    const p = squadById[id];
-    if (p) rows[p.pos].push(p);
+function removePlayer(id) {
+  setState({
+    squad: state.squad.filter(function (p) { return p.id !== id; }),
+    startingIds: state.startingIds.filter(function (i) { return i !== id; }),
+    captainId: state.captainId === id ? null : state.captainId,
+    viceCaptainId: state.viceCaptainId === id ? null : state.viceCaptainId
   });
-  const bench = benchIds.map((id) => squadById[id]).filter(Boolean);
-  const formation = `${rows.DEF.length}-${rows.MID.length}-${rows.FWD.length}`;
+}
+function toggleStart(id) {
+  var ids = state.startingIds;
+  if (ids.indexOf(id) !== -1) setState({ startingIds: ids.filter(function (i) { return i !== id; }) });
+  else if (ids.length < 11) setState({ startingIds: ids.concat([id]) });
+}
+function setCaptain(id) { setState({ captainId: id, viceCaptainId: state.viceCaptainId === id ? null : state.viceCaptainId }); }
+function setVice(id) { setState({ viceCaptainId: id, captainId: state.captainId === id ? null : state.captainId }); }
+function addHistoryEntry(entry) { setState({ history: state.history.filter(function (e) { return e.gw !== entry.gw; }).concat([entry]) }); }
+function removeHistoryEntry(idx) { setState({ history: state.history.filter(function (_, i) { return i !== idx; }) }); }
+function doReset() { setState({ squad: [], startingIds: [], captainId: null, viceCaptainId: null, confirmReset: false }); }
+function openFplApp() { window.open('https://fantasy.premierleague.com/en/my-team', '_blank', 'noopener,noreferrer'); }
 
-  if (squad.length === 0) {
-    return (
-      <div className="empty-state">
-        <SparklesIcon size={28} style={sx({ opacity: 0.9 })} />
-        <p className="empty-title">القائمة فارغة</p>
-        <p className="empty-body">
-          ابدئي بإضافة لاعبين من تبويب «القائمة» — إمّا من الاقتراحات السريعة أو يدوياً بأي لاعب تريدين متابعته.
-        </p>
-      </div>
+/* ============================================================================
+   مكوّنات العرض
+   ============================================================================ */
+
+function playerChip(player, isCaptain, isVice, small) {
+  var kids = [];
+  if (isCaptain) kids.push(h('span', { class: 'armband armband-c' }, 'C'));
+  else if (isVice) kids.push(h('span', { class: 'armband armband-v' }, 'V'));
+  kids.push(h('span', { class: 'chip-pos-dot chip-pos-' + player.pos }));
+  kids.push(h('span', { class: 'player-chip-name' }, player.name));
+  kids.push(h('span', { class: 'player-chip-club' }, player.clubCode));
+  kids.push(h('span', { class: 'player-chip-price' }, '£' + player.price.toFixed(1)));
+  return h('button', { class: 'player-chip' + (small ? ' player-chip-sm' : '') }, kids);
+}
+
+function renderTopBar() {
+  var cd = computeCountdown();
+  var urgent = !cd.past && cd.days === 0 && cd.hours < 6;
+  var squadInfo = validateSquad(state.squad);
+  var tabs = [['pitch', 'الملعب'], ['squad', 'القائمة'], ['gw', 'الجولة'], ['history', 'السجل']];
+
+  return h('div', { class: 'topbar' },
+    h('div', { class: 'topbar-row' },
+      h('div', { class: 'topbar-brand' }, icon('trophy', 18), h('span', {}, 'متتبّع الفانتازي — الجولة ' + CURRENT_GW)),
+      h('div', { id: 'countdown-wrap', class: 'countdown' + (urgent ? ' countdown-urgent' : '') },
+        icon('clock', 14), h('span', { id: 'countdown-text' }, countdownText(cd)))
+    ),
+    h('div', { class: 'topbar-row topbar-stats' },
+      h('div', { class: 'stat-chip' }, icon('wallet', 13), h('span', {}, 'المتبقي: ' + fmtMoney(squadInfo.remaining))),
+      h('div', { class: 'stat-chip' }, icon('users', 13), h('span', {}, 'القائمة: ' + state.squad.length + '/١٥')),
+      h('button', { class: 'stat-chip stat-chip-action', onclick: openFplApp }, icon('externalLink', 13), h('span', {}, 'افتح تطبيق الفانتازي'))
+    ),
+    h('div', { class: 'tabbar' }, tabs.map(function (t) {
+      return h('button', { class: 'tab-btn' + (state.activeTab === t[0] ? ' tab-btn-active' : ''), onclick: function () { setState({ activeTab: t[0] }); } }, t[1]);
+    }))
+  );
+}
+
+function renderPitchTab() {
+  var squadById = {};
+  state.squad.forEach(function (p) { squadById[p.id] = p; });
+
+  if (state.squad.length === 0) {
+    return h('div', { class: 'empty-state' },
+      icon('sparkles', 28),
+      h('p', { class: 'empty-title' }, 'القائمة فارغة'),
+      h('p', { class: 'empty-body' }, 'ابدئي بإضافة لاعبين من تبويب «القائمة» — إمّا من الاقتراحات السريعة أو يدوياً بأي لاعب تريدين متابعته.')
     );
   }
 
-  return (
-    <div>
-      <div className="formation-badge">التشكيلة: {formation}</div>
-      {xiErrors.length > 0 && (
-        <div className="alert-box">
-          <AlertTriangleIcon size={15} />
-          <div>
-            {xiErrors.map((e, i) => (
-              <div key={i}>{e}</div>
-            ))}
-          </div>
-        </div>
-      )}
-      <div className="pitch-wrap">
-        <div className="pitch">
-          <div className="pitch-circle" />
-          <div className="pitch-halfway" />
-          {['FWD', 'MID', 'DEF', 'GK'].map((pos) => (
-            <div className="pitch-row" key={pos}>
-              {rows[pos].map((p) => (
-                <PlayerChip
-                  key={p.id}
-                  player={p}
-                  isCaptain={p.id === captainId}
-                  isVice={p.id === viceCaptainId}
-                  onClick={noop}
-                />
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="bench-label">دكة الاحتياط</div>
-      <div className="bench-row">
-        {bench.map((p) => (
-          <PlayerChip key={p.id} player={p} isCaptain={false} isVice={false} onClick={noop} small />
-        ))}
-        {bench.length === 0 && <span className="muted-text">لا يوجد لاعبون على مقاعد البدلاء بعد</span>}
-      </div>
-    </div>
+  var rows = { FWD: [], MID: [], DEF: [], GK: [] };
+  state.startingIds.forEach(function (id) { var p = squadById[id]; if (p) rows[p.pos].push(p); });
+  var benchIds = state.squad.map(function (p) { return p.id; }).filter(function (id) { return state.startingIds.indexOf(id) === -1; });
+  var bench = benchIds.map(function (id) { return squadById[id]; }).filter(Boolean);
+  var formation = rows.DEF.length + '-' + rows.MID.length + '-' + rows.FWD.length;
+  var xi = validateStartingXI(state.startingIds, squadById);
+
+  var nodes = [h('div', { class: 'formation-badge' }, 'التشكيلة: ' + formation)];
+
+  if (xi.errors.length) {
+    nodes.push(h('div', { class: 'alert-box' }, icon('alertTriangle', 15), h('div', {}, xi.errors.map(function (e) { return h('div', {}, e); }))));
+  }
+
+  nodes.push(
+    h('div', { class: 'pitch-wrap' },
+      h('div', { class: 'pitch' },
+        h('div', { class: 'pitch-circle' }),
+        h('div', { class: 'pitch-halfway' }),
+        ['FWD', 'MID', 'DEF', 'GK'].map(function (pos) {
+          return h('div', { class: 'pitch-row' }, rows[pos].map(function (p) {
+            return playerChip(p, p.id === state.captainId, p.id === state.viceCaptainId, false);
+          }));
+        })
+      )
+    ),
+    h('div', { class: 'bench-label' }, 'دكة الاحتياط'),
+    h('div', { class: 'bench-row' },
+      bench.map(function (p) { return playerChip(p, false, false, true); }),
+      bench.length === 0 ? h('span', { class: 'muted-text' }, 'لا يوجد لاعبون على مقاعد البدلاء بعد') : null
+    )
+  );
+
+  return h('div', {}, nodes);
+}
+
+function renderAddPlayerForm(existingIds) {
+  var suggestions = SEED_PLAYERS.filter(function (p) { return existingIds.indexOf(p.id) === -1; });
+  var kids = [
+    h('button', { class: 'section-toggle', onclick: function () { setState({ addFormOpen: !state.addFormOpen }); } },
+      h('span', {}, 'إضافة لاعب يدوياً'), icon(state.addFormOpen ? 'chevronUp' : 'chevronDown', 16))
+  ];
+
+  if (state.addFormOpen) {
+    var nameInput = h('input', { class: 'input', placeholder: 'اسم اللاعب' });
+    var clubInput = h('input', { class: 'input', placeholder: 'النادي' });
+    var posSelect = h('select', { class: 'input' }, POSITION_ORDER.map(function (p) { return h('option', { value: p }, POSITION_LABELS[p]); }));
+    var priceInput = h('input', { class: 'input', placeholder: 'السعر (مليون)', inputmode: 'decimal' });
+    var form = h('form', {
+      class: 'add-form',
+      onsubmit: function (e) {
+        e.preventDefault();
+        var name = nameInput.value.trim();
+        var club = clubInput.value.trim();
+        var priceNum = parseFloat(priceInput.value);
+        if (!name || isNaN(priceNum) || priceNum <= 0) return;
+        addPlayer({ id: 'custom-' + Date.now(), name: name, club: club || '—', clubCode: (club || '—').slice(0, 3).toUpperCase(), pos: posSelect.value, price: priceNum });
+      }
+    },
+      nameInput, clubInput, h('div', { class: 'add-form-row' }, posSelect, priceInput),
+      h('button', { type: 'submit', class: 'btn btn-primary' }, icon('plus', 15), ' إضافة إلى القائمة')
+    );
+    kids.push(form);
+  }
+
+  if (suggestions.length) {
+    kids.push(h('div', { class: 'suggestions' },
+      h('p', { class: 'muted-text suggestions-label' }, 'اقتراحات سريعة (اضغطي للإضافة):'),
+      h('div', { class: 'suggestion-chips' }, suggestions.map(function (p) {
+        return h('button', { class: 'suggestion-chip', onclick: function () { addPlayer(p); } }, p.name + ' · ' + POSITION_SHORT[p.pos] + ' · £' + p.price.toFixed(1));
+      }))
+    ));
+  }
+
+  return h('div', { class: 'card' }, kids);
+}
+
+function renderSquadRow(p) {
+  var starting = state.startingIds.indexOf(p.id) !== -1;
+  return h('div', { class: 'squad-row' },
+    h('div', { class: 'squad-row-main' }, h('span', { class: 'squad-row-name' }, p.name), h('span', { class: 'muted-text' }, p.club + ' · £' + p.price.toFixed(1))),
+    h('div', { class: 'squad-row-actions' },
+      h('button', { class: 'mini-btn' + (starting ? ' mini-btn-active' : ''), onclick: function () { toggleStart(p.id); } }, starting ? 'أساسي' : 'احتياط'),
+      h('button', { class: 'mini-btn mini-btn-gold' + (state.captainId === p.id ? ' mini-btn-active' : ''), disabled: !starting, onclick: function () { setCaptain(p.id); } }, 'C'),
+      h('button', { class: 'mini-btn' + (state.viceCaptainId === p.id ? ' mini-btn-active' : ''), disabled: !starting, onclick: function () { setVice(p.id); } }, 'V'),
+      h('button', { class: 'mini-btn mini-btn-danger', onclick: function () { removePlayer(p.id); } }, icon('x', 13))
+    )
   );
 }
 
-function AddPlayerForm({ onAdd, existingIds }) {
-  const [name, setName] = useState('');
-  const [club, setClub] = useState('');
-  const [pos, setPos] = useState('MID');
-  const [price, setPrice] = useState('');
-  const [open, setOpen] = useState(false);
+function renderSquadTab() {
+  var squadInfo = validateSquad(state.squad);
+  var existingIds = state.squad.map(function (p) { return p.id; });
 
-  const suggestions = SEED_PLAYERS.filter((p) => !existingIds.has(p.id));
+  var budgetCard = h('div', { class: 'card budget-card' },
+    h('div', { class: 'budget-row' }, h('span', {}, 'الميزانية المستخدمة'), h('strong', {}, fmtMoney(squadInfo.spent) + ' / ' + fmtMoney(BUDGET_CAP))),
+    h('div', { class: 'budget-bar-track' }, h('div', { class: 'budget-bar-fill', style: { width: Math.min(100, (squadInfo.spent / BUDGET_CAP) * 100) + '%', background: squadInfo.spent > BUDGET_CAP ? '#B3423A' : '' } })),
+    h('div', { class: 'budget-positions' }, POSITION_ORDER.map(function (pos) { return h('span', { class: 'pos-count' }, POSITION_LABELS[pos] + ': ' + squadInfo.counts[pos] + '/' + SQUAD_RULES[pos]); }))
+  );
 
-  const submit = (e) => {
-    e.preventDefault();
-    const priceNum = parseFloat(price);
-    if (!name.trim() || Number.isNaN(priceNum) || priceNum <= 0) return;
-    onAdd({
-      id: `custom-${Date.now()}`,
-      name: name.trim(),
-      club: club.trim() || '—',
-      clubCode: (club.trim() || '—').slice(0, 3).toUpperCase(),
-      pos,
-      price: priceNum,
-    });
-    setName('');
-    setClub('');
-    setPrice('');
-  };
+  var alertNode = squadInfo.errors.length ? h('div', { class: 'alert-box' }, icon('alertTriangle', 15), h('div', {}, squadInfo.errors.map(function (e) { return h('div', {}, e); }))) : null;
 
-  return (
-    <div className="card">
-      <button className="section-toggle" onClick={() => setOpen((o) => !o)}>
-        <span>إضافة لاعب يدوياً</span>
-        {open ? <ChevronUpIcon size={16} /> : <ChevronDownIcon size={16} />}
-      </button>
-      {open && (
-        <form onSubmit={submit} className="add-form">
-          <input className="input" placeholder="اسم اللاعب" value={name} onChange={(e) => setName(e.target.value)} />
-          <input className="input" placeholder="النادي" value={club} onChange={(e) => setClub(e.target.value)} />
-          <div className="add-form-row">
-            <select className="input" value={pos} onChange={(e) => setPos(e.target.value)}>
-              {POSITION_ORDER.map((p) => (
-                <option key={p} value={p}>{POSITION_LABELS[p]}</option>
-              ))}
-            </select>
-            <input className="input" placeholder="السعر (مليون)" inputMode="decimal" value={price} onChange={(e) => setPrice(e.target.value)} />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            <PlusIcon size={15} /> إضافة إلى القائمة
-          </button>
-        </form>
-      )}
-      {suggestions.length > 0 && (
-        <div className="suggestions">
-          <p className="muted-text suggestions-label">اقتراحات سريعة (اضغطي للإضافة):</p>
-          <div className="suggestion-chips">
-            {suggestions.map((p) => (
-              <button
-                key={p.id}
-                className="suggestion-chip"
-                onClick={() => onAdd(p)}
-              >
-                {p.name} · {POSITION_SHORT[p.pos]} · £{p.price.toFixed(1)}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
+  var groups = POSITION_ORDER.map(function (pos) {
+    var players = state.squad.filter(function (p) { return p.pos === pos; });
+    if (!players.length) return null;
+    return h('div', { class: 'squad-group' }, h('p', { class: 'squad-group-title' }, POSITION_LABELS[pos]), players.map(renderSquadRow));
+  }).filter(Boolean);
+
+  var emptyMsg = state.squad.length === 0 ? h('p', { class: 'muted-text', style: { textAlign: 'center', padding: '20px 0' } }, 'لم تُضيفي أي لاعبين بعد.') : null;
+
+  return h('div', {}, budgetCard, alertNode, renderAddPlayerForm(existingIds), groups, emptyMsg);
+}
+
+function renderFixtureRow(f) {
+  var homeM = DIFF_META[f.homeDiff], awayM = DIFF_META[f.awayDiff];
+  return h('div', { class: 'fixture-row' },
+    h('div', { class: 'fixture-teams' },
+      h('span', { class: 'fixture-team', style: { background: homeM.bg, color: homeM.color } }, f.homeName),
+      h('span', { class: 'muted-text' }, 'ضد'),
+      h('span', { class: 'fixture-team', style: { background: awayM.bg, color: awayM.color } }, f.awayName)
+    ),
+    h('span', { class: 'muted-text fixture-time' }, localKickoff(f.kickoff))
   );
 }
 
-function SquadTab({ squad, startingIds, captainId, viceCaptainId, onAdd, onRemove, onToggleStart, onSetCaptain, onSetVice, squadInfo }) {
-  const existingIds = useMemo(() => new Set(squad.map((p) => p.id)), [squad]);
-  return (
-    <div>
-      <div className="card budget-card">
-        <div className="budget-row">
-          <span>الميزانية المستخدمة</span>
-          <strong>{fmtMoney(squadInfo.spent)} / {fmtMoney(BUDGET_CAP)}</strong>
-        </div>
-        <div className="budget-bar-track">
-          <div
-            className="budget-bar-fill"
-            style={sx({ width: `${Math.min(100, (squadInfo.spent / BUDGET_CAP) * 100)}%`, background: squadInfo.spent > BUDGET_CAP ? '#B3423A' : undefined })}
-          />
-        </div>
-        <div className="budget-positions">
-          {POSITION_ORDER.map((pos) => (
-            <span key={pos} className="pos-count">
-              {POSITION_LABELS[pos]}: {squadInfo.counts[pos]}/{SQUAD_RULES[pos]}
-            </span>
-          ))}
-        </div>
-      </div>
+function renderGameweekTab() {
+  var noticeCard = h('div', { class: 'card notice-card' }, icon('info', 15),
+    h('span', {}, 'بيانات هذه الجولة اعتباراً من ٢١ أغسطس ٢٠٢٦. قبل كل جولة جديدة، اطلبي مني تحديث هذا القسم بأحدث المباريات والتوصيات.'));
 
-      {squadInfo.errors.length > 0 && (
-        <div className="alert-box">
-          <AlertTriangleIcon size={15} />
-          <div>
-            {squadInfo.errors.map((e, i) => (
-              <div key={i}>{e}</div>
-            ))}
-          </div>
-        </div>
-      )}
+  var fixturesCard = h('div', { class: 'card' }, GW1_FIXTURES.map(renderFixtureRow));
 
-      <AddPlayerForm onAdd={onAdd} existingIds={existingIds} />
+  var captainCard = h('div', { class: 'card' }, CAPTAIN_TIPS.map(function (c) {
+    return h('div', { class: 'captain-row' },
+      h('span', { class: 'captain-rank' }, String(c.rank)),
+      h('div', { class: 'captain-info' },
+        h('div', { class: 'captain-name-row' }, h('strong', {}, c.name), h('span', { class: 'muted-text' }, c.club + (c.price ? ' · £' + c.price : ''))),
+        h('p', { class: 'captain-note' }, c.note)
+      )
+    );
+  }));
 
-      {POSITION_ORDER.map((pos) => {
-        const players = squad.filter((p) => p.pos === pos);
-        if (players.length === 0) return null;
-        return (
-          <div key={pos} className="squad-group">
-            <p className="squad-group-title">{POSITION_LABELS[pos]}</p>
-            {players.map((p) => {
-              const starting = startingIds.includes(p.id);
-              return (
-                <div key={p.id} className="squad-row">
-                  <div className="squad-row-main">
-                    <span className="squad-row-name">{p.name}</span>
-                    <span className="muted-text">{p.club} · £{p.price.toFixed(1)}</span>
-                  </div>
-                  <div className="squad-row-actions">
-                    <button
-                      className={`mini-btn ${starting ? 'mini-btn-active' : ''}`}
-                      onClick={() => onToggleStart(p.id)}
-                      title={starting ? 'نقل لدكة الاحتياط' : 'إدراج في التشكيلة الأساسية'}
-                    >
-                      {starting ? 'أساسي' : 'احتياط'}
-                    </button>
-                    <button
-                      className={`mini-btn mini-btn-gold ${captainId === p.id ? 'mini-btn-active' : ''}`}
-                      disabled={!starting}
-                      onClick={() => onSetCaptain(p.id)}
-                    >
-                      C
-                    </button>
-                    <button
-                      className={`mini-btn ${viceCaptainId === p.id ? 'mini-btn-active' : ''}`}
-                      disabled={!starting}
-                      onClick={() => onSetVice(p.id)}
-                    >
-                      V
-                    </button>
-                    <button className="mini-btn mini-btn-danger" onClick={() => onRemove(p.id)}>
-                      <XIcon size={13} />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        );
-      })}
-      {squad.length === 0 && (
-        <p className="muted-text" style={sx({ textAlign: 'center', padding: '20px 0' })}>
-          لم تُضيفي أي لاعبين بعد.
-        </p>
-      )}
-    </div>
+  var rulesKids = [
+    h('button', { class: 'section-toggle', onclick: function () { setState({ rulesOpen: !state.rulesOpen }); } },
+      h('span', {}, 'قواعد الموسم ٢٠٢٦/٢٧'), icon(state.rulesOpen ? 'chevronUp' : 'chevronDown', 16))
+  ];
+  if (state.rulesOpen) {
+    rulesKids.push(h('div', { class: 'rules-list' },
+      h('p', { class: 'muted-text', style: { marginBottom: '8px' } }, 'المدة: ' + SEASON_INFO.span),
+      SEASON_INFO.points.map(function (pt) { return h('div', { class: 'rule-item' }, icon('check', 13), h('span', {}, pt)); })
+    ));
+  }
+
+  return h('div', {},
+    noticeCard,
+    h('p', { class: 'section-heading' }, 'مباريات الجولة ' + CURRENT_GW), fixturesCard,
+    h('p', { class: 'section-heading' }, 'أفضل خيارات الكابتن'), captainCard,
+    h('div', { class: 'card' }, rulesKids)
   );
 }
 
-function FixtureRow({ f }) {
-  const home = DIFF_META[f.homeDiff];
-  const away = DIFF_META[f.awayDiff];
-  return (
-    <div className="fixture-row">
-      <div className="fixture-teams">
-        <span className="fixture-team" style={sx({ background: home.bg, color: home.color })}>{f.homeName}</span>
-        <span className="muted-text">ضد</span>
-        <span className="fixture-team" style={sx({ background: away.bg, color: away.color })}>{f.awayName}</span>
-      </div>
-      <span className="muted-text fixture-time">{localKickoff(f.kickoff)}</span>
-    </div>
+function renderHistoryTab() {
+  var gwInput = h('input', { class: 'input', placeholder: 'رقم الجولة', inputmode: 'numeric' });
+  var ptsInput = h('input', { class: 'input', placeholder: 'النقاط', inputmode: 'numeric' });
+  var rankInput = h('input', { class: 'input', placeholder: 'الترتيب العام (اختياري)' });
+
+  var form = h('form', {
+    class: 'add-form',
+    onsubmit: function (e) {
+      e.preventDefault();
+      var gwNum = parseInt(gwInput.value, 10);
+      var ptsNum = parseInt(ptsInput.value, 10);
+      if (!gwNum || isNaN(ptsNum)) return;
+      addHistoryEntry({ gw: gwNum, pts: ptsNum, rank: rankInput.value.trim() || null });
+    }
+  },
+    h('div', { class: 'add-form-row' }, gwInput, ptsInput),
+    rankInput,
+    h('button', { type: 'submit', class: 'btn btn-primary' }, icon('plus', 15), ' حفظ النتيجة')
+  );
+
+  var formCard = h('div', { class: 'card' }, h('p', { class: 'section-toggle', style: { cursor: 'default' } }, 'تسجيل نتيجة جولة'), form);
+
+  var listNode;
+  if (state.history.length === 0) {
+    listNode = h('div', { class: 'empty-state' }, icon('trophy', 26),
+      h('p', { class: 'empty-title' }, 'لا يوجد سجل بعد'),
+      h('p', { class: 'empty-body' }, 'بعد انتهاء كل جولة، سجّلي نقاطك هنا لمتابعة أدائك عبر الموسم.'));
+  } else {
+    var maxPts = Math.max.apply(null, [1].concat(state.history.map(function (e) { return e.pts; })));
+    var sorted = state.history.slice().sort(function (a, b) { return a.gw - b.gw; });
+    listNode = h('div', { class: 'card' }, sorted.map(function (entry) {
+      var idx = state.history.indexOf(entry);
+      var row = [
+        h('span', { class: 'history-gw' }, 'ج' + entry.gw),
+        h('div', { class: 'history-bar-track' }, h('div', { class: 'history-bar-fill', style: { width: (entry.pts / maxPts * 100) + '%' } })),
+        h('span', { class: 'history-pts' }, String(entry.pts))
+      ];
+      if (entry.rank) row.push(h('span', { class: 'muted-text history-rank' }, '#' + entry.rank));
+      row.push(h('button', { class: 'mini-btn mini-btn-danger', onclick: function () { removeHistoryEntry(idx); } }, icon('x', 12)));
+      return h('div', { class: 'history-row' }, row);
+    }));
+  }
+
+  return h('div', {}, formCard, listNode);
+}
+
+function renderFooter() {
+  if (state.confirmReset) {
+    return h('div', { class: 'footer-actions' },
+      h('div', { class: 'reset-confirm' },
+        h('span', { class: 'muted-text' }, 'حذف كل البيانات المحفوظة؟'),
+        h('button', { style: { color: '#B3423A', fontWeight: '700' }, onclick: doReset }, 'نعم، احذف'),
+        h('button', { onclick: function () { setState({ confirmReset: false }); } }, 'إلغاء')
+      )
+    );
+  }
+  return h('div', { class: 'footer-actions' },
+    h('button', { class: 'reset-btn', onclick: function () { setState({ confirmReset: true }); } }, icon('rotateCcw', 12), ' إعادة تعيين كل البيانات')
   );
 }
 
-function GameweekTab() {
-  const [showRules, setShowRules] = useState(false);
-  return (
-    <div>
-      <div className="card notice-card">
-        <InfoIcon size={15} />
-        <span>بيانات هذه الجولة اعتباراً من ٢١ أغسطس ٢٠٢٦. قبل كل جولة جديدة، اطلبي مني تحديث هذا القسم بأحدث المباريات والتوصيات.</span>
-      </div>
-
-      <p className="section-heading">مباريات الجولة {CURRENT_GW}</p>
-      <div className="card">
-        {GW1_FIXTURES.map((f, i) => (
-          <FixtureRow key={i} f={f} />
-        ))}
-      </div>
-
-      <p className="section-heading">أفضل خيارات الكابتن</p>
-      <div className="card">
-        {CAPTAIN_TIPS.map((c) => (
-          <div key={c.rank} className="captain-row">
-            <span className="captain-rank">{c.rank}</span>
-            <div className="captain-info">
-              <div className="captain-name-row">
-                <strong>{c.name}</strong>
-                <span className="muted-text">{c.club}{c.price ? ` · £${c.price}` : ''}</span>
-              </div>
-              <p className="captain-note">{c.note}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="card">
-        <button className="section-toggle" onClick={() => setShowRules((o) => !o)}>
-          <span>قواعد الموسم ٢٠٢٦/٢٧</span>
-          {showRules ? <ChevronUpIcon size={16} /> : <ChevronDownIcon size={16} />}
-        </button>
-        {showRules && (
-          <div className="rules-list">
-            <p className="muted-text" style={sx({ marginBottom: 8 })}>المدة: {SEASON_INFO.span}</p>
-            {SEASON_INFO.points.map((pt, i) => (
-              <div key={i} className="rule-item">
-                <CheckIcon size={13} />
-                <span>{pt}</span>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
+function renderActiveTab() {
+  if (state.activeTab === 'pitch') return renderPitchTab();
+  if (state.activeTab === 'squad') return renderSquadTab();
+  if (state.activeTab === 'gw') return renderGameweekTab();
+  if (state.activeTab === 'history') return renderHistoryTab();
+  return h('div', {});
 }
 
-function HistoryTab({ history, onAdd, onRemove }) {
-  const [gw, setGw] = useState('');
-  const [pts, setPts] = useState('');
-  const [rank, setRank] = useState('');
-
-  const submit = (e) => {
-    e.preventDefault();
-    const gwNum = parseInt(gw, 10);
-    const ptsNum = parseInt(pts, 10);
-    if (!gwNum || Number.isNaN(ptsNum)) return;
-    onAdd({ gw: gwNum, pts: ptsNum, rank: rank.trim() || null });
-    setGw('');
-    setPts('');
-    setRank('');
-  };
-
-  const maxPts = Math.max(1, ...history.map((h) => h.pts));
-
-  return (
-    <div>
-      <div className="card">
-        <p className="section-toggle" style={sx({ cursor: 'default' })}>تسجيل نتيجة جولة</p>
-        <form onSubmit={submit} className="add-form">
-          <div className="add-form-row">
-            <input className="input" placeholder="رقم الجولة" inputMode="numeric" value={gw} onChange={(e) => setGw(e.target.value)} />
-            <input className="input" placeholder="النقاط" inputMode="numeric" value={pts} onChange={(e) => setPts(e.target.value)} />
-          </div>
-          <input className="input" placeholder="الترتيب العام (اختياري)" value={rank} onChange={(e) => setRank(e.target.value)} />
-          <button type="submit" className="btn btn-primary">
-            <PlusIcon size={15} /> حفظ النتيجة
-          </button>
-        </form>
-      </div>
-
-      {history.length === 0 ? (
-        <div className="empty-state">
-          <TrophyIcon size={26} style={sx({ opacity: 0.9 })} />
-          <p className="empty-title">لا يوجد سجل بعد</p>
-          <p className="empty-body">بعد انتهاء كل جولة، سجّلي نقاطك هنا لمتابعة أدائك عبر الموسم.</p>
-        </div>
-      ) : (
-        <div className="card">
-          {[...history].sort((a, b) => a.gw - b.gw).map((h, i) => (
-            <div key={i} className="history-row">
-              <span className="history-gw">ج{h.gw}</span>
-              <div className="history-bar-track">
-                <div className="history-bar-fill" style={sx({ width: `${(h.pts / maxPts) * 100}%` })} />
-              </div>
-              <span className="history-pts">{h.pts}</span>
-              {h.rank && <span className="muted-text history-rank">#{h.rank}</span>}
-              <button className="mini-btn mini-btn-danger" onClick={() => onRemove(i)}>
-                <XIcon size={12} />
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+function render() {
+  var root = document.getElementById('root');
+  root.innerHTML = '';
+  root.appendChild(h('div', { class: 'app-root', dir: 'rtl', lang: 'ar' },
+    renderTopBar(),
+    h('div', { class: 'content' }, renderActiveTab()),
+    renderFooter()
+  ));
 }
 
 /* ============================================================================
-   المكوّن الرئيسي
+   المؤقّت المستقل للعدّ التنازلي — يحدّث نصّاً فقط، بدون إعادة رسم كاملة
    ============================================================================ */
+setInterval(function () {
+  var textEl = document.getElementById('countdown-text');
+  var wrapEl = document.getElementById('countdown-wrap');
+  if (!textEl || !wrapEl) return;
+  var cd = computeCountdown();
+  var urgent = !cd.past && cd.days === 0 && cd.hours < 6;
+  textEl.textContent = countdownText(cd);
+  wrapEl.className = 'countdown' + (urgent ? ' countdown-urgent' : '');
+}, 1000);
 
-function FPLGameweekTracker() {
-  const [loaded, setLoaded] = useState(false);
-  const [squad, setSquad] = useState([]);
-  const [startingIds, setStartingIds] = useState([]);
-  const [captainId, setCaptainId] = useState(null);
-  const [viceCaptainId, setViceCaptainId] = useState(null);
-  const [history, setHistory] = useState([]);
-  const [activeTab, setActiveTab] = useState('pitch');
-  const [confirmReset, setConfirmReset] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      const saved = await loadTeamState();
-      if (saved) {
-        setSquad(saved.squad || []);
-        setStartingIds(saved.startingIds || []);
-        setCaptainId(saved.captainId || null);
-        setViceCaptainId(saved.viceCaptainId || null);
-      }
-      const savedHistory = await loadHistory();
-      setHistory(savedHistory);
-      setLoaded(true);
-    })();
-  }, []);
-
-  useEffect(() => {
-    if (!loaded) return;
-    saveTeamState({ squad, startingIds, captainId, viceCaptainId });
-  }, [loaded, squad, startingIds, captainId, viceCaptainId]);
-
-  useEffect(() => {
-    if (!loaded) return;
-    saveHistory(history);
-  }, [loaded, history]);
-
-  const squadById = useMemo(() => Object.fromEntries(squad.map((p) => [p.id, p])), [squad]);
-  const squadInfo = useMemo(() => validateSquad(squad), [squad]);
-  const xiValidation = useMemo(() => validateStartingXI(startingIds, squadById), [startingIds, squadById]);
-  const benchIds = useMemo(() => squad.map((p) => p.id).filter((id) => !startingIds.includes(id)), [squad, startingIds]);
-
-  const handleAdd = useCallback((player) => {
-    setSquad((s) => {
-      if (s.some((p) => p.id === player.id)) return s;
-      if (s.length >= 15) return s;
-      return [...s, player];
-    });
-  }, []);
-
-  const handleRemove = useCallback((id) => {
-    setSquad((s) => s.filter((p) => p.id !== id));
-    setStartingIds((ids) => ids.filter((i) => i !== id));
-    setCaptainId((c) => (c === id ? null : c));
-    setViceCaptainId((v) => (v === id ? null : v));
-  }, []);
-
-  const handleToggleStart = useCallback((id) => {
-    setStartingIds((ids) => {
-      if (ids.includes(id)) {
-        return ids.filter((i) => i !== id);
-      }
-      if (ids.length >= 11) return ids;
-      return [...ids, id];
-    });
-  }, []);
-
-  const handleSetCaptain = useCallback((id) => {
-    setCaptainId(id);
-    setViceCaptainId((v) => (v === id ? null : v));
-  }, []);
-
-  const handleSetVice = useCallback((id) => {
-    setViceCaptainId(id);
-    setCaptainId((c) => (c === id ? null : c));
-  }, []);
-
-  const handleAddHistory = useCallback((entry) => {
-    setHistory((h) => [...h.filter((e) => e.gw !== entry.gw), entry]);
-  }, []);
-  const handleRemoveHistory = useCallback((idx) => {
-    setHistory((h) => h.filter((_, i) => i !== idx));
-  }, []);
-
-  const doReset = () => {
-    setSquad([]);
-    setStartingIds([]);
-    setCaptainId(null);
-    setViceCaptainId(null);
-    setConfirmReset(false);
-  };
-
-  return (
-    <div dir="rtl" lang="ar" className="app-root">
-      <TopBar
-        gw={CURRENT_GW}
-        budgetInfo={squadInfo}
-        squadCount={squad.length}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-      />
-
-      <div className="content">
-        {activeTab === 'pitch' && (
-          <PitchView
-            squad={squad}
-            startingIds={startingIds}
-            benchIds={benchIds}
-            captainId={captainId}
-            viceCaptainId={viceCaptainId}
-            xiErrors={squad.length > 0 ? xiValidation.errors : []}
-          />
-        )}
-        {activeTab === 'squad' && (
-          <SquadTab
-            squad={squad}
-            startingIds={startingIds}
-            captainId={captainId}
-            viceCaptainId={viceCaptainId}
-            onAdd={handleAdd}
-            onRemove={handleRemove}
-            onToggleStart={handleToggleStart}
-            onSetCaptain={handleSetCaptain}
-            onSetVice={handleSetVice}
-            squadInfo={squadInfo}
-          />
-        )}
-        {activeTab === 'gw' && <GameweekTab />}
-        {activeTab === 'history' && (
-          <HistoryTab history={history} onAdd={handleAddHistory} onRemove={handleRemoveHistory} />
-        )}
-      </div>
-
-      <div className="footer-actions">
-        {confirmReset ? (
-          <div className="reset-confirm">
-            <span className="muted-text">حذف كل البيانات المحفوظة؟</span>
-            <button onClick={doReset} style={sx({ color: '#B3423A', fontWeight: 700 })}>نعم، احذف</button>
-            <button onClick={() => setConfirmReset(false)}>إلغاء</button>
-          </div>
-        ) : (
-          <button className="reset-btn" onClick={() => setConfirmReset(true)}>
-            <RotateCcwIcon size={12} /> إعادة تعيين كل البيانات
-          </button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<FPLGameweekTracker />);
+/* ============================================================================
+   التشغيل
+   ============================================================================ */
+render(); // ارسمي فوراً بحالة فارغة حتى لا تظهر الصفحة بيضاء أثناء تحميل البيانات المحفوظة
+Promise.all([loadTeamState(), loadHistory()]).then(function (results) {
+  var saved = results[0], savedHistory = results[1];
+  if (saved) {
+    state.squad = saved.squad || [];
+    state.startingIds = saved.startingIds || [];
+    state.captainId = saved.captainId || null;
+    state.viceCaptainId = saved.viceCaptainId || null;
+  }
+  state.history = savedHistory || [];
+  state.loaded = true;
+  render();
+}).catch(function (e) {
+  console.error('تعذّر تحميل البيانات المحفوظة', e);
+  state.loaded = true;
+});
 </script>
 </body>
 </html>
