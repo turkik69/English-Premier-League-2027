@@ -249,8 +249,31 @@ var SEED_PLAYERS = [
   { id: 'haaland', name: 'Haaland', club: 'Man City', clubCode: 'MCI', pos: 'FWD', price: 15.5 },
   { id: 'isak', name: 'Isak', club: 'Liverpool', clubCode: 'LFC', pos: 'FWD', price: 9.0 },
   { id: 'thiago', name: 'Igor Thiago', club: 'Brentford', clubCode: 'BRE', pos: 'FWD', price: 8.0 },
-  { id: 'ekitike', name: 'Ekitike', club: 'Liverpool', clubCode: 'LFC', pos: 'FWD', price: 7.5 }
 ];
+
+// قائمتك الحقيقية للجولة ١ (من الصورة/البيانات اللي زوّدتِني فيها بتاريخ ٢٢ أغسطس ٢٠٢٦)
+// الأسعار المؤكدة من بيانات حية: Rice و Havertz. البقية أسعار تقريبية —
+// صححيها من تبويب "القائمة" لو تفرق عن السعر الفعلي بتطبيق الفانتازي
+var USER_SQUAD = [
+  { id: 'donnarumma', name: 'Donnarumma', club: 'Man City', clubCode: 'MCI', pos: 'GK', price: 5.5 },
+  { id: 'phillips-hul', name: 'Phillips', club: 'Hull City', clubCode: 'HUL', pos: 'GK', price: 4.0 },
+  { id: 'virgil', name: 'Virgil', club: 'Liverpool', clubCode: 'LFC', pos: 'DEF', price: 6.0 },
+  { id: 'senesi', name: 'Senesi', club: 'Tottenham', clubCode: 'TOT', pos: 'DEF', price: 4.5 },
+  { id: 'tarkowski', name: 'Tarkowski', club: 'Everton', clubCode: 'EVE', pos: 'DEF', price: 5.0 },
+  { id: 'lacroix', name: 'Lacroix', club: 'Chelsea', clubCode: 'CFC', pos: 'DEF', price: 4.5 },
+  { id: 'collins', name: 'Collins', club: 'Brentford', clubCode: 'BRE', pos: 'DEF', price: 4.5 },
+  { id: 'rice', name: 'Rice', club: 'Arsenal', clubCode: 'ARS', pos: 'MID', price: 7.5 },
+  { id: 'wirtz', name: 'Wirtz', club: 'Liverpool', clubCode: 'LFC', pos: 'MID', price: 8.5 },
+  { id: 'doku', name: 'Doku', club: 'Man City', clubCode: 'MCI', pos: 'MID', price: 6.5 },
+  { id: 'norgaard-eve', name: 'Nørgaard', club: 'Everton', clubCode: 'EVE', pos: 'MID', price: 4.5 },
+  { id: 'adams-bou', name: 'Adams', club: 'Bournemouth', clubCode: 'BOU', pos: 'MID', price: 4.5 },
+  { id: 'haaland', name: 'Haaland', club: 'Man City', clubCode: 'MCI', pos: 'FWD', price: 15.5 },
+  { id: 'guiu', name: 'Marc Guiu', club: 'Chelsea', clubCode: 'CFC', pos: 'FWD', price: 5.0 },
+  { id: 'havertz', name: 'Havertz', club: 'Arsenal', clubCode: 'ARS', pos: 'FWD', price: 7.5 }
+];
+var USER_STARTING_IDS = ['donnarumma', 'virgil', 'senesi', 'tarkowski', 'lacroix', 'collins', 'rice', 'wirtz', 'haaland', 'guiu', 'havertz'];
+var USER_CAPTAIN_ID = 'haaland';
+var USER_VICE_ID = 'donnarumma';
 
 var GW1_FIXTURES = [
   { home: 'ARS', away: 'COV', homeName: 'Arsenal', awayName: 'Coventry City', kickoff: '2026-08-21T19:00:00Z', homeDiff: 'easy', awayDiff: 'hard' },
@@ -738,11 +761,16 @@ setInterval(function () {
 render(); // ارسمي فوراً بحالة فارغة حتى لا تظهر الصفحة بيضاء أثناء تحميل البيانات المحفوظة
 Promise.all([loadTeamState(), loadHistory()]).then(function (results) {
   var saved = results[0], savedHistory = results[1];
-  if (saved) {
-    state.squad = saved.squad || [];
+  if (saved && saved.squad && saved.squad.length > 0) {
+    state.squad = saved.squad;
     state.startingIds = saved.startingIds || [];
     state.captainId = saved.captainId || null;
     state.viceCaptainId = saved.viceCaptainId || null;
+  } else {
+    state.squad = USER_SQUAD;
+    state.startingIds = USER_STARTING_IDS;
+    state.captainId = USER_CAPTAIN_ID;
+    state.viceCaptainId = USER_VICE_ID;
   }
   state.history = savedHistory || [];
   state.loaded = true;
