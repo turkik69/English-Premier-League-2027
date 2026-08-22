@@ -113,6 +113,20 @@
   .captain-name-row { display:flex; gap:6px; align-items:baseline; font-size:13px; }
   .captain-note { font-size:11.5px; color:var(--muted); margin:3px 0 0; }
 
+  .rec-card { }
+  .rec-card-gold { background:var(--gold-100); border-color:#E8D6A6; }
+  .rec-highlight { display:flex; align-items:center; gap:10px; margin-bottom:4px; }
+  .armband-static { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; flex-shrink:0; box-shadow:0 1px 4px rgba(0,0,0,0.25); }
+  .armband-c-static { background:var(--gold-500); color:#3A2A05; }
+  .armband-v-static { background:#CBD5E1; color:#1F2937; }
+  .transfer-row { padding:6px 0; border-bottom:1px solid var(--border); margin-bottom:8px; }
+  .transfer-row:last-child { border-bottom:none; margin-bottom:0; }
+  .transfer-line { display:flex; align-items:center; gap:7px; font-size:13px; margin-bottom:2px; }
+  .transfer-tag { font-size:10px; font-weight:800; padding:2px 7px; border-radius:6px; }
+  .transfer-out-tag { background:#F8E6E4; color:#8C2E27; }
+  .transfer-in-tag { background:#E6F3EA; color:#1F6B3D; }
+  .bench-num { font-size:9px; font-weight:800; color:var(--muted); }
+
   .rules-list { margin-top:10px; }
   .rule-item { display:flex; gap:7px; align-items:flex-start; font-size:12px; color:var(--ink); margin-bottom:8px; }
   .rule-item svg { flex-shrink:0; margin-top:2px; color:var(--navy-500); }
@@ -293,8 +307,20 @@ var CAPTAIN_TIPS = [
   { rank: 2, name: 'Bruno Fernandes', club: 'Man Utd', price: '12.0', note: 'ضيف على هال سيتي المرتقاة حديثاً. أعلى توقع نقاط لهذا الأسبوع بين كل اللاعبين، وأصبح مسؤولاً عن ضربات الجزاء والركنيات هذا الموسم.' },
   { rank: 3, name: 'Bryan Mbeumo', club: 'Man Utd', price: null, note: 'يشارك بروين فرنانديز نفس المباراة المواتية أمام هال سيتي.' },
   { rank: 4, name: 'Bukayo Saka', club: 'Arsenal', price: '9.5', note: 'مباراة أرضية أمام كوفنتري. خيار مختلف عن الحشود، لكن هناك مخاوف من التعب بعد مشاركته الطويلة في كأس العالم.' },
-  { rank: 5, name: 'Antoine Semenyo', club: 'Man City', price: null, note: 'يواجه فريقه السابق بورنموث بعد انتقاله، في فورمة قوية.' }
 ];
+
+// توصيات الجولة الحالية — أعدّلها يدوياً كل جولة (اطلبي مني تحديثها)
+var GW_RECOMMENDATIONS = {
+  transfers: [], // كل عنصر: { out:'اسم', outPrice:'٥.٠', in:'اسم', inPrice:'٥.٥', reason:'سبب' }
+  transfersNote: 'لا حاجة لأي تبديل هذا الأسبوع — هذه أول جولة وقائمتك مقفلة أصلاً بعد بداية الموسم. أول فرصة تبديل حقيقية تجي مع الجولة ٢.',
+  captainName: 'Haaland',
+  captainClub: 'Man City',
+  captainReason: 'مباراة أرضية مواتية أمام بورنموث، وأفضل توقع نقاط بين كل المهاجمين هذا الأسبوع. هذا الاختيار محفوظ أصلاً بتشكيلتك الحالية.',
+  viceName: 'Havertz',
+  viceClub: 'Arsenal',
+  viceReason: 'أقوى خيار هجومي "احتياطي" بقائمتك لو صار أي طارئ لهالاند مستقبلاً — بدّلي نائب الكابتن لأي لاعب تبينه بحرية كل جولة بدون أي تكلفة، ما يشترط يكون نفس اختيار الجولة الأولى (دوناروما).',
+  chipAdvice: 'وفّري شرائحك هذا الأسبوع. أول ويلد كارد أو بنش بوست أو تربل كابتن يستاهل الانتظار لجولة فيها فرصة واضحة (مباراة سهلة جداً لهالاند، أو أزمة إصابات بقائمتك) بدل استخدامه بشكل روتيني بالجولات الأولى.'
+};
 
 var DIFF_META = {
   easy: { label: 'مباراة سهلة', color: '#2F7A4F', bg: '#E6F3EA' },
@@ -413,7 +439,9 @@ var state = {
   activeTab: 'pitch',
   confirmReset: false,
   addFormOpen: false,
-  rulesOpen: false
+  rulesOpen: false,
+  fixturesOpen: false,
+  candidatesOpen: false
 };
 
 function setState(patch) {
@@ -473,7 +501,7 @@ function renderTopBar() {
   var cd = computeCountdown();
   var urgent = !cd.past && cd.days === 0 && cd.hours < 6;
   var squadInfo = validateSquad(state.squad);
-  var tabs = [['pitch', 'الملعب'], ['squad', 'القائمة'], ['gw', 'الجولة'], ['history', 'السجل']];
+  var tabs = [['pitch', 'الملعب'], ['squad', 'القائمة'], ['gw', 'توصيات الجولة'], ['history', 'السجل']];
 
   return h('div', { class: 'topbar' },
     h('div', { class: 'topbar-row' },
@@ -531,7 +559,13 @@ function renderPitchTab() {
     ),
     h('div', { class: 'bench-label' }, 'دكة الاحتياط'),
     h('div', { class: 'bench-row' },
-      bench.map(function (p) { return playerChip(p, false, false, true); }),
+      bench.map(function (p, i) {
+        var outfieldIndex = bench.slice(0, i).filter(function (b) { return b.pos !== 'GK'; }).length + 1;
+        return h('div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px' } },
+          h('span', { class: 'bench-num' }, p.pos === 'GK' ? 'GKP' : String(outfieldIndex)),
+          playerChip(p, false, false, true)
+        );
+      }),
       bench.length === 0 ? h('span', { class: 'muted-text' }, 'لا يوجد لاعبون على مقاعد البدلاء بعد') : null
     )
   );
@@ -629,20 +663,64 @@ function renderFixtureRow(f) {
 }
 
 function renderGameweekTab() {
+  var r = GW_RECOMMENDATIONS;
   var noticeCard = h('div', { class: 'card notice-card' }, icon('info', 15),
     h('span', {}, 'بيانات هذه الجولة اعتباراً من ٢١ أغسطس ٢٠٢٦. قبل كل جولة جديدة، اطلبي مني تحديث هذا القسم بأحدث المباريات والتوصيات.'));
 
-  var fixturesCard = h('div', { class: 'card' }, GW1_FIXTURES.map(renderFixtureRow));
+  var transfersCard;
+  if (r.transfers.length === 0) {
+    transfersCard = h('div', { class: 'card rec-card' }, h('p', { class: 'muted-text' }, r.transfersNote));
+  } else {
+    transfersCard = h('div', { class: 'card rec-card' }, r.transfers.map(function (t) {
+      return h('div', { class: 'transfer-row' },
+        h('div', { class: 'transfer-line' }, h('span', { class: 'transfer-tag transfer-out-tag' }, 'إخراج'), h('strong', {}, t.out), h('span', { class: 'muted-text' }, '£' + t.outPrice)),
+        h('div', { class: 'transfer-line' }, h('span', { class: 'transfer-tag transfer-in-tag' }, 'إدخال'), h('strong', {}, t.in), h('span', { class: 'muted-text' }, '£' + t.inPrice)),
+        h('p', { class: 'captain-note' }, t.reason)
+      );
+    }));
+  }
 
-  var captainCard = h('div', { class: 'card' }, CAPTAIN_TIPS.map(function (c) {
-    return h('div', { class: 'captain-row' },
-      h('span', { class: 'captain-rank' }, String(c.rank)),
-      h('div', { class: 'captain-info' },
-        h('div', { class: 'captain-name-row' }, h('strong', {}, c.name), h('span', { class: 'muted-text' }, c.club + (c.price ? ' · £' + c.price : ''))),
-        h('p', { class: 'captain-note' }, c.note)
-      )
-    );
-  }));
+  var captainCard = h('div', { class: 'card rec-card rec-card-gold' },
+    h('div', { class: 'rec-highlight' },
+      h('span', { class: 'armband-static armband-c-static' }, 'C'),
+      h('div', {}, h('strong', {}, r.captainName), h('span', { class: 'muted-text' }, ' · ' + r.captainClub))
+    ),
+    h('p', { class: 'captain-note' }, r.captainReason)
+  );
+
+  var viceCard = h('div', { class: 'card rec-card' },
+    h('div', { class: 'rec-highlight' },
+      h('span', { class: 'armband-static armband-v-static' }, 'V'),
+      h('div', {}, h('strong', {}, r.viceName), h('span', { class: 'muted-text' }, ' · ' + r.viceClub))
+    ),
+    h('p', { class: 'captain-note' }, r.viceReason)
+  );
+
+  var chipCard = h('div', { class: 'card rec-card' }, h('p', { class: 'captain-note' }, r.chipAdvice));
+
+  var candidatesKids = [
+    h('button', { class: 'section-toggle', onclick: function () { setState({ candidatesOpen: !state.candidatesOpen }); } },
+      h('span', {}, 'مقارنة خيارات الكابتن'), icon(state.candidatesOpen ? 'chevronUp' : 'chevronDown', 16))
+  ];
+  if (state.candidatesOpen) {
+    candidatesKids.push(h('div', { class: 'rules-list' }, CAPTAIN_TIPS.map(function (c) {
+      return h('div', { class: 'captain-row' },
+        h('span', { class: 'captain-rank' }, String(c.rank)),
+        h('div', { class: 'captain-info' },
+          h('div', { class: 'captain-name-row' }, h('strong', {}, c.name), h('span', { class: 'muted-text' }, c.club + (c.price ? ' · £' + c.price : ''))),
+          h('p', { class: 'captain-note' }, c.note)
+        )
+      );
+    })));
+  }
+
+  var fixturesKids = [
+    h('button', { class: 'section-toggle', onclick: function () { setState({ fixturesOpen: !state.fixturesOpen }); } },
+      h('span', {}, 'مباريات الجولة ' + CURRENT_GW), icon(state.fixturesOpen ? 'chevronUp' : 'chevronDown', 16))
+  ];
+  if (state.fixturesOpen) {
+    fixturesKids.push(h('div', { style: { marginTop: '10px' } }, GW1_FIXTURES.map(renderFixtureRow)));
+  }
 
   var rulesKids = [
     h('button', { class: 'section-toggle', onclick: function () { setState({ rulesOpen: !state.rulesOpen }); } },
@@ -657,8 +735,11 @@ function renderGameweekTab() {
 
   return h('div', {},
     noticeCard,
-    h('p', { class: 'section-heading' }, 'مباريات الجولة ' + CURRENT_GW), fixturesCard,
-    h('p', { class: 'section-heading' }, 'أفضل خيارات الكابتن'), captainCard,
+    h('p', { class: 'section-heading' }, 'التبديلات المقترحة'), transfersCard,
+    h('p', { class: 'section-heading' }, 'الكابتن ونائب الكابتن'), captainCard, viceCard,
+    h('p', { class: 'section-heading' }, 'الشرائح (Chips)'), chipCard,
+    h('div', { class: 'card' }, candidatesKids),
+    h('div', { class: 'card' }, fixturesKids),
     h('div', { class: 'card' }, rulesKids)
   );
 }
